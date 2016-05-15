@@ -13,11 +13,11 @@ var minify = require('gulp-minify');
 // Sass
 gulp.task('sass', function () {
   return gulp.src('sass/*.sass')
-    .pipe(sass().on('error', gutil.log))
+    .pipe(sass({ outputStyle: 'compressed' }).on('error', gutil.log))
     .pipe(gulp.dest('public/css'));
 });
 gulp.task('sass:watch', function () {
-  return gulp.watch('sass/*.sass', ['sass']);
+  return gulp.watch(['sass/*.sass', 'sass/**/*.sass'], ['sass']);
 });
 
 // Scripts

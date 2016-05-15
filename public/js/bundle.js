@@ -19477,7 +19477,7 @@ module.exports = Header;
 
 
 },{"react":167}],169:[function(require,module,exports){
-var GreetBox, GreetBoxFactory, Header, React, ReactDOM, div, h2, p, ref;
+var Button, GreetBox, GreetBoxFactory, Header, React, ReactDOM, button, div, h2, p, ref, span;
 
 React = require('react');
 
@@ -19485,20 +19485,93 @@ ReactDOM = require('react-dom');
 
 Header = require('./elements/header');
 
-ref = React.DOM, div = ref.div, h2 = ref.h2, p = ref.p;
+ref = React.DOM, div = ref.div, h2 = ref.h2, p = ref.p, button = ref.button, span = ref.span;
+
+Button = React.createClass({
+  getDefaultProps: function() {
+    return {
+      type: 'primary',
+      style: null
+    };
+  },
+  getClassName: function() {
+    return "btn btn-" + this.props.type;
+  },
+  render: function() {
+    return button({
+      className: this.getClassName(),
+      onClick: this.props.onClick,
+      style: this.props.style
+    }, this.props.name);
+  }
+});
 
 GreetBox = React.createClass({
   getDefaultProps: function() {
     return {
-      name: 'Fulano'
+      name: 'Fulano',
+      items: []
     };
+  },
+  buttonClick: function(e) {
+    var items;
+    items = this.props.items;
+    items.push('Clicastes! ' + e.target.className);
+    return this.setState({
+      items: items
+    });
+  },
+  clickLog: function() {
+    var i, item, j, len, ref1, results;
+    ref1 = this.props.items;
+    results = [];
+    for (i = j = 0, len = ref1.length; j < len; i = ++j) {
+      item = ref1[i];
+      results.push(p({
+        key: 'item-' + i
+      }, item));
+    }
+    return results;
+  },
+  buttons: function() {
+    var self;
+    self = this;
+    return ['primary', 'danger', 'info', 'default', 'warning'].map(function(type) {
+      return React.createElement(Button, {
+        key: 'button-' + type,
+        type: type,
+        name: 'Clique aqui',
+        onClick: self.buttonClick,
+        style: {
+          marginRight: '10px'
+        }
+      });
+    });
   },
   render: function() {
     return div({
-      className: 'wrapper'
+      className: 'container-fluid'
+    }, div({
+      className: 'row'
+    }, div({
+      className: 'col-sm-6'
     }, React.createElement(Header), h2({
       className: 'header'
-    }, this.props.name), p(null, 'Lorem ipsum dolor'));
+    }, this.props.name), p(null, 'Lorem ipsum dolor'), div({
+      className: 'buttons'
+    }, this.buttons())), div({
+      className: 'col-sm-6'
+    }, this.clickLog()), div({
+      className: 'col-sm-12'
+    }, div({
+      className: 'loader'
+    }, span({
+      className: 'item-1'
+    }), span({
+      className: 'item-2'
+    }), span({
+      className: 'item-3'
+    })))));
   }
 });
 

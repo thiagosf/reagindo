@@ -1,0 +1,33 @@
+.loader
+  overflow: hidden
+  margin: 20px 0
+  span
+    animation: loaderAnimation 1s infinite ease-out
+    width: 36px
+    height: 36px
+    border-radius: 50%
+    border: 18px solid #3CBE1E
+    opacity: 0
+    float: left
+    margin-right: 5px
+    &.item-1
+      animation-delay: 0
+    &.item-2
+      animation-delay: 0.5s
+    &.item-3
+      animation-delay: 1s
+
+@keyframes loaderAnimation
+  0%
+    transform: scale(0)
+    opacity: 0
+  30%
+    opacity: 1
+  50%
+    border-width: 18px
+  60%
+    opacity: 1
+  100%
+    transform: scale(1)
+    border-width: 0px
+    opacity: 0
