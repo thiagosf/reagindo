@@ -6,15 +6,15 @@ Ambiente de desenvolvimento de aplicativos __React__.
 
 Baixar o repositório:
 
-`git clone https://github.com/thiagosf/reagindo.git my-awesome-project`
+```git clone https://github.com/thiagosf/reagindo.git my-awesome-project```
 
 Instalar dependências:
 
-`npm install`
+```npm install```
 
 Executar o webserver:
 
-`gulp webserver`
+```gulp webserver```
 
 ## TODO
 
