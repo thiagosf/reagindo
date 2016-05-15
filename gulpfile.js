@@ -14,7 +14,7 @@ var minify = require('gulp-minify');
 gulp.task('sass', function () {
   return gulp.src('sass/*.sass')
     .pipe(sass().on('error', gutil.log))
-    .pipe(gulp.dest('./public/css'));
+    .pipe(gulp.dest('public/css'));
 });
 gulp.task('sass:watch', function () {
   return gulp.watch('sass/*.sass', ['sass']);
@@ -25,7 +25,7 @@ gulp.task('scripts', function () {
   return gulp.src('./src/index.coffee', { read: false })
     .pipe(browserify({ transform: ['coffeeify'], extensions: ['.coffee'] }))
     .pipe(concat('bundle.js'))
-    .pipe(gulp.dest('./public/js'));
+    .pipe(gulp.dest('public/js'));
 });
 gulp.task('scripts:watch', function() {
   return gulp.watch(['src/*.coffee', 'src/**/*.coffee'], ['scripts']);
@@ -33,11 +33,11 @@ gulp.task('scripts:watch', function() {
 
 // Minify
 gulp.task('compress', ['scripts'], function() {
-  gulp.src('./public/js/*.js')
+  return gulp.src('public/js/*.js')
     .pipe(minify({
       ext: { min:'.min.js' }
     }))
-    .pipe(gulp.dest('./public/js'))
+    .pipe(gulp.dest('public/js'))
 });
 
 // Webserver
@@ -46,7 +46,7 @@ gulp.task('webserver', ['sass:watch', 'scripts:watch'], function () {
     .pipe(webserver({
       host: '0.0.0.0',
       livereload: true,
-      directoryListing: true,
+      directoryListing: false,
       open: true
     }));
 });
