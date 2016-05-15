@@ -1,0 +1,27 @@
+{
+  "name": "reagindo",
+  "version": "0.0.0",
+  "description": "Estrutura para aplicativo web usando React",
+  "main": "src/index.coffee",
+  "scripts": {},
+  "author": "Thiago Silva Ferreira",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp-sass": "~2.3.1",
+    "connect": "~3.4.1",
+    "serve-static": "~1.10.2",
+    "gulp": "~3.9.1",
+    "gulp-webserver": "~0.9.1",
+    "coffeeify": "~2.0.1",
+    "browserify": "~13.0.1",
+    "gulp-coffee": "~2.3.2",
+    "gulp-util": "~3.0.7",
+    "gulp-browserify": "~0.5.1",
+    "gulp-concat": "~2.6.0",
+    "gulp-minify": "0.0.11"
+  },
+  "dependencies": {
+    "react": "~15.0.2",
+    "react-dom": "~15.0.2"
+  }
+}
