@@ -6,7 +6,7 @@ Ambiente de desenvolvimento de aplicativos __React__.
 
 Baixar o repositório:
 
-`git clone ...`
+`git clone https://github.com/thiagosf/reagindo.git my-awesome-project`
 
 Instalar dependências:
 
