@@ -25,19 +25,19 @@ gulp.task('scripts', function () {
   return gulp.src('./src/index.coffee', { read: false })
     .pipe(browserify({ transform: ['coffeeify'], extensions: ['.coffee'] }))
     .pipe(concat('bundle.js'))
-    .pipe(gulp.dest('./public/build'));
+    .pipe(gulp.dest('./public/js'));
 });
 gulp.task('scripts:watch', function() {
   return gulp.watch(['src/*.coffee', 'src/**/*.coffee'], ['scripts']);
 });
 
 // Minify
-gulp.task('compress', function() {
-  gulp.src('./public/build/*.js')
+gulp.task('compress', ['scripts'], function() {
+  gulp.src('./public/js/*.js')
     .pipe(minify({
       ext: { min:'.min.js' }
     }))
-    .pipe(gulp.dest('./public/build'))
+    .pipe(gulp.dest('./public/js'))
 });
 
 // Webserver
@@ -52,4 +52,4 @@ gulp.task('webserver', ['sass:watch', 'scripts:watch'], function () {
 });
 
 // Default 
-gulp.task('default', ['sass', 'scripts', 'compress']);
+gulp.task('default', ['sass', 'compress']);
