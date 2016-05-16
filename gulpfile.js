@@ -22,7 +22,7 @@ gulp.task('sass:watch', function () {
 
 // Scripts
 gulp.task('scripts', function () {
-  return gulp.src('./src/index.coffee', { read: false })
+  return gulp.src('./src/app.coffee', { read: false })
     .pipe(browserify({ transform: ['coffeeify'], extensions: ['.coffee'] }))
     .pipe(concat('bundle.js'))
     .pipe(gulp.dest('public/js'));

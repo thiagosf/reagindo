@@ -24,6 +24,7 @@
     "react": "~15.0.2",
     "react-dom": "~15.0.2",
     "react-tap-event-plugin": "~1.0.0",
-    "bootstrap-sass": "~3.3.6"
+    "bootstrap-sass": "~3.3.6",
+    "react-router": "~2.4.0"
   }
 }

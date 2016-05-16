@@ -1,18 +1,19 @@
 React = require 'react'
 ReactDOM = require 'react-dom'
+
 Header = require './elements/header'
+Loader = require './components/loader'
 
 {div, h2, p, button, span} = React.DOM
+{Router, Route, Link, browserHistory} = require 'react-router'
 
 Button = React.createClass
   getDefaultProps: ->
     type: 'primary'
     style: null
-  getClassName: ->
-    "btn btn-" + @props.type
   render: ->
     button
-      className: @getClassName()
+      className: "btn btn-#{@props.type}"
       onClick: @props.onClick
       style: @props.style
       @props.name
@@ -46,20 +47,26 @@ GreetBox = React.createClass
           div 
             className: 'buttons'
             @buttons()
+          React.createElement(Loader, color: 'blue-grey')
         div 
           className: 'col-sm-6'
           @clickLog()
-        div 
-          className: 'col-sm-12'
-          div 
-            className: 'loader'
-            span className: 'item-1'
-            span className: 'item-2'
-            span className: 'item-3'
-
 
 GreetBoxFactory = React.createFactory GreetBox
 ReactDOM.render(
   React.createElement(GreetBoxFactory, name: 'Fulano')
   document.getElementById('content')
   )
+
+# ReactDOM.render(
+#   React.createElement(
+#     Router 
+#       history: browserHistory
+#   )
+# ), document.getElementById('content')
+
+# RouterFactory = React.createFactory Router
+# ReactDOM.render(
+#   React.createElement(RouterFactory, history: browserHistory, React.createElement(Route, path: '/', component: GreetBox))
+#   document.getElementById('content')
+#   )
