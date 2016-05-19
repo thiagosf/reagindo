@@ -3,12 +3,43 @@
 // Modulos 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var coffee = require('gulp-coffee');
 var webserver = require('gulp-webserver');
 var gutil = require('gulp-util');
-var browserify = require('gulp-browserify');
 var concat = require('gulp-concat');
 var minify = require('gulp-minify');
+var babel = require("gulp-babel");
+var babelify = require('babelify');
+var browserify = require('browserify');
+var rename = require('gulp-rename');
+var sourcemaps = require('gulp-sourcemaps');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+
+// Configuration for Gulp
+var config = {
+  js: {
+    src: './src/app.jsx',
+    watch: ['./src/**/*'],
+    outputDir: './public/js/',
+    outputFile: 'app.js',
+  },
+};
+
+// Gulp task for build
+gulp.task('scripts', function() {
+  return browserify(config.js.src)
+    .transform(babelify)
+    .bundle()
+    .pipe(source('app.jsx'))
+    .pipe(buffer())
+    .pipe(rename(config.js.outputFile))
+    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(sourcemaps.write('./map'))
+    .pipe(gulp.dest(config.js.outputDir));
+});
+gulp.task('scripts:watch', function () {
+  return gulp.watch(config.js.watch, ['scripts']);
+});
 
 // Sass
 gulp.task('sass', function () {
@@ -20,24 +51,13 @@ gulp.task('sass:watch', function () {
   return gulp.watch(['sass/*.sass', 'sass/**/*.sass'], ['sass']);
 });
 
-// Scripts
-gulp.task('scripts', function () {
-  return gulp.src('./src/app.coffee', { read: false })
-    .pipe(browserify({ transform: ['coffeeify'], extensions: ['.coffee'] }))
-    .pipe(concat('bundle.js'))
-    .pipe(gulp.dest('public/js'));
-});
-gulp.task('scripts:watch', function() {
-  return gulp.watch(['src/*.coffee', 'src/**/*.coffee'], ['scripts']);
-});
-
 // Minify
 gulp.task('compress', ['scripts'], function() {
-  return gulp.src('public/js/*.js')
+  return gulp.src('./public/js/app.js')
     .pipe(minify({
       ext: { min:'.min.js' }
     }))
-    .pipe(gulp.dest('public/js'))
+    .pipe(gulp.dest('./public/js'))
 });
 
 // Webserver
@@ -47,7 +67,8 @@ gulp.task('webserver', ['sass:watch', 'scripts:watch'], function () {
       host: '0.0.0.0',
       livereload: true,
       directoryListing: false,
-      open: true
+      open: true,
+      fallback: 'index.html'
     }));
 });
 
