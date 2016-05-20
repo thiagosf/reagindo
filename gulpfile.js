@@ -27,7 +27,7 @@ var config = {
 
 // Gulp task for build
 gulp.task('scripts', function() {
-  return browserify(config.js.src)
+  return browserify({ entries: config.js.src, extensions: ['.jsx'] })
     .transform(babelify)
     .bundle()
     .pipe(source('app.jsx'))

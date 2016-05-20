@@ -19,7 +19,7 @@ Executar o webserver:
 ## TODO
 
 - [x] Criar estrutura inicial
-- [ ] Usar react-router
+- [x] Usar react-router
 - [ ] Criar testes dos componentes do React
 - [ ] Criar estrutura de admin modular
 

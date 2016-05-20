@@ -1,29 +1,11 @@
-// http://mikevalstar.com/post/fast-gulp-browserify-babelify-watchify-react-build/
-
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, Link, browserHistory } from 'react-router'
 import classNames from 'classnames'
 
-
-const Button = React.createClass({
-  getDefaultProps() {
-    type: 'primary'
-    style: null
-  },
-  getClassName() {
-    return "btn btn-" + this.props.type
-  },
-  render() {
-    return (
-      <button 
-        className={this.getClassName()} 
-        onClick={this.props.onClick} 
-        style={this.props.style} 
-        >{this.props.children}</button>
-    )
-  }
-})
+import Loader from './components/loader'
+import Button from './components/bootstrap'
+import NoMatch from './no_match'
 
 const App = React.createClass({
   getInitialState() {
@@ -33,22 +15,24 @@ const App = React.createClass({
   },
   clickButton(e) {
     let messages = this.state.messages
-    messages.push('Mais um click ' + e.target.className)
+    messages.push('Mais um click ' + e.target.className + ' - ' + messages.length)
     this.setState({ messages: messages })
   },
   removeMe(index, e) {
-    console.log(arguments)
+    let messages = this.state.messages
+    messages.splice(index, 1)
+    this.setState({ messages: messages })
   },
   messages() {
-    let i = 0
+    let i = -1
     return this.state.messages.map(item => {
-      return (<p key={i++} onClick={this.removeMe.bind(this, i)}>{item}</p>)
+      return (<p key={++i} onClick={this.removeMe.bind(this, i)}>{item}</p>)
     })
   },
   render() {
     return (
       <div className="container-fluid">
-        <h1>Teste 2</h1>
+        <h1>Reagindo</h1>
         <nav>
           <ul>
             <li>
@@ -62,29 +46,17 @@ const App = React.createClass({
         <div>
           <Button type="warning" onClick={this.clickButton}>Ola mundo</Button>
           <div className="well">{this.messages()}</div>
+          <Loader />
         </div>
         {this.props.children}
       </div>
-      )
-  }
-})
-
-const NoMatch = React.createClass({
-  render() {
-    return (
-      <div className="row">
-        <div className="col-sm-6">
-          <h2>NoMatch 1</h2>
-        </div>
-      </div>
-      )
+    )
   }
 })
 
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="error" component={NoMatch} />
       <Route path="*" component={NoMatch} />
     </Route>
   </Router>
