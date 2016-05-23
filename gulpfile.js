@@ -19,10 +19,14 @@ var buffer = require('vinyl-buffer');
 var config = {
   js: {
     src: './src/app.jsx',
-    watch: ['./src/**/*'],
+    watch: ['./src/**/*', './src/**/**/*'],
     outputDir: './public/js/',
     outputFile: 'app.js',
   },
+  css: {
+    watch: ['./sass/**/*'],
+    outputDir: './public/css/',
+  }
 };
 
 // Gulp task for build
@@ -43,12 +47,12 @@ gulp.task('scripts:watch', function () {
 
 // Sass
 gulp.task('sass', function () {
-  return gulp.src('sass/*.sass')
+  return gulp.src(config.css.watch)
     .pipe(sass({ outputStyle: 'compressed' }).on('error', gutil.log))
-    .pipe(gulp.dest('public/css'));
+    .pipe(gulp.dest(config.css.outputDir));
 });
 gulp.task('sass:watch', function () {
-  return gulp.watch(['sass/*.sass', 'sass/**/*.sass'], ['sass']);
+  return gulp.watch(config.css.watch, ['sass']);
 });
 
 // Minify

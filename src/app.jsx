@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import Loader from './components/loader'
 import Button from './components/bootstrap'
 import NoMatch from './no_match'
+import UsersLogin from './pages/users/login'
 
 const App = React.createClass({
   getInitialState() {
@@ -35,12 +36,9 @@ const App = React.createClass({
         <h1>Reagindo</h1>
         <nav>
           <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/error">Error page</Link>
-            </li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/login">Login</Link></li>
+            <li><Link to="/error">Error page2</Link></li>
           </ul>
         </nav>
         <div>
@@ -56,6 +54,7 @@ const App = React.createClass({
 
 render((
   <Router history={browserHistory}>
+    <Route path="/login" component={UsersLogin} />
     <Route path="/" component={App}>
       <Route path="*" component={NoMatch} />
     </Route>
