@@ -9,9 +9,16 @@ export default class UsersLogin extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
+
+    let _this = this
+    let username = this.refs.username.value;
+    let password = this.refs.password.value;
+
     this.setState({ sending: true })
-    username = this.refs.username.value;
-    password = this.refs.password.value;
+    
+    setTimeout(() => {
+      _this.context.router.push('/dashboard')
+    }, 1500)
   }
   btnClass() {
     return classNames({
@@ -40,4 +47,8 @@ export default class UsersLogin extends Component {
       </div>
     )
   }
+}
+
+UsersLogin.contextTypes = {
+  router: React.PropTypes.object.isRequired
 }

@@ -25177,19 +25177,26 @@ var UsersLogin = function (_Component) {
   function UsersLogin(props) {
     _classCallCheck(this, UsersLogin);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UsersLogin).call(this, props));
+    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(UsersLogin).call(this, props));
 
-    _this.state = { sending: false };
-    return _this;
+    _this2.state = { sending: false };
+    return _this2;
   }
 
   _createClass(UsersLogin, [{
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
+
+      var _this = this;
+      var username = this.refs.username.value;
+      var password = this.refs.password.value;
+
       this.setState({ sending: true });
-      username = this.refs.username.value;
-      password = this.refs.password.value;
+
+      setTimeout(function () {
+        _this.context.router.push('/dashboard');
+      }, 1500);
     }
   }, {
     key: 'btnClass',
@@ -25252,6 +25259,11 @@ var UsersLogin = function (_Component) {
 }(_react.Component);
 
 exports.default = UsersLogin;
+
+
+UsersLogin.contextTypes = {
+  router: _react2.default.PropTypes.object.isRequired
+};
 
 },{"classnames":1,"react":227,"react-dom":51}]},{},[230]);
 
