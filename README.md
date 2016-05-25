@@ -20,6 +20,7 @@ Executar o webserver:
 
 - [x] Criar estrutura inicial
 - [x] Usar react-router
+- [ ] Adicionar Redux ou Flux para manipulação do estado da aplicação
 - [ ] Criar testes dos componentes do React
 - [ ] Criar estrutura de admin modular
 

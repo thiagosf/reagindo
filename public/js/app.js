@@ -24836,6 +24836,8 @@ module.exports = warning;
 },{"_process":49}],230:[function(require,module,exports){
 'use strict';
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -24848,14 +24850,6 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _loader = require('./components/loader');
-
-var _loader2 = _interopRequireDefault(_loader);
-
-var _bootstrap = require('./components/bootstrap');
-
-var _bootstrap2 = _interopRequireDefault(_bootstrap);
-
 var _no_match = require('./no_match');
 
 var _no_match2 = _interopRequireDefault(_no_match);
@@ -24864,100 +24858,81 @@ var _login = require('./pages/users/login');
 
 var _login2 = _interopRequireDefault(_login);
 
+var _dashboard = require('./pages/dashboard');
+
+var _dashboard2 = _interopRequireDefault(_dashboard);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var App = _react2.default.createClass({
-  displayName: 'App',
-  getInitialState: function getInitialState() {
-    return {
-      messages: []
-    };
-  },
-  clickButton: function clickButton(e) {
-    var messages = this.state.messages;
-    messages.push('Mais um click ' + e.target.className + ' - ' + messages.length);
-    this.setState({ messages: messages });
-  },
-  removeMe: function removeMe(index, e) {
-    var messages = this.state.messages;
-    messages.splice(index, 1);
-    this.setState({ messages: messages });
-  },
-  messages: function messages() {
-    var _this = this;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    var i = -1;
-    return this.state.messages.map(function (item) {
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// const App = React.createClass({
+var App = function (_Component) {
+  _inherits(App, _Component);
+
+  function App() {
+    _classCallCheck(this, App);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+  }
+
+  _createClass(App, [{
+    key: 'render',
+    value: function render() {
       return _react2.default.createElement(
-        'p',
-        { key: ++i, onClick: _this.removeMe.bind(_this, i) },
-        item
-      );
-    });
-  },
-  render: function render() {
-    return _react2.default.createElement(
-      'div',
-      { className: 'container-fluid' },
-      _react2.default.createElement(
-        'h1',
-        null,
-        'Reagindo'
-      ),
-      _react2.default.createElement(
-        'nav',
-        null,
+        'div',
+        { className: 'container-fluid' },
         _react2.default.createElement(
-          'ul',
+          'h1',
+          null,
+          'Reagindo'
+        ),
+        _react2.default.createElement(
+          'nav',
           null,
           _react2.default.createElement(
-            'li',
+            'ul',
             null,
             _react2.default.createElement(
-              _reactRouter.Link,
-              { to: '/' },
-              'Home'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouter.Link,
+                { to: '/dashboard' },
+                'Dashboard'
+              )
+            ),
             _react2.default.createElement(
-              _reactRouter.Link,
-              { to: '/login' },
-              'Login'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouter.Link,
+                { to: '/login' },
+                'Login'
+              )
+            ),
             _react2.default.createElement(
-              _reactRouter.Link,
-              { to: '/error' },
-              'Error page2'
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouter.Link,
+                { to: '/error' },
+                'Error page2'
+              )
             )
           )
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          _bootstrap2.default,
-          { type: 'warning', onClick: this.clickButton },
-          'Ola mundo'
         ),
-        _react2.default.createElement(
-          'div',
-          { className: 'well' },
-          this.messages()
-        ),
-        _react2.default.createElement(_loader2.default, null)
-      ),
-      this.props.children
-    );
-  }
-});
+        this.props.children
+      );
+    }
+  }]);
+
+  return App;
+}(_react.Component);
 
 (0, _reactDom.render)(_react2.default.createElement(
   _reactRouter.Router,
@@ -24966,11 +24941,12 @@ var App = _react2.default.createClass({
   _react2.default.createElement(
     _reactRouter.Route,
     { path: '/', component: App },
+    _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _dashboard2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: '*', component: _no_match2.default })
   )
 ), document.getElementById('content'));
 
-},{"./components/bootstrap":231,"./components/loader":232,"./no_match":233,"./pages/users/login":234,"classnames":1,"react":227,"react-dom":51,"react-router":81}],231:[function(require,module,exports){
+},{"./no_match":233,"./pages/dashboard":234,"./pages/users/login":235,"classnames":1,"react":227,"react-dom":51,"react-router":81}],231:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25145,6 +25121,107 @@ var NoMatch = function (_Component) {
 exports.default = NoMatch;
 
 },{"react":227,"react-dom":51}],234:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _bootstrap = require('../components/bootstrap');
+
+var _bootstrap2 = _interopRequireDefault(_bootstrap);
+
+var _loader = require('../components/loader');
+
+var _loader2 = _interopRequireDefault(_loader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Dashboard = function (_Component) {
+  _inherits(Dashboard, _Component);
+
+  function Dashboard(props) {
+    _classCallCheck(this, Dashboard);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
+
+    _this.state = { messages: [] };
+    return _this;
+  }
+
+  _createClass(Dashboard, [{
+    key: 'clickButton',
+    value: function clickButton(e) {
+      var messages = this.state.messages;
+      messages.push('Mais um click ' + e.target.className + ' - ' + messages.length);
+      this.setState({ messages: messages });
+    }
+  }, {
+    key: 'removeMe',
+    value: function removeMe(index, e) {
+      var messages = this.state.messages;
+      messages.splice(index, 1);
+      this.setState({ messages: messages });
+    }
+  }, {
+    key: 'messages',
+    value: function messages() {
+      var _this2 = this;
+
+      var i = -1;
+      return this.state.messages.map(function (item) {
+        return _react2.default.createElement(
+          'p',
+          { key: ++i, onClick: _this2.removeMe.bind(_this2, i) },
+          item
+        );
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          _bootstrap2.default,
+          { type: 'warning', onClick: this.clickButton.bind(this) },
+          'Ola mundo'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'well' },
+          this.messages()
+        ),
+        _react2.default.createElement(_loader2.default, null)
+      );
+    }
+  }]);
+
+  return Dashboard;
+}(_react.Component);
+
+exports.default = Dashboard;
+
+},{"../components/bootstrap":231,"../components/loader":232,"classnames":1,"react":227,"react-dom":51}],235:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
