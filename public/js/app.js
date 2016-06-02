@@ -26559,21 +26559,25 @@ module.exports = warning;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.removeMessage = exports.addMessage = undefined;
+
+var _constants = require('../constants');
+
 var addMessage = exports.addMessage = function addMessage(text) {
   return {
-    type: 'ADD_MESSAGE',
+    type: _constants.ADD_MESSAGE,
     text: text
   };
 };
 
 var removeMessage = exports.removeMessage = function removeMessage(id) {
   return {
-    type: 'REMOVE_MESSAGE',
+    type: _constants.REMOVE_MESSAGE,
     id: id
   };
 };
 
-},{}],260:[function(require,module,exports){
+},{"../constants":265}],260:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -26604,7 +26608,7 @@ var _no_match = require('./no_match');
 
 var _no_match2 = _interopRequireDefault(_no_match);
 
-var _login = require('./pages/users/login');
+var _login = require('./components/login');
 
 var _login2 = _interopRequireDefault(_login);
 
@@ -26714,7 +26718,7 @@ _reactDom2.default.render(_react2.default.createElement(
   )
 ), document.getElementById('content'));
 
-},{"./components/dashboard":262,"./no_match":264,"./pages/users/login":265,"./reducers":266,"classnames":1,"react":243,"react-dom":51,"react-redux":54,"react-router":97,"react-router-redux":64,"redux":249}],261:[function(require,module,exports){
+},{"./components/dashboard":262,"./components/login":264,"./no_match":266,"./reducers":268,"classnames":1,"react":243,"react-dom":51,"react-redux":54,"react-router":97,"react-router-redux":64,"redux":249}],261:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26801,7 +26805,7 @@ var _loader = require('../components/loader');
 
 var _loader2 = _interopRequireDefault(_loader);
 
-var _index = require('../actions/index');
+var _dashboard = require('../actions/dashboard');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26849,24 +26853,24 @@ function Dashboard(_ref) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    messages: state.mainApp.dashboardApp.messages
+    messages: state.dashboard.messages
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     onAddMessage: function onAddMessage(text) {
-      dispatch((0, _index.addMessage)(text));
+      dispatch((0, _dashboard.addMessage)(text));
     },
     onMessageClick: function onMessageClick(id) {
-      dispatch((0, _index.removeMessage)(id));
+      dispatch((0, _dashboard.removeMessage)(id));
     }
   };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Dashboard);
 
-},{"../actions/index":259,"../components/bootstrap":261,"../components/loader":263,"classnames":1,"react":243,"react-dom":51,"react-redux":54}],263:[function(require,module,exports){
+},{"../actions/dashboard":259,"../components/bootstrap":261,"../components/loader":263,"classnames":1,"react":243,"react-dom":51,"react-redux":54}],263:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26939,6 +26943,140 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = require('react-dom');
 
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Login = function (_Component) {
+  _inherits(Login, _Component);
+
+  function Login(props) {
+    _classCallCheck(this, Login);
+
+    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this, props));
+
+    _this2.state = { sending: false };
+    return _this2;
+  }
+
+  _createClass(Login, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+
+      var _this = this;
+      var username = this.refs.username.value;
+      var password = this.refs.password.value;
+
+      this.setState({ sending: true });
+
+      setTimeout(function () {
+        _this.context.router.push('/dashboard');
+      }, 1500);
+    }
+  }, {
+    key: 'btnClass',
+    value: function btnClass() {
+      return (0, _classnames2.default)({
+        'btn': true,
+        'btn-primary': true,
+        'disabled': this.state.sending
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'container-fluid' },
+        _react2.default.createElement(
+          'div',
+          { className: 'row' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-4 col-sm-offset-4' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              'Login'
+            ),
+            _react2.default.createElement(
+              'form',
+              { action: '#', onSubmit: this.handleSubmit.bind(this), method: 'post' },
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(
+                  'label',
+                  { htmlFor: 'username' },
+                  'Nome de usuário'
+                ),
+                _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'username', ref: 'username' })
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(
+                  'label',
+                  { htmlFor: 'password' },
+                  'Senha'
+                ),
+                _react2.default.createElement('input', { type: 'password', className: 'form-control', id: 'password', ref: 'password' })
+              ),
+              _react2.default.createElement(
+                'button',
+                { className: this.btnClass() },
+                'Entrar'
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Login;
+}(_react.Component);
+
+exports.default = Login;
+
+
+Login.contextTypes = {
+  router: _react2.default.PropTypes.object.isRequired
+};
+
+},{"classnames":1,"react":243,"react-dom":51}],265:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var ADD_MESSAGE = exports.ADD_MESSAGE = 'ADD_MESSAGE';
+var REMOVE_MESSAGE = exports.REMOVE_MESSAGE = 'REMOVE_MESSAGE';
+
+},{}],266:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26980,159 +27118,40 @@ var NoMatch = function (_Component) {
 
 exports.default = NoMatch;
 
-},{"react":243,"react-dom":51}],265:[function(require,module,exports){
+},{"react":243,"react-dom":51}],267:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
-
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var UsersLogin = function (_Component) {
-  _inherits(UsersLogin, _Component);
-
-  function UsersLogin(props) {
-    _classCallCheck(this, UsersLogin);
-
-    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(UsersLogin).call(this, props));
-
-    _this2.state = { sending: false };
-    return _this2;
-  }
-
-  _createClass(UsersLogin, [{
-    key: 'handleSubmit',
-    value: function handleSubmit(e) {
-      e.preventDefault();
-
-      var _this = this;
-      var username = this.refs.username.value;
-      var password = this.refs.password.value;
-
-      this.setState({ sending: true });
-
-      setTimeout(function () {
-        _this.context.router.push('/dashboard');
-      }, 1500);
-    }
-  }, {
-    key: 'btnClass',
-    value: function btnClass() {
-      return (0, _classnames2.default)({
-        'btn': true,
-        'btn-primary': true,
-        'disabled': this.state.sending
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'row' },
-        _react2.default.createElement(
-          'div',
-          { className: 'col-sm-4 col-sm-offset-4' },
-          _react2.default.createElement(
-            'h2',
-            null,
-            'Login'
-          ),
-          _react2.default.createElement(
-            'form',
-            { action: '#', onSubmit: this.handleSubmit.bind(this), method: 'post' },
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'username' },
-                'Nome de usuário'
-              ),
-              _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'username', ref: 'username' })
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'password' },
-                'Senha'
-              ),
-              _react2.default.createElement('input', { type: 'password', className: 'form-control', id: 'password', ref: 'password' })
-            ),
-            _react2.default.createElement(
-              'button',
-              { className: this.btnClass() },
-              'Entrar'
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return UsersLogin;
-}(_react.Component);
-
-exports.default = UsersLogin;
-
-
-UsersLogin.contextTypes = {
-  router: _react2.default.PropTypes.object.isRequired
-};
-
-},{"classnames":1,"react":243,"react-dom":51}],266:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.mainApp = undefined;
-
-var _redux = require('redux');
+var _constants = require('../constants');
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var initialState = { messages: [{ id: 0, text: 'Default message' }] };
+console.log(_constants.ADD_MESSAGE);
 
-var dashboardApp = function dashboardApp() {
+// mover funcao para um diretorio de funcoes diversas
+function tokenize() {
+  return Math.random();
+}
+
+var initialState = { messages: [{ id: tokenize(), text: 'Default message' }] };
+
+exports.default = function () {
   var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
   var action = arguments[1];
 
   switch (action.type) {
-    case 'ADD_MESSAGE':
-      var id = state.messages.length;
+    case _constants.ADD_MESSAGE:
       return Object.assign({}, state, {
         messages: [].concat(_toConsumableArray(state.messages), [{
-          id: id,
+          id: tokenize(),
           text: action.text
         }])
       });
 
-    case 'REMOVE_MESSAGE':
-      // state.messages.splice(action.index, 1)
-      // return state.messages
-      console.log(state, action);
+    case _constants.REMOVE_MESSAGE:
       return {
         messages: state.messages.filter(function (message) {
           return message.id != action.id;
@@ -27144,10 +27163,22 @@ var dashboardApp = function dashboardApp() {
   }
 };
 
-var mainApp = exports.mainApp = (0, _redux.combineReducers)({
-  dashboardApp: dashboardApp
-});
+},{"../constants":265}],268:[function(require,module,exports){
+'use strict';
 
-},{"redux":249}]},{},[260]);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.dashboard = undefined;
+
+var _dashboard2 = require('./dashboard');
+
+var _dashboard3 = _interopRequireDefault(_dashboard2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.dashboard = _dashboard3.default;
+
+},{"./dashboard":267}]},{},[260]);
 
 //# sourceMappingURL=map/app.js.map

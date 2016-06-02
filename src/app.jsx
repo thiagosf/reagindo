@@ -7,7 +7,7 @@ import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import NoMatch from './no_match'
-import UsersLogin from './pages/users/login'
+import Login from './components/login'
 import Dashboard from './components/dashboard'
 import * as reducers from './reducers'
 
@@ -43,7 +43,7 @@ class App extends Component {
 ReactDOM.render((
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/login" component={UsersLogin} />
+      <Route path="/login" component={Login} />
       <Route path="/" component={App}>
         <IndexRoute component={Dashboard} />
         <Route path="/dashboard" component={Dashboard} />

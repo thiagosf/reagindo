@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import Button from '../components/bootstrap'
 import Loader from '../components/loader'
-import { addMessage, removeMessage } from '../actions/index'
+import { addMessage, removeMessage } from '../actions/dashboard'
 
 function formatMessages(message, onMessageClick) {
   return (
@@ -27,7 +27,7 @@ function Dashboard({ messages, onAddMessage, onMessageClick }) {
 
 const mapStateToProps = (state) => {
   return {
-    messages: state.mainApp.dashboardApp.messages
+    messages: state.dashboard.messages
   }
 }
 
