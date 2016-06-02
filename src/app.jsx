@@ -1,13 +1,27 @@
 import React, { Component } from 'react'
-import { render } from 'react-dom'
-import { Router, Route, Link, browserHistory } from 'react-router'
+import ReactDOM from 'react-dom'
 import classNames from 'classnames'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import NoMatch from './no_match'
 import UsersLogin from './pages/users/login'
-import Dashboard from './pages/dashboard'
+import Dashboard from './components/dashboard'
+import * as reducers from './reducers'
 
-// const App = React.createClass({
+// Add the reducer to your store on the `routing` key
+const store = createStore(
+  combineReducers({
+    ...reducers,
+    routing: routerReducer
+  })
+)
+
+// Create an enhanced history that syncs navigation events with the store
+const history = syncHistoryWithStore(browserHistory, store)
+
 class App extends Component {
   render() {
     return (
@@ -26,12 +40,15 @@ class App extends Component {
   }
 }
 
-render((
-  <Router history={browserHistory}>
-    <Route path="/login" component={UsersLogin} />
-    <Route path="/" component={App}>
-      <Route path="/dashboard" component={Dashboard} />
-      <Route path="*" component={NoMatch} />
-    </Route>
-  </Router>
+ReactDOM.render((
+  <Provider store={store}>
+    <Router history={browserHistory}>
+      <Route path="/login" component={UsersLogin} />
+      <Route path="/" component={App}>
+        <IndexRoute component={Dashboard} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="*" component={NoMatch} />
+      </Route>
+    </Router>
+  </Provider>
 ), document.getElementById('content'))
