@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+const { PropTypes } = React;
 
 export default class Loader extends Component {
   getClassName() {
@@ -17,3 +18,6 @@ export default class Loader extends Component {
 }
 
 Loader.defaultProps = { color: 'green' }
+Loader.propTypes = {
+  color: PropTypes.string
+};

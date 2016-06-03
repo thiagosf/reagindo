@@ -27,6 +27,7 @@
     "chai-equal-jsx": "^1.0.9",
     "classnames": "^2.2.5",
     "connect": "^3.4.1",
+    "enzyme": "^2.3.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-browserify": "^0.5.1",
@@ -39,6 +40,7 @@
     "gulp-webserver": "^0.9.1",
     "mocha": "^2.5.3",
     "serve-static": "^1.10.2",
+    "sinon": "^1.17.4",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },

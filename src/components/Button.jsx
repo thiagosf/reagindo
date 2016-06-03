@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+const { PropTypes } = React;
 
 export default class Button extends Component {
   getClassName() {
@@ -17,3 +18,7 @@ export default class Button extends Component {
 }
 
 Button.defaultProps = { type: 'primary', style: null }
+Button.propTypes = {
+  type: PropTypes.string,
+  style: PropTypes.string,
+};
