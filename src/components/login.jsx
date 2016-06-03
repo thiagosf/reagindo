@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { div, h2 } from 'react-dom'
 import classNames from 'classnames'
 
 export default class Login extends Component {

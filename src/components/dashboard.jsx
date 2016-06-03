@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { div, h2 } from 'react-dom'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 
-import Button from '../components/bootstrap'
-import Loader from '../components/loader'
+import { Button, Loader } from '../components'
 import { addMessage, removeMessage } from '../actions/dashboard'
 
 function formatMessages(message, onMessageClick) {

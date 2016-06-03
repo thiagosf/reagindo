@@ -4,7 +4,7 @@
   "description": "Ambiente de desenvolvimento de aplicativos React.",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel-core/register --require ./test/test-helper.js test/**/*.spec.jsx"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,8 @@
     "babel-preset-stage-0": "^6.5.0",
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
+    "chai": "^3.5.0",
+    "chai-equal-jsx": "^1.0.9",
     "classnames": "^2.2.5",
     "connect": "^3.4.1",
     "gulp": "^3.9.1",
@@ -35,6 +37,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
     "gulp-webserver": "^0.9.1",
+    "mocha": "^2.5.3",
     "serve-static": "^1.10.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { button } from 'react-dom'
 
 export default class Button extends Component {
   getClassName() {

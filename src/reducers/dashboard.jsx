@@ -1,9 +1,5 @@
 import { ADD_MESSAGE, REMOVE_MESSAGE } from '../constants'
-
-// mover funcao para um diretorio de funcoes diversas
-function tokenize() {
-  return Math.random();
-}
+import { tokenize } from '../helpers'
 
 let initialState = { messages: [{ id: tokenize(), text: 'Default message' }] }
 

@@ -26577,7 +26577,7 @@ var removeMessage = exports.removeMessage = function removeMessage(id) {
   };
 };
 
-},{"../constants":265}],260:[function(require,module,exports){
+},{"../constants":268}],260:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -26604,17 +26604,7 @@ var _reactRouter = require('react-router');
 
 var _reactRouterRedux = require('react-router-redux');
 
-var _no_match = require('./no_match');
-
-var _no_match2 = _interopRequireDefault(_no_match);
-
-var _login = require('./components/login');
-
-var _login2 = _interopRequireDefault(_login);
-
-var _dashboard = require('./components/dashboard');
-
-var _dashboard2 = _interopRequireDefault(_dashboard);
+var _components = require('./components');
 
 var _reducers = require('./reducers');
 
@@ -26658,42 +26648,12 @@ var App = function (_Component) {
           null,
           'Reagindo'
         ),
+        _react2.default.createElement(_components.Nav, null),
         _react2.default.createElement(
-          'nav',
-          null,
-          _react2.default.createElement(
-            'ul',
-            null,
-            _react2.default.createElement(
-              'li',
-              null,
-              _react2.default.createElement(
-                _reactRouter.Link,
-                { to: '/dashboard' },
-                'Dashboard'
-              )
-            ),
-            _react2.default.createElement(
-              'li',
-              null,
-              _react2.default.createElement(
-                _reactRouter.Link,
-                { to: '/login' },
-                'Login'
-              )
-            ),
-            _react2.default.createElement(
-              'li',
-              null,
-              _react2.default.createElement(
-                _reactRouter.Link,
-                { to: '/error' },
-                'Error page2'
-              )
-            )
-          )
-        ),
-        this.props.children
+          'div',
+          { className: 'content' },
+          this.props.children
+        )
       );
     }
   }]);
@@ -26707,18 +26667,18 @@ _reactDom2.default.render(_react2.default.createElement(
   _react2.default.createElement(
     _reactRouter.Router,
     { history: _reactRouter.browserHistory },
-    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _login2.default }),
+    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _components.Login }),
     _react2.default.createElement(
       _reactRouter.Route,
       { path: '/', component: App },
-      _react2.default.createElement(_reactRouter.IndexRoute, { component: _dashboard2.default }),
-      _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _dashboard2.default }),
-      _react2.default.createElement(_reactRouter.Route, { path: '*', component: _no_match2.default })
+      _react2.default.createElement(_reactRouter.IndexRoute, { component: _components.Dashboard }),
+      _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _components.Dashboard }),
+      _react2.default.createElement(_reactRouter.Route, { path: '*', component: _components.NoMatch })
     )
   )
 ), document.getElementById('content'));
 
-},{"./components/dashboard":262,"./components/login":264,"./no_match":266,"./reducers":268,"classnames":1,"react":243,"react-dom":51,"react-redux":54,"react-router":97,"react-router-redux":64,"redux":249}],261:[function(require,module,exports){
+},{"./components":267,"./reducers":272,"classnames":1,"react":243,"react-dom":51,"react-redux":54,"react-router":97,"react-router-redux":64,"redux":249}],261:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26730,8 +26690,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26778,7 +26736,7 @@ exports.default = Button;
 
 Button.defaultProps = { type: 'primary', style: null };
 
-},{"react":243,"react-dom":51}],262:[function(require,module,exports){
+},{"react":243}],262:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26789,21 +26747,13 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = require('react-dom');
-
 var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
 var _reactRedux = require('react-redux');
 
-var _bootstrap = require('../components/bootstrap');
-
-var _bootstrap2 = _interopRequireDefault(_bootstrap);
-
-var _loader = require('../components/loader');
-
-var _loader2 = _interopRequireDefault(_loader);
+var _components = require('../components');
 
 var _dashboard = require('../actions/dashboard');
 
@@ -26830,7 +26780,7 @@ function Dashboard(_ref) {
     'div',
     null,
     _react2.default.createElement(
-      _bootstrap2.default,
+      _components.Button,
       { type: 'warning', onClick: function onClick() {
           return onAddMessage('Ola mundo');
         } },
@@ -26847,7 +26797,7 @@ function Dashboard(_ref) {
         })
       )
     ),
-    _react2.default.createElement(_loader2.default, null)
+    _react2.default.createElement(_components.Loader, null)
   );
 }
 
@@ -26870,7 +26820,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Dashboard);
 
-},{"../actions/dashboard":259,"../components/bootstrap":261,"../components/loader":263,"classnames":1,"react":243,"react-dom":51,"react-redux":54}],263:[function(require,module,exports){
+},{"../actions/dashboard":259,"../components":267,"classnames":1,"react":243,"react-redux":54}],263:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26882,8 +26832,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26928,7 +26876,7 @@ exports.default = Loader;
 
 Loader.defaultProps = { color: 'green' };
 
-},{"react":243,"react-dom":51}],264:[function(require,module,exports){
+},{"react":243}],264:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26940,8 +26888,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
 
 var _classnames = require('classnames');
 
@@ -27053,16 +26999,7 @@ Login.contextTypes = {
   router: _react2.default.PropTypes.object.isRequired
 };
 
-},{"classnames":1,"react":243,"react-dom":51}],265:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var ADD_MESSAGE = exports.ADD_MESSAGE = 'ADD_MESSAGE';
-var REMOVE_MESSAGE = exports.REMOVE_MESSAGE = 'REMOVE_MESSAGE';
-
-},{}],266:[function(require,module,exports){
+},{"classnames":1,"react":243}],265:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27075,7 +27012,83 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = require('react-dom');
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Nav = function (_Component) {
+  _inherits(Nav, _Component);
+
+  function Nav() {
+    _classCallCheck(this, Nav);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Nav).apply(this, arguments));
+  }
+
+  _createClass(Nav, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'nav',
+        null,
+        _react2.default.createElement(
+          'ul',
+          null,
+          _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { to: '/dashboard' },
+              'Dashboard'
+            )
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { to: '/login' },
+              'Login'
+            )
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { to: '/error' },
+              'Error page2'
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Nav;
+}(_react.Component);
+
+exports.default = Nav;
+
+},{"react":243,"react-router":97}],266:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27095,18 +27108,18 @@ var NoMatch = function (_Component) {
   }
 
   _createClass(NoMatch, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        { className: 'row' },
+        "div",
+        { className: "row" },
         _react2.default.createElement(
-          'div',
-          { className: 'col-sm-6' },
+          "div",
+          { className: "col-sm-6" },
           _react2.default.createElement(
-            'h2',
+            "h2",
             null,
-            'Ooops.. página não encontrada'
+            "Ooops.. página não encontrada"
           )
         )
       );
@@ -27118,7 +27131,87 @@ var NoMatch = function (_Component) {
 
 exports.default = NoMatch;
 
-},{"react":243,"react-dom":51}],267:[function(require,module,exports){
+},{"react":243}],267:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.NoMatch = exports.Dashboard = exports.Login = exports.Loader = exports.Button = exports.Nav = undefined;
+
+var _Nav2 = require('./Nav');
+
+var _Nav3 = _interopRequireDefault(_Nav2);
+
+var _Button2 = require('./Button');
+
+var _Button3 = _interopRequireDefault(_Button2);
+
+var _Loader2 = require('./Loader');
+
+var _Loader3 = _interopRequireDefault(_Loader2);
+
+var _Login2 = require('./Login');
+
+var _Login3 = _interopRequireDefault(_Login2);
+
+var _Dashboard2 = require('./Dashboard');
+
+var _Dashboard3 = _interopRequireDefault(_Dashboard2);
+
+var _NoMatch2 = require('./NoMatch');
+
+var _NoMatch3 = _interopRequireDefault(_NoMatch2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.Nav = _Nav3.default;
+exports.Button = _Button3.default;
+exports.Loader = _Loader3.default;
+exports.Login = _Login3.default;
+exports.Dashboard = _Dashboard3.default;
+exports.NoMatch = _NoMatch3.default;
+
+},{"./Button":261,"./Dashboard":262,"./Loader":263,"./Login":264,"./Nav":265,"./NoMatch":266}],268:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var ADD_MESSAGE = exports.ADD_MESSAGE = 'ADD_MESSAGE';
+var REMOVE_MESSAGE = exports.REMOVE_MESSAGE = 'REMOVE_MESSAGE';
+
+},{}],269:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.tokenize = undefined;
+
+var _tokenize2 = require('./tokenize');
+
+var _tokenize3 = _interopRequireDefault(_tokenize2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.tokenize = _tokenize3.default;
+
+},{"./tokenize":270}],270:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+// Gera um token aleatório
+// @todo Gerar token com letras e números com relação
+//       a data/hora para ser único
+
+exports.default = function () {
+  return Math.random();
+};
+
+},{}],271:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27127,16 +27220,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _constants = require('../constants');
 
+var _helpers = require('../helpers');
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-console.log(_constants.ADD_MESSAGE);
-
-// mover funcao para um diretorio de funcoes diversas
-function tokenize() {
-  return Math.random();
-}
-
-var initialState = { messages: [{ id: tokenize(), text: 'Default message' }] };
+var initialState = { messages: [{ id: (0, _helpers.tokenize)(), text: 'Default message' }] };
 
 exports.default = function () {
   var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
@@ -27146,7 +27234,7 @@ exports.default = function () {
     case _constants.ADD_MESSAGE:
       return Object.assign({}, state, {
         messages: [].concat(_toConsumableArray(state.messages), [{
-          id: tokenize(),
+          id: (0, _helpers.tokenize)(),
           text: action.text
         }])
       });
@@ -27163,7 +27251,7 @@ exports.default = function () {
   }
 };
 
-},{"../constants":265}],268:[function(require,module,exports){
+},{"../constants":268,"../helpers":269}],272:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27179,6 +27267,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.dashboard = _dashboard3.default;
 
-},{"./dashboard":267}]},{},[260]);
+},{"./dashboard":271}]},{},[260]);
 
 //# sourceMappingURL=map/app.js.map

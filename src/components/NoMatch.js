@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { div, h2 } from 'react-dom'
 
 export default class NoMatch extends Component {
   render() {

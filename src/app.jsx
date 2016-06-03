@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
-import NoMatch from './no_match'
-import Login from './components/login'
-import Dashboard from './components/dashboard'
+import { Login, Dashboard, NoMatch, Nav } from './components'
 import * as reducers from './reducers'
 
 // Add the reducer to your store on the `routing` key
@@ -27,14 +25,10 @@ class App extends Component {
     return (
       <div className="container-fluid">
         <h1>Reagindo</h1>
-        <nav>
-          <ul>
-            <li><Link to="/dashboard">Dashboard</Link></li>
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/error">Error page2</Link></li>
-          </ul>
-        </nav>
-        {this.props.children}
+        <Nav />
+        <div className="content">
+          {this.props.children}
+        </div>
       </div>
     )
   }

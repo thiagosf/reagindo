@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { div, span } from 'react-dom'
 
 export default class Loader extends Component {
   getClassName() {
