@@ -4,7 +4,8 @@
   "description": "Ambiente de desenvolvimento de aplicativos React.",
   "main": "src/index.js",
   "scripts": {
-    "test": "NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel-core/register --require ./test/test-helper.js test/**/*.spec.jsx"
+    "test": "NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel-core/register --require ./test/test-helper.js test/**/*.spec.jsx",
+    "coverage": "./node_modules/.bin/babel-istanbul cover ./node_modules/.bin/_mocha -- --compilers js:babel-core/register --require ./test/test-helper.js test/**/*.spec.jsx"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,8 @@
   "homepage": "https://github.com/thiagosf/reagindo#readme",
   "devDependencies": {
     "babel": "^6.5.2",
+    "babel-cli": "^6.9.0",
+    "babel-istanbul": "^0.8.0",
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
@@ -38,6 +41,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
     "gulp-webserver": "^0.9.1",
+    "istanbul": "^0.4.3",
     "mocha": "^2.5.3",
     "serve-static": "^1.10.2",
     "sinon": "^1.17.4",

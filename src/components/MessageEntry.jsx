@@ -6,8 +6,11 @@ import { addMessage } from '../actions/dashboard'
 
 class MessageEntry extends Component {
   sendMessage(e) {
-    this.props.onAddMessage(this.refs.text.value)
-    this.refs.text.value = ''
+    e.preventDefault()
+    if (this.refs.text.value != '') {
+      this.props.onAddMessage(this.refs.text.value)
+      this.refs.text.value = ''
+    }
     this.refs.text.focus()
   }
   handleSubmit(e) {
@@ -20,7 +23,7 @@ class MessageEntry extends Component {
           <input type="text" className="form-control" ref="text" />
         </div>
         <span> </span>
-        <Button buttonType="submit" type="success">Adicionar</Button>
+        <Button type="submit" primary>Adicionar</Button>
       </form>
     )
   }

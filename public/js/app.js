@@ -26675,7 +26675,7 @@ _reactDom2.default.render(_react2.default.createElement(
   )
 ), document.getElementById('content'));
 
-},{"./components":268,"./containers":271,"./reducers":275,"classnames":1,"react":243,"react-dom":51,"react-redux":54,"react-router":97,"react-router-redux":64,"redux":249}],261:[function(require,module,exports){
+},{"./components":268,"./containers":273,"./reducers":277,"classnames":1,"react":243,"react-dom":51,"react-redux":54,"react-router":97,"react-router-redux":64,"redux":249}],261:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26689,6 +26689,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26712,7 +26716,17 @@ var Button = function (_Component) {
   _createClass(Button, [{
     key: 'getClassName',
     value: function getClassName() {
-      return "btn btn-" + this.props.type;
+      return (0, _classnames2.default)({
+        'btn': true,
+        'btn-primary': this.props.primary,
+        'btn-warning': this.props.warning,
+        'btn-danger': this.props.danger,
+        'btn-info': this.props.info,
+        'btn-default': this.props.default,
+        'btn-xs': this.props.xsmall,
+        'btn-sm': this.props.small,
+        'btn-large': this.props.large
+      });
     }
   }, {
     key: 'render',
@@ -26733,12 +26747,25 @@ var Button = function (_Component) {
 exports.default = Button;
 
 
-Button.defaultProps = { type: 'primary' };
-Button.propTypes = {
-  type: PropTypes.string
+Button.defaultProps = {
+  type: 'button',
+  styled: 'primary',
+  size: ''
 };
 
-},{"react":243}],262:[function(require,module,exports){
+Button.propTypes = {
+  type: PropTypes.string,
+  primary: PropTypes.bool,
+  warning: PropTypes.bool,
+  danger: PropTypes.bool,
+  info: PropTypes.bool,
+  default: PropTypes.bool,
+  xsmall: PropTypes.bool,
+  small: PropTypes.bool,
+  large: PropTypes.bool
+};
+
+},{"classnames":1,"react":243}],262:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26961,8 +26988,11 @@ var MessageEntry = function (_Component) {
   _createClass(MessageEntry, [{
     key: 'sendMessage',
     value: function sendMessage(e) {
-      this.props.onAddMessage(this.refs.text.value);
-      this.refs.text.value = '';
+      e.preventDefault();
+      if (this.refs.text.value != '') {
+        this.props.onAddMessage(this.refs.text.value);
+        this.refs.text.value = '';
+      }
       this.refs.text.focus();
     }
   }, {
@@ -26988,7 +27018,7 @@ var MessageEntry = function (_Component) {
         ),
         _react2.default.createElement(
           _components.Button,
-          { buttonType: 'submit', type: 'success' },
+          { type: 'submit', primary: true },
           'Adicionar'
         )
       );
@@ -27019,25 +27049,35 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
 var _reactRedux = require('react-redux');
 
 var _dashboard = require('../actions/dashboard');
+
+var _components = require('../components');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function formatMessages(message, onMessageClick) {
   return _react2.default.createElement(
-    'li',
-    { key: message.id, onClick: function onClick() {
-        return onMessageClick(message.id);
-      } },
-    message.id,
-    ' ',
-    message.text
+    'div',
+    { key: message.id },
+    _react2.default.createElement(
+      _components.Button,
+      { danger: true, xsmall: true, className: 'text-danger', onClick: function onClick() {
+          return onMessageClick(message.id);
+        } },
+      _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove' })
+    ),
+    _react2.default.createElement(
+      'span',
+      null,
+      ' '
+    ),
+    _react2.default.createElement(
+      'span',
+      null,
+      message.text
+    )
   );
 }
 
@@ -27048,13 +27088,9 @@ function MessageList(_ref) {
   return _react2.default.createElement(
     'div',
     null,
-    _react2.default.createElement(
-      'ul',
-      null,
-      messages.map(function (message) {
-        return formatMessages(message, onMessageClick);
-      })
-    )
+    messages.map(function (message) {
+      return formatMessages(message, onMessageClick);
+    })
   );
 }
 
@@ -27074,7 +27110,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MessageList);
 
-},{"../actions/dashboard":259,"classnames":1,"react":243,"react-redux":54}],266:[function(require,module,exports){
+},{"../actions/dashboard":259,"../components":268,"react":243,"react-redux":54}],266:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27320,87 +27356,116 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.default = function () {
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'header',
+      null,
+      _react2.default.createElement(
+        'h1',
+        null,
+        'Dashboard'
+      ),
+      _react2.default.createElement(_.DashboardMessagesContainer, null),
+      _react2.default.createElement(_components.Loader, null)
+    )
+  );
+};
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _dashboard = require('../actions/dashboard');
+var _ = require('./');
 
 var _components = require('../components');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+},{"../components":268,"./":273,"react":243}],271:[function(require,module,exports){
+"use strict";
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+exports.default = function (_ref) {
+  var children = _ref.children;
 
-var DashboardContainer = function (_Component) {
-  _inherits(DashboardContainer, _Component);
+  return _react2.default.createElement(
+    "div",
+    { className: "well well-sm" },
+    children
+  );
+};
 
-  function DashboardContainer() {
-    _classCallCheck(this, DashboardContainer);
+var _react = require("react");
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardContainer).apply(this, arguments));
-  }
+var _react2 = _interopRequireDefault(_react);
 
-  _createClass(DashboardContainer, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'header',
-          null,
-          _react2.default.createElement(
-            'h1',
-            null,
-            'Dashboard'
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'well' },
-            _react2.default.createElement(
-              'h2',
-              null,
-              'Mensagens'
-            ),
-            _react2.default.createElement(_components.MessageEntry, null),
-            _react2.default.createElement('hr', null),
-            _react2.default.createElement(_components.MessageList, null)
-          ),
-          _react2.default.createElement(_components.Loader, null)
-        )
-      );
-    }
-  }]);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-  return DashboardContainer;
-}(_react.Component);
-
-exports.default = DashboardContainer;
-
-},{"../actions/dashboard":259,"../components":268,"react":243}],271:[function(require,module,exports){
+},{"react":243}],272:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.DashboardContainer = undefined;
+
+exports.default = function () {
+  return _react2.default.createElement(
+    _.DashboardItemContainer,
+    null,
+    _react2.default.createElement(
+      'h2',
+      null,
+      'Mensagens'
+    ),
+    _react2.default.createElement(_components.MessageEntry, null),
+    _react2.default.createElement('hr', null),
+    _react2.default.createElement(_components.MessageList, null)
+  );
+};
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _ = require('./');
+
+var _components = require('../components');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+},{"../components":268,"./":273,"react":243}],273:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DashboardMessagesContainer = exports.DashboardItemContainer = exports.DashboardContainer = undefined;
 
 var _DashboardContainer2 = require('./DashboardContainer');
 
 var _DashboardContainer3 = _interopRequireDefault(_DashboardContainer2);
 
+var _DashboardItemContainer2 = require('./DashboardItemContainer');
+
+var _DashboardItemContainer3 = _interopRequireDefault(_DashboardItemContainer2);
+
+var _DashboardMessagesContainer2 = require('./DashboardMessagesContainer');
+
+var _DashboardMessagesContainer3 = _interopRequireDefault(_DashboardMessagesContainer2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.DashboardContainer = _DashboardContainer3.default;
+exports.DashboardItemContainer = _DashboardItemContainer3.default;
+exports.DashboardMessagesContainer = _DashboardMessagesContainer3.default;
 
-},{"./DashboardContainer":270}],272:[function(require,module,exports){
+},{"./DashboardContainer":270,"./DashboardItemContainer":271,"./DashboardMessagesContainer":272}],274:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27416,7 +27481,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.tokenize = _tokenize3.default;
 
-},{"./tokenize":273}],273:[function(require,module,exports){
+},{"./tokenize":275}],275:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27430,7 +27495,7 @@ exports.default = function () {
   return Math.random();
 };
 
-},{}],274:[function(require,module,exports){
+},{}],276:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27470,7 +27535,7 @@ exports.default = function () {
   }
 };
 
-},{"../constants":269,"../helpers":272}],275:[function(require,module,exports){
+},{"../constants":269,"../helpers":274}],277:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27486,6 +27551,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.dashboard = _dashboard3.default;
 
-},{"./dashboard":274}]},{},[260]);
+},{"./dashboard":276}]},{},[260]);
 
 //# sourceMappingURL=map/app.js.map

@@ -1,19 +1,25 @@
 import React, { Component } from 'react'
-import classNames from 'classnames'
 import { connect } from 'react-redux'
 
 import { removeMessage } from '../actions/dashboard'
+import { Button } from '../components'
 
 function formatMessages(message, onMessageClick) {
   return (
-    <li key={message.id} onClick={() => onMessageClick(message.id)}>{message.id} {message.text}</li>
+    <div key={message.id}>
+      <Button danger xsmall className="text-danger" onClick={() => onMessageClick(message.id)}>
+        <span className="glyphicon glyphicon-remove"></span>
+      </Button>
+      <span> </span>
+      <span>{message.text}</span>
+    </div>
   )
 }
 
 function MessageList({ messages, onMessageClick }) {
   return (
     <div>
-      <ul>{messages.map(message => formatMessages(message, onMessageClick))}</ul>
+      {messages.map(message => formatMessages(message, onMessageClick))}
     </div>
   )
 }

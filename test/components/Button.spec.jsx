@@ -16,7 +16,7 @@ describe('<Button />', () => {
   });
 
   it('changes warning type button', () => {
-    const wrapper = shallow(<Button type="warning" />);
+    const wrapper = shallow(<Button warning />);
     expect(wrapper.find('.btn-warning')).to.have.length(1);
   });
 });
