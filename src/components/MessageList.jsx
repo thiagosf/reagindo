@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 
-import { Button, Loader } from '../components'
-import { addMessage, removeMessage } from '../actions/dashboard'
+import { removeMessage } from '../actions/dashboard'
 
 function formatMessages(message, onMessageClick) {
   return (
@@ -11,14 +10,10 @@ function formatMessages(message, onMessageClick) {
   )
 }
 
-function Dashboard({ messages, onAddMessage, onMessageClick }) {
+function MessageList({ messages, onMessageClick }) {
   return (
     <div>
-      <Button type="warning" onClick={() => onAddMessage('Ola mundo')}>Ola mundo</Button>
-      <div className="well">
-        <ul>{messages.map(message => formatMessages(message, onMessageClick))}</ul>
-      </div>
-      <Loader />
+      <ul>{messages.map(message => formatMessages(message, onMessageClick))}</ul>
     </div>
   )
 }
@@ -31,9 +26,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddMessage: (text) => {
-      dispatch(addMessage(text))
-    },
     onMessageClick: (id) => {
       dispatch(removeMessage(id))
     }
@@ -43,4 +35,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Dashboard)
+)(MessageList)

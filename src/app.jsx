@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
-import { Login, Dashboard, NoMatch, Nav } from './components'
+import { Login, NoMatch, Nav } from './components'
 import { DashboardContainer } from './containers'
 import * as reducers from './reducers'
 

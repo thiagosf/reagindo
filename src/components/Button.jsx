@@ -5,20 +5,17 @@ export default class Button extends Component {
   getClassName() {
     return "btn btn-" + this.props.type
   }
-
   render() {
     return (
       <button 
-        className={this.getClassName()} 
-        onClick={this.props.onClick} 
-        style={this.props.style} 
+        {...this.props}
+        className={this.getClassName()}
         >{this.props.children}</button>
     )
   }
 }
 
-Button.defaultProps = { type: 'primary', style: null }
+Button.defaultProps = { type: 'primary' }
 Button.propTypes = {
-  type: PropTypes.string,
-  style: PropTypes.string,
+  type: PropTypes.string
 };
