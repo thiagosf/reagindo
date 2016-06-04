@@ -26606,6 +26606,8 @@ var _reactRouterRedux = require('react-router-redux');
 
 var _components = require('./components');
 
+var _containers = require('./containers');
+
 var _reducers = require('./reducers');
 
 var reducers = _interopRequireWildcard(_reducers);
@@ -26642,16 +26644,11 @@ var App = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'container-fluid' },
-        _react2.default.createElement(
-          'h1',
-          null,
-          'Reagindo'
-        ),
+        null,
         _react2.default.createElement(_components.Nav, null),
         _react2.default.createElement(
           'div',
-          { className: 'content' },
+          { className: 'container' },
           this.props.children
         )
       );
@@ -26671,14 +26668,14 @@ _reactDom2.default.render(_react2.default.createElement(
     _react2.default.createElement(
       _reactRouter.Route,
       { path: '/', component: App },
-      _react2.default.createElement(_reactRouter.IndexRoute, { component: _components.Dashboard }),
-      _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _components.Dashboard }),
+      _react2.default.createElement(_reactRouter.IndexRoute, { component: _containers.DashboardContainer }),
+      _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _containers.DashboardContainer }),
       _react2.default.createElement(_reactRouter.Route, { path: '*', component: _components.NoMatch })
     )
   )
 ), document.getElementById('content'));
 
-},{"./components":267,"./reducers":272,"classnames":1,"react":243,"react-dom":51,"react-redux":54,"react-router":97,"react-router-redux":64,"redux":249}],261:[function(require,module,exports){
+},{"./components":267,"./containers":270,"./reducers":274,"classnames":1,"react":243,"react-dom":51,"react-redux":54,"react-router":97,"react-router-redux":64,"redux":249}],261:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26698,6 +26695,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PropTypes = _react2.default.PropTypes;
 
 var Button = function (_Component) {
   _inherits(Button, _Component);
@@ -26735,6 +26734,10 @@ exports.default = Button;
 
 
 Button.defaultProps = { type: 'primary', style: null };
+Button.propTypes = {
+  type: PropTypes.string,
+  style: PropTypes.string
+};
 
 },{"react":243}],262:[function(require,module,exports){
 'use strict';
@@ -26841,6 +26844,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var PropTypes = _react2.default.PropTypes;
+
 var Loader = function (_Component) {
   _inherits(Loader, _Component);
 
@@ -26875,6 +26880,9 @@ exports.default = Loader;
 
 
 Loader.defaultProps = { color: 'green' };
+Loader.propTypes = {
+  color: PropTypes.string
+};
 
 },{"react":243}],264:[function(require,module,exports){
 'use strict';
@@ -27014,6 +27022,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27025,46 +27037,94 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Nav = function (_Component) {
   _inherits(Nav, _Component);
 
-  function Nav() {
+  function Nav(props) {
     _classCallCheck(this, Nav);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Nav).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Nav).call(this, props));
+
+    _this.state = {
+      opened_nav: false
+    };
+    return _this;
   }
 
   _createClass(Nav, [{
+    key: 'openNav',
+    value: function openNav() {
+      this.setState({ opened_nav: !this.state.opened_nav });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
+      var navbarClassname = (0, _classnames2.default)({
+        'navbar-collapse': true,
+        'collapse': true,
+        'in': this.state.opened_nav
+      });
       return _react2.default.createElement(
         'nav',
-        null,
+        { className: 'navbar navbar-inverse navbar-fixed-top' },
         _react2.default.createElement(
-          'ul',
-          null,
+          'div',
+          { className: 'container' },
           _react2.default.createElement(
-            'li',
-            null,
+            'div',
+            { className: 'navbar-header' },
+            _react2.default.createElement(
+              'button',
+              { type: 'button', className: 'navbar-toggle collapsed', onClick: function onClick() {
+                  return _this2.openNav();
+                } },
+              _react2.default.createElement(
+                'span',
+                { className: 'sr-only' },
+                'Toggle navigation'
+              ),
+              _react2.default.createElement('span', { className: 'icon-bar' }),
+              _react2.default.createElement('span', { className: 'icon-bar' }),
+              _react2.default.createElement('span', { className: 'icon-bar' })
+            ),
             _react2.default.createElement(
               _reactRouter.Link,
-              { to: '/dashboard' },
-              'Dashboard'
+              { className: 'navbar-brand', to: '/' },
+              'Reagindo'
             )
           ),
           _react2.default.createElement(
-            'li',
-            null,
+            'div',
+            { id: 'navbar', className: navbarClassname },
             _react2.default.createElement(
-              _reactRouter.Link,
-              { to: '/login' },
-              'Login'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
-            _react2.default.createElement(
-              _reactRouter.Link,
-              { to: '/error' },
-              'Error page2'
+              'ul',
+              { className: 'nav navbar-nav' },
+              _react2.default.createElement(
+                'li',
+                { className: 'active' },
+                _react2.default.createElement(
+                  _reactRouter.Link,
+                  { to: '/' },
+                  'Home'
+                )
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  _reactRouter.Link,
+                  { to: '/error-page' },
+                  'Error page'
+                )
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  _reactRouter.Link,
+                  { to: '/login' },
+                  'Login'
+                )
+              )
             )
           )
         )
@@ -27077,7 +27137,7 @@ var Nav = function (_Component) {
 
 exports.default = Nav;
 
-},{"react":243,"react-router":97}],266:[function(require,module,exports){
+},{"classnames":1,"react":243,"react-router":97}],266:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27187,6 +27247,76 @@ var REMOVE_MESSAGE = exports.REMOVE_MESSAGE = 'REMOVE_MESSAGE';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DashboardContainer = function (_Component) {
+  _inherits(DashboardContainer, _Component);
+
+  function DashboardContainer() {
+    _classCallCheck(this, DashboardContainer);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardContainer).apply(this, arguments));
+  }
+
+  _createClass(DashboardContainer, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'header',
+          null,
+          _react2.default.createElement(
+            'h1',
+            null,
+            'Dashboard'
+          )
+        )
+      );
+    }
+  }]);
+
+  return DashboardContainer;
+}(_react.Component);
+
+exports.default = DashboardContainer;
+
+},{"react":243}],270:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DashboardContainer = undefined;
+
+var _DashboardContainer2 = require('./DashboardContainer');
+
+var _DashboardContainer3 = _interopRequireDefault(_DashboardContainer2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.DashboardContainer = _DashboardContainer3.default;
+
+},{"./DashboardContainer":269}],271:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.tokenize = undefined;
 
 var _tokenize2 = require('./tokenize');
@@ -27197,7 +27327,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.tokenize = _tokenize3.default;
 
-},{"./tokenize":270}],270:[function(require,module,exports){
+},{"./tokenize":272}],272:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27211,7 +27341,7 @@ exports.default = function () {
   return Math.random();
 };
 
-},{}],271:[function(require,module,exports){
+},{}],273:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27251,7 +27381,7 @@ exports.default = function () {
   }
 };
 
-},{"../constants":268,"../helpers":269}],272:[function(require,module,exports){
+},{"../constants":268,"../helpers":271}],274:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27267,6 +27397,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.dashboard = _dashboard3.default;
 
-},{"./dashboard":271}]},{},[260]);
+},{"./dashboard":273}]},{},[260]);
 
 //# sourceMappingURL=map/app.js.map

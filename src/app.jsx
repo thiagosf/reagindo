@@ -7,6 +7,7 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import { Login, Dashboard, NoMatch, Nav } from './components'
+import { DashboardContainer } from './containers'
 import * as reducers from './reducers'
 
 // Add the reducer to your store on the `routing` key
@@ -23,10 +24,9 @@ const history = syncHistoryWithStore(browserHistory, store)
 class App extends Component {
   render() {
     return (
-      <div className="container-fluid">
-        <h1>Reagindo</h1>
+      <div>
         <Nav />
-        <div className="content">
+        <div className="container">
           {this.props.children}
         </div>
       </div>
@@ -39,8 +39,8 @@ ReactDOM.render((
     <Router history={browserHistory}>
       <Route path="/login" component={Login} />
       <Route path="/" component={App}>
-        <IndexRoute component={Dashboard} />
-        <Route path="/dashboard" component={Dashboard} />
+        <IndexRoute component={DashboardContainer} />
+        <Route path="/dashboard" component={DashboardContainer} />
         <Route path="*" component={NoMatch} />
       </Route>
     </Router>
