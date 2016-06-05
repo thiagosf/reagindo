@@ -7,9 +7,15 @@ export default function() {
     <div>
       <header>
         <h1>Dashboard</h1>
-        <DashboardMessagesContainer />
-        <Loader />
       </header>
+      <div className="row">
+        <div className="col-sm-4">
+          <DashboardMessagesContainer />
+        </div>
+        <div className="col-sm-4">
+          <Loader />
+        </div>
+      </div>
     </div>
   )
 }

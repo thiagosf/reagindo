@@ -18,13 +18,20 @@ class MessageEntry extends Component {
   }
   render() {
     return (
-      <form className="form-inline" action="#" onSubmit={this.handleSubmit.bind(this)}>
-        <div className="form-group">
-          <input type="text" className="form-control" ref="text" />
-        </div>
-        <span> </span>
-        <Button type="submit" primary>Adicionar</Button>
-      </form>
+      <div>
+        <form className="form-inline2" action="#" onSubmit={this.handleSubmit.bind(this)}>
+          <div className="row">
+            <div className="col-sm-7">
+              <div className="form-group">
+                <input type="text" className="form-control" ref="text" />
+              </div>
+            </div>
+            <div className="col-sm-5">
+              <Button type="submit" primary block>Adicionar</Button>
+            </div>
+          </div>
+        </form>
+      </div>
     )
   }
 }

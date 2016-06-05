@@ -6,7 +6,7 @@ import { Button } from '../components'
 
 function formatMessages(message, onMessageClick) {
   return (
-    <div key={message.id}>
+    <div className="message-item" key={message.id}>
       <Button danger xsmall className="text-danger" onClick={() => onMessageClick(message.id)}>
         <span className="glyphicon glyphicon-remove"></span>
       </Button>
@@ -18,7 +18,7 @@ function formatMessages(message, onMessageClick) {
 
 function MessageList({ messages, onMessageClick }) {
   return (
-    <div>
+    <div className="message-list">
       {messages.map(message => formatMessages(message, onMessageClick))}
     </div>
   )
@@ -26,7 +26,7 @@ function MessageList({ messages, onMessageClick }) {
 
 const mapStateToProps = (state) => {
   return {
-    messages: state.dashboard.messages
+    messages: state.dashboard.present.messages
   }
 }
 

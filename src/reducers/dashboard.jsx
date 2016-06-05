@@ -1,9 +1,10 @@
 import { ADD_MESSAGE, REMOVE_MESSAGE } from '../constants'
 import { tokenize } from '../helpers'
+import undoable, { distinctState } from 'redux-undo'
 
 let initialState = { messages: [{ id: tokenize(), text: 'Default message' }] }
 
-export default (state = initialState, action) => {
+const dashboard = (state = initialState, action) => {
   switch (action.type) {
     case ADD_MESSAGE:
       return Object.assign({}, state, {
@@ -27,3 +28,9 @@ export default (state = initialState, action) => {
       return state
   }
 }
+
+const undoableTodos = undoable(dashboard, {
+  filter: distinctState()
+})
+
+export default undoableTodos
