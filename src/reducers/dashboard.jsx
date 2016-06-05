@@ -30,7 +30,8 @@ const dashboard = (state = initialState, action) => {
 }
 
 const undoableTodos = undoable(dashboard, {
-  filter: distinctState()
+  filter: distinctState(),
+  limit: 10
 })
 
 export default undoableTodos

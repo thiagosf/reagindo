@@ -26923,7 +26923,7 @@ var removeMessage = exports.removeMessage = function removeMessage(id) {
   };
 };
 
-},{"../constants":270}],261:[function(require,module,exports){
+},{"../constants":271}],261:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -27021,7 +27021,7 @@ _reactDom2.default.render(_react2.default.createElement(
   )
 ), document.getElementById('content'));
 
-},{"./components":269,"./containers":275,"./reducers":279,"classnames":1,"react":243,"react-dom":51,"react-redux":54,"react-router":97,"react-router-redux":64,"redux":250}],262:[function(require,module,exports){
+},{"./components":270,"./containers":277,"./reducers":281,"classnames":1,"react":243,"react-dom":51,"react-redux":54,"react-router":97,"react-router-redux":64,"redux":250}],262:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27304,6 +27304,67 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _components = require('../components');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Message = function Message(_ref) {
+  var text = _ref.text;
+  var deleted = _ref.deleted;
+  var onClick = _ref.onClick;
+
+  var className = (0, _classnames2.default)({
+    'message-item': true,
+    'dismiss': deleted
+  });
+  return _react2.default.createElement(
+    'div',
+    { className: className },
+    _react2.default.createElement(
+      _components.Button,
+      { danger: true, xsmall: true, className: 'text-danger', onClick: onClick },
+      _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove' })
+    ),
+    _react2.default.createElement(
+      'span',
+      null,
+      ' '
+    ),
+    _react2.default.createElement(
+      'span',
+      null,
+      text
+    )
+  );
+};
+
+Message.propTypes = {
+  id: _react.PropTypes.number,
+  text: _react.PropTypes.string,
+  deleted: _react.PropTypes.bool
+};
+
+Message.defaultProps = {
+  deleted: false
+};
+
+exports.default = Message;
+
+},{"../components":270,"classnames":1,"react":243}],266:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -27397,50 +27458,24 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(MessageEntry);
 
-},{"../actions/dashboard":260,"../components":269,"react":243,"react-redux":54}],266:[function(require,module,exports){
+},{"../actions/dashboard":260,"../components":270,"react":243,"react-redux":54}],267:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = require('react-redux');
-
-var _dashboard = require('../actions/dashboard');
 
 var _components = require('../components');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function formatMessages(message, onMessageClick) {
-  return _react2.default.createElement(
-    'div',
-    { className: 'message-item', key: message.id },
-    _react2.default.createElement(
-      _components.Button,
-      { danger: true, xsmall: true, className: 'text-danger', onClick: function onClick() {
-          return onMessageClick(message.id);
-        } },
-      _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove' })
-    ),
-    _react2.default.createElement(
-      'span',
-      null,
-      ' '
-    ),
-    _react2.default.createElement(
-      'span',
-      null,
-      message.text
-    )
-  );
-}
-
-function MessageList(_ref) {
+var MessageList = function MessageList(_ref) {
   var messages = _ref.messages;
   var onMessageClick = _ref.onMessageClick;
 
@@ -27448,28 +27483,28 @@ function MessageList(_ref) {
     'div',
     { className: 'message-list' },
     messages.map(function (message) {
-      return formatMessages(message, onMessageClick);
+      return _react2.default.createElement(_components.Message, _extends({
+        key: message.id
+      }, message, {
+        onClick: function onClick() {
+          return onMessageClick(message.id);
+        }
+      }));
     })
   );
-}
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    messages: state.dashboard.present.messages
-  };
 };
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    onMessageClick: function onMessageClick(id) {
-      dispatch((0, _dashboard.removeMessage)(id));
-    }
-  };
+MessageList.propTypes = {
+  messages: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+    id: _react.PropTypes.number.isRequired,
+    text: _react.PropTypes.string.isRequired
+  }).isRequired).isRequired,
+  onMessageClick: _react.PropTypes.func.isRequired
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MessageList);
+exports.default = MessageList;
 
-},{"../actions/dashboard":260,"../components":269,"react":243,"react-redux":54}],267:[function(require,module,exports){
+},{"../components":270,"react":243}],268:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27621,7 +27656,7 @@ var mapStateToProps = function mapStateToProps(state) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(Nav);
 
-},{"classnames":1,"react":243,"react-redux":54,"react-router":97}],268:[function(require,module,exports){
+},{"classnames":1,"react":243,"react-redux":54,"react-router":97}],269:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27675,13 +27710,13 @@ var NoMatch = function (_Component) {
 
 exports.default = NoMatch;
 
-},{"react":243}],269:[function(require,module,exports){
+},{"react":243}],270:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.NoMatch = exports.MessageEntry = exports.MessageList = exports.Login = exports.Loader = exports.Button = exports.Nav = undefined;
+exports.NoMatch = exports.MessageEntry = exports.Message = exports.MessageList = exports.Login = exports.Loader = exports.Button = exports.Nav = undefined;
 
 var _Nav2 = require('./Nav');
 
@@ -27703,6 +27738,10 @@ var _MessageList2 = require('./MessageList');
 
 var _MessageList3 = _interopRequireDefault(_MessageList2);
 
+var _Message2 = require('./Message');
+
+var _Message3 = _interopRequireDefault(_Message2);
+
 var _MessageEntry2 = require('./MessageEntry');
 
 var _MessageEntry3 = _interopRequireDefault(_MessageEntry2);
@@ -27718,10 +27757,11 @@ exports.Button = _Button3.default;
 exports.Loader = _Loader3.default;
 exports.Login = _Login3.default;
 exports.MessageList = _MessageList3.default;
+exports.Message = _Message3.default;
 exports.MessageEntry = _MessageEntry3.default;
 exports.NoMatch = _NoMatch3.default;
 
-},{"./Button":262,"./Loader":263,"./Login":264,"./MessageEntry":265,"./MessageList":266,"./Nav":267,"./NoMatch":268}],270:[function(require,module,exports){
+},{"./Button":262,"./Loader":263,"./Login":264,"./Message":265,"./MessageEntry":266,"./MessageList":267,"./Nav":268,"./NoMatch":269}],271:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27730,7 +27770,7 @@ Object.defineProperty(exports, "__esModule", {
 var ADD_MESSAGE = exports.ADD_MESSAGE = 'ADD_MESSAGE';
 var REMOVE_MESSAGE = exports.REMOVE_MESSAGE = 'REMOVE_MESSAGE';
 
-},{}],271:[function(require,module,exports){
+},{}],272:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27777,7 +27817,7 @@ var _components = require('../components');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../components":269,"./":275,"react":243}],272:[function(require,module,exports){
+},{"../components":270,"./":277,"react":243}],273:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27810,7 +27850,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":243}],273:[function(require,module,exports){
+},{"react":243}],274:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27823,7 +27863,7 @@ exports.default = function () {
     { item: 'message-entry', title: 'Mensagens' },
     _react2.default.createElement(_UndoRedoMessages2.default, null),
     _react2.default.createElement(_components.MessageEntry, null),
-    _react2.default.createElement(_components.MessageList, null)
+    _react2.default.createElement(_.MessageListContainer, null)
   );
 };
 
@@ -27841,7 +27881,36 @@ var _UndoRedoMessages2 = _interopRequireDefault(_UndoRedoMessages);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../components":269,"./":275,"./UndoRedoMessages":274,"react":243}],274:[function(require,module,exports){
+},{"../components":270,"./":277,"./UndoRedoMessages":276,"react":243}],275:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = require('react-redux');
+
+var _components = require('../components');
+
+var _dashboard = require('../actions/dashboard');
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    messages: state.dashboard.present.messages
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    onMessageClick: function onMessageClick(id) {
+      dispatch((0, _dashboard.removeMessage)(id));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_components.MessageList);
+
+},{"../actions/dashboard":260,"../components":270,"react-redux":54}],276:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27908,13 +27977,13 @@ UndoRedoMessages = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)
 
 exports.default = UndoRedoMessages;
 
-},{"../components":269,"react":243,"react-redux":54,"redux-undo":244}],275:[function(require,module,exports){
+},{"../components":270,"react":243,"react-redux":54,"redux-undo":244}],277:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.DashboardMessagesContainer = exports.DashboardItemContainer = exports.DashboardContainer = undefined;
+exports.MessageListContainer = exports.DashboardMessagesContainer = exports.DashboardItemContainer = exports.DashboardContainer = undefined;
 
 var _DashboardContainer2 = require('./DashboardContainer');
 
@@ -27928,13 +27997,18 @@ var _DashboardMessagesContainer2 = require('./DashboardMessagesContainer');
 
 var _DashboardMessagesContainer3 = _interopRequireDefault(_DashboardMessagesContainer2);
 
+var _MessageListContainer2 = require('./MessageListContainer');
+
+var _MessageListContainer3 = _interopRequireDefault(_MessageListContainer2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.DashboardContainer = _DashboardContainer3.default;
 exports.DashboardItemContainer = _DashboardItemContainer3.default;
 exports.DashboardMessagesContainer = _DashboardMessagesContainer3.default;
+exports.MessageListContainer = _MessageListContainer3.default;
 
-},{"./DashboardContainer":271,"./DashboardItemContainer":272,"./DashboardMessagesContainer":273}],276:[function(require,module,exports){
+},{"./DashboardContainer":272,"./DashboardItemContainer":273,"./DashboardMessagesContainer":274,"./MessageListContainer":275}],278:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27950,7 +28024,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.tokenize = _tokenize3.default;
 
-},{"./tokenize":277}],277:[function(require,module,exports){
+},{"./tokenize":279}],279:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27964,7 +28038,7 @@ exports.default = function () {
   return Math.random();
 };
 
-},{}],278:[function(require,module,exports){
+},{}],280:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28011,12 +28085,13 @@ var dashboard = function dashboard() {
 };
 
 var undoableTodos = (0, _reduxUndo2.default)(dashboard, {
-  filter: (0, _reduxUndo.distinctState)()
+  filter: (0, _reduxUndo.distinctState)(),
+  limit: 10
 });
 
 exports.default = undoableTodos;
 
-},{"../constants":270,"../helpers":276,"redux-undo":244}],279:[function(require,module,exports){
+},{"../constants":271,"../helpers":278,"redux-undo":244}],281:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28032,6 +28107,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.dashboard = _dashboard3.default;
 
-},{"./dashboard":278}]},{},[261]);
+},{"./dashboard":280}]},{},[261]);
 
 //# sourceMappingURL=map/app.js.map

@@ -1,6 +1,6 @@
 import React from 'react'
-import { DashboardItemContainer } from './'
-import { MessageList, MessageEntry } from '../components'
+import { DashboardItemContainer, MessageListContainer } from './'
+import { MessageEntry } from '../components'
 import UndoRedoMessages from './UndoRedoMessages'
 
 export default function() {
@@ -8,7 +8,7 @@ export default function() {
     <DashboardItemContainer item="message-entry" title="Mensagens">
       <UndoRedoMessages />
       <MessageEntry />
-      <MessageList />
+      <MessageListContainer />
     </DashboardItemContainer>
   )
 }

@@ -1,44 +1,26 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component, PropTypes } from 'react'
+import { Message } from '../components'
 
-import { removeMessage } from '../actions/dashboard'
-import { Button } from '../components'
-
-function formatMessages(message, onMessageClick) {
-  return (
-    <div className="message-item" key={message.id}>
-      <Button danger xsmall className="text-danger" onClick={() => onMessageClick(message.id)}>
-        <span className="glyphicon glyphicon-remove"></span>
-      </Button>
-      <span> </span>
-      <span>{message.text}</span>
-    </div>
-  )
-}
-
-function MessageList({ messages, onMessageClick }) {
+const MessageList = ({ messages, onMessageClick }) => {
   return (
     <div className="message-list">
-      {messages.map(message => formatMessages(message, onMessageClick))}
+      {messages.map(message => 
+        <Message
+          key={message.id}
+          {...message}
+          onClick={() => onMessageClick(message.id)}
+          />
+      )}
     </div>
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    messages: state.dashboard.present.messages
-  }
+MessageList.propTypes = {
+  messages: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    text: PropTypes.string.isRequired
+  }).isRequired).isRequired,
+  onMessageClick: PropTypes.func.isRequired
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onMessageClick: (id) => {
-      dispatch(removeMessage(id))
-    }
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MessageList)
+export default MessageList

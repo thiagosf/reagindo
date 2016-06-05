@@ -3,6 +3,7 @@
     margin: 0 0 20px 0
     font-size: 18px
   &.dashboard-message-entry
+    overflow: hidden
     .message-list
       padding-top: 10px
     .message-item 
@@ -11,5 +12,14 @@
       margin-top: 10px
       border: 1px solid #ddd
       border-radius: 2px
+      animation: enterMessageItem .2s forwards
       .btn 
         margin-right: 10px
+
+@keyframes enterMessageItem
+  0%
+    opacity: 0
+    transform: scale(0.97)
+  100% 
+    opacity: 1
+    transform: scale(1)
