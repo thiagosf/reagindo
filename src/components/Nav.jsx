@@ -58,8 +58,8 @@ class Nav extends Component {
 Nav.defaultProps = {
   nav: [
     { label: 'Home', link: '/' },
-    { label: 'Errro page', link: '/error-page' },
-    { label: 'Login', link: '/login' }
+    { label: 'Posts', link: '/posts' },
+    { label: 'Sair', link: '/login' }
   ]
 }
 

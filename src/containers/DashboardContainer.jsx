@@ -5,7 +5,7 @@ import { Loader } from '../components'
 export default function() {
   return(
     <div>
-      <header>
+      <header className="main-header">
         <h1>Dashboard</h1>
       </header>
       <div className="row">

@@ -1,14 +1,9 @@
 import React, { PropTypes } from 'react'
-import classNames from 'classnames'
 import { Button } from '../components'
 
-const Message = ({ text, deleted, onClick }) => {
-  const className = classNames({
-    'message-item': true,
-    'dismiss': deleted
-  })
+const Message = ({ text, onClick }) => {
   return (
-    <div className={className}>
+    <div  className="message-item">
       <Button danger xsmall className="text-danger" onClick={onClick}>
         <span className="glyphicon glyphicon-remove"></span>
       </Button>
