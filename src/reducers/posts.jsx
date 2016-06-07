@@ -4,7 +4,17 @@ import {
   RECEIVE_POSTS
 } from '../constants'
 
-const initialState = { isFetching: false, posts: [], page: 1 }
+const initialState = {
+  isFetching: false,
+  posts: [],
+  page: 1,
+  post: {
+    id: '...',
+    title: '...',
+    author: '...',
+    created_utc: '...'
+  }
+}
 
 function posts(state = initialState, action) {
   switch (action.type) {

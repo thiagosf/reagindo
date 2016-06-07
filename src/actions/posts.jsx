@@ -74,7 +74,7 @@ export function fetchPost(id) {
         if (err) {
           // dispatch de erro
         } else {
-          dispatch(receivePosts(id, res.body))
+          dispatch(receivePost(id, res.body))
         }
       })
   }

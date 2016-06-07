@@ -7,7 +7,7 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import { Login, NoMatch, Nav } from './components'
-import { DashboardContainer, PostsContainer } from './containers'
+import { DashboardContainer, PostsContainer, PostsTableContainer, PostFormContainer } from './containers'
 import * as reducers from './reducers'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
@@ -44,8 +44,10 @@ ReactDOM.render((
       <Route path="/" component={App}>
         <IndexRoute component={DashboardContainer} />
         <Route path="/dashboard" component={DashboardContainer} />
-        <Route path="/posts" component={PostsContainer} />
-        <Route path="/posts/:id" component={PostsContainer} />
+        <Route path="/posts" component={PostsContainer}>
+          <IndexRoute component={PostsTableContainer} />
+          <Route path="/posts/:id" component={PostFormContainer} />
+        </Route>
         <Route path="*" component={NoMatch} />
       </Route>
     </Router>

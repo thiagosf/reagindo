@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 import { Loader } from '../components'
 import { removePost, fetchPosts } from '../actions/posts'
 import moment from 'moment'
@@ -24,9 +25,9 @@ export function postRow(post) {
       <td>{post.author}</td>
       <td className="text-nowrap">{date()}</td>
       <td>
-        <a className="btn btn-success btn-xs" href={edit_url}>Editar</a>
+        <Link to={edit_url} className="btn btn-success btn-xs">Editar</Link>
         <span> </span>
-        <a className="btn btn-danger btn-xs" href={destroy_url}>Deletar</a>
+        <Link to={destroy_url} className="btn btn-danger btn-xs">Deletar</Link>
       </td>
     </tr>
   )

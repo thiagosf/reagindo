@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import PostsTableContainer from './PostsTableContainer'
-import PostFormContainer from './PostFormContainer'
 
 class PostsContainer extends Component {
   render() {
@@ -10,8 +8,7 @@ class PostsContainer extends Component {
         <header className="main-header">
           <h1>Posts</h1>
         </header>
-        <PostsTableContainer />
-        <PostFormContainer />
+        {this.props.children}
       </div>
     )
   }
@@ -28,9 +25,11 @@ const mapDispatchToProps = (dispatch) => {
     onCreatePost: (post) => {
       console.log('onCreatePost', post);
     },
+    onUpdatePost: (post) => {
+      console.log('onUpdatePost', post);
+    },
     onDeletePost: (id) => {
       console.log('onDeletePost', id);
-      // dispatch(removePost(id))
     }
   }
 }

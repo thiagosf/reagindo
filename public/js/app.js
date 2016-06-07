@@ -32864,7 +32864,7 @@ function fetchPost(id) {
       if (err) {
         // dispatch de erro
       } else {
-          dispatch(receivePosts(id, res.body));
+          dispatch(receivePost(id, res.body));
         }
     });
   };
@@ -32971,8 +32971,12 @@ _reactDom2.default.render(_react2.default.createElement(
       { path: '/', component: App },
       _react2.default.createElement(_reactRouter.IndexRoute, { component: _containers.DashboardContainer }),
       _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _containers.DashboardContainer }),
-      _react2.default.createElement(_reactRouter.Route, { path: '/posts', component: _containers.PostsContainer }),
-      _react2.default.createElement(_reactRouter.Route, { path: '/posts/:id', component: _containers.PostsContainer }),
+      _react2.default.createElement(
+        _reactRouter.Route,
+        { path: '/posts', component: _containers.PostsContainer },
+        _react2.default.createElement(_reactRouter.IndexRoute, { component: _containers.PostsTableContainer }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/posts/:id', component: _containers.PostFormContainer })
+      ),
       _react2.default.createElement(_reactRouter.Route, { path: '*', component: _components.NoMatch })
     )
   )
@@ -33878,6 +33882,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
 
+var _reactRouter = require('react-router');
+
 var _components = require('../components');
 
 var _posts = require('../actions/posts');
@@ -33902,8 +33908,11 @@ var PostFormContainer = function (_Component) {
   _createClass(PostFormContainer, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // const { fetchPosts, page } = this.props
-      // fetchPosts(page)
+      var _props = this.props;
+      var fetchPost = _props.fetchPost;
+      var params = _props.params;
+
+      fetchPost(params.id);
     }
   }, {
     key: 'getLoader',
@@ -33918,6 +33927,11 @@ var PostFormContainer = function (_Component) {
         null,
         this.getLoader(),
         _react2.default.createElement(
+          'h1',
+          null,
+          this.props.post.title
+        ),
+        _react2.default.createElement(
           'form',
           null,
           _react2.default.createElement(
@@ -33931,9 +33945,22 @@ var PostFormContainer = function (_Component) {
             _react2.default.createElement('input', { type: 'text', className: 'form-control' })
           ),
           _react2.default.createElement(
-            _components.Button,
-            { success: true, large: true },
-            'Salvar'
+            'div',
+            { className: 'text-center' },
+            _react2.default.createElement(
+              _components.Button,
+              { success: true, large: true },
+              'Salvar'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'other-actions' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { to: '/posts', className: 'btn btn-warning' },
+              'Cancelar'
+            )
           )
         )
       );
@@ -33944,16 +33971,24 @@ var PostFormContainer = function (_Component) {
 }(_react.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-  return {};
+  return {
+    post: state.posts.post,
+    id: state.posts.id,
+    isFetching: state.posts.isFetching
+  };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    fetchPost: function fetchPost(id) {
+      return dispatch((0, _posts.fetchPost)(id));
+    }
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostFormContainer);
 
-},{"../actions/posts":270,"../components":280,"react":245,"react-redux":56}],287:[function(require,module,exports){
+},{"../actions/posts":270,"../components":280,"react":245,"react-redux":56,"react-router":99}],287:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33967,14 +34002,6 @@ var _react = require('react');
 var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
-
-var _PostsTableContainer = require('./PostsTableContainer');
-
-var _PostsTableContainer2 = _interopRequireDefault(_PostsTableContainer);
-
-var _PostFormContainer = require('./PostFormContainer');
-
-var _PostFormContainer2 = _interopRequireDefault(_PostFormContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34008,8 +34035,7 @@ var PostsContainer = function (_Component) {
             'Posts'
           )
         ),
-        _react2.default.createElement(_PostsTableContainer2.default, null),
-        _react2.default.createElement(_PostFormContainer2.default, null)
+        this.props.children
       );
     }
   }]);
@@ -34028,16 +34054,18 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     onCreatePost: function onCreatePost(post) {
       console.log('onCreatePost', post);
     },
+    onUpdatePost: function onUpdatePost(post) {
+      console.log('onUpdatePost', post);
+    },
     onDeletePost: function onDeletePost(id) {
       console.log('onDeletePost', id);
-      // dispatch(removePost(id))
     }
   };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostsContainer);
 
-},{"./PostFormContainer":286,"./PostsTableContainer":288,"react":245,"react-redux":56}],288:[function(require,module,exports){
+},{"react":245,"react-redux":56}],288:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34053,6 +34081,8 @@ var _react = require('react');
 var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
+
+var _reactRouter = require('react-router');
 
 var _components = require('../components');
 
@@ -34118,8 +34148,8 @@ function postRow(post) {
       'td',
       null,
       _react2.default.createElement(
-        'a',
-        { className: 'btn btn-success btn-xs', href: edit_url },
+        _reactRouter.Link,
+        { to: edit_url, className: 'btn btn-success btn-xs' },
         'Editar'
       ),
       _react2.default.createElement(
@@ -34128,8 +34158,8 @@ function postRow(post) {
         ' '
       ),
       _react2.default.createElement(
-        'a',
-        { className: 'btn btn-danger btn-xs', href: destroy_url },
+        _reactRouter.Link,
+        { to: destroy_url, className: 'btn btn-danger btn-xs' },
         'Deletar'
       )
     )
@@ -34243,7 +34273,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostsTableContainer);
 
-},{"../actions/posts":270,"../components":280,"moment":50,"react":245,"react-redux":56}],289:[function(require,module,exports){
+},{"../actions/posts":270,"../components":280,"moment":50,"react":245,"react-redux":56,"react-router":99}],289:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34316,7 +34346,7 @@ exports.default = UndoRedoMessages;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.PostsContainer = exports.MessageListContainer = exports.DashboardMessagesContainer = exports.DashboardItemContainer = exports.DashboardContainer = undefined;
+exports.PostFormContainer = exports.PostsTableContainer = exports.PostsContainer = exports.MessageListContainer = exports.DashboardMessagesContainer = exports.DashboardItemContainer = exports.DashboardContainer = undefined;
 
 var _DashboardContainer2 = require('./DashboardContainer');
 
@@ -34338,6 +34368,14 @@ var _PostsContainer2 = require('./PostsContainer');
 
 var _PostsContainer3 = _interopRequireDefault(_PostsContainer2);
 
+var _PostsTableContainer2 = require('./PostsTableContainer');
+
+var _PostsTableContainer3 = _interopRequireDefault(_PostsTableContainer2);
+
+var _PostFormContainer2 = require('./PostFormContainer');
+
+var _PostFormContainer3 = _interopRequireDefault(_PostFormContainer2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.DashboardContainer = _DashboardContainer3.default;
@@ -34345,8 +34383,10 @@ exports.DashboardItemContainer = _DashboardItemContainer3.default;
 exports.DashboardMessagesContainer = _DashboardMessagesContainer3.default;
 exports.MessageListContainer = _MessageListContainer3.default;
 exports.PostsContainer = _PostsContainer3.default;
+exports.PostsTableContainer = _PostsTableContainer3.default;
+exports.PostFormContainer = _PostFormContainer3.default;
 
-},{"./DashboardContainer":282,"./DashboardItemContainer":283,"./DashboardMessagesContainer":284,"./MessageListContainer":285,"./PostsContainer":287}],291:[function(require,module,exports){
+},{"./DashboardContainer":282,"./DashboardItemContainer":283,"./DashboardMessagesContainer":284,"./MessageListContainer":285,"./PostFormContainer":286,"./PostsContainer":287,"./PostsTableContainer":288}],291:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34459,7 +34499,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _constants = require('../constants');
 
-var initialState = { isFetching: false, posts: [], page: 1 };
+var initialState = {
+  isFetching: false,
+  posts: [],
+  page: 1,
+  post: {
+    id: '...',
+    title: '...',
+    author: '...',
+    created_utc: '...'
+  }
+};
 
 function posts() {
   var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
