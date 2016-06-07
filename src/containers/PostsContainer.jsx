@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PostsTableContainer from './PostsTableContainer'
+import PostFormContainer from './PostFormContainer'
 
 class PostsContainer extends Component {
   render() {
@@ -10,6 +11,7 @@ class PostsContainer extends Component {
           <h1>Posts</h1>
         </header>
         <PostsTableContainer />
+        <PostFormContainer />
       </div>
     )
   }

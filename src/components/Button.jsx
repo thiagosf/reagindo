@@ -11,9 +11,10 @@ export default class Button extends Component {
       'btn-danger': this.props.danger,
       'btn-info': this.props.info,
       'btn-default': this.props.default,
+      'btn-success': this.props.success,
       'btn-xs': this.props.xsmall,
       'btn-sm': this.props.small,
-      'btn-large': this.props.large,
+      'btn-lg': this.props.large,
       'btn-block': this.props.block
     })
   }
@@ -40,6 +41,7 @@ Button.propTypes = {
   danger: PropTypes.bool,
   info: PropTypes.bool,
   default: PropTypes.bool,
+  success: PropTypes.bool,
   xsmall: PropTypes.bool,
   small: PropTypes.bool,
   large: PropTypes.bool,

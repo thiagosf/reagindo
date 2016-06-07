@@ -8,12 +8,14 @@ export function postRow(post) {
   const thumbnail = () => {
     if (post.thumbnail != 'self') return <img src={post.thumbnail} height="30" />
   }
+
   const date = () => {
     return <span className="label label-default">{moment.unix(post.created_utc).format('LLL')}</span>
   }
-  const seePost = () => {
-    return <a className="btn btn-primary btn-xs" href={post.url} target="_blank">Ver post</a>
-  }
+
+  let edit_url = `/posts/${post.id}`
+  let destroy_url = `/posts/${post.id}`
+
   return (
     <tr key={post.id}>
       <td>{post.id}</td>
@@ -21,7 +23,11 @@ export function postRow(post) {
       <td>{post.title}</td>
       <td>{post.author}</td>
       <td className="text-nowrap">{date()}</td>
-      <td>{seePost()}</td>
+      <td>
+        <a className="btn btn-success btn-xs" href={edit_url}>Editar</a>
+        <span> </span>
+        <a className="btn btn-danger btn-xs" href={destroy_url}>Deletar</a>
+      </td>
     </tr>
   )
 }

@@ -45,6 +45,7 @@ ReactDOM.render((
         <IndexRoute component={DashboardContainer} />
         <Route path="/dashboard" component={DashboardContainer} />
         <Route path="/posts" component={PostsContainer} />
+        <Route path="/posts/:id" component={PostsContainer} />
         <Route path="*" component={NoMatch} />
       </Route>
     </Router>
