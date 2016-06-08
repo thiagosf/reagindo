@@ -1,24 +1,22 @@
 import {
   REMOVE_POST,
   REQUEST_POSTS,
-  RECEIVE_POSTS
+  REQUEST_POST,
+  RECEIVE_POSTS,
+  RECEIVE_POST
 } from '../constants'
 
 const initialState = {
   isFetching: false,
   posts: [],
   page: 1,
-  post: {
-    id: '...',
-    title: '...',
-    author: '...',
-    created_utc: '...'
-  }
+  post: null
 }
 
 function posts(state = initialState, action) {
   switch (action.type) {
     case REQUEST_POSTS:
+    case REQUEST_POST:
       return Object.assign({}, state, {
         isFetching: true
       })
@@ -27,6 +25,12 @@ function posts(state = initialState, action) {
       return Object.assign({}, state, {
         isFetching: false,
         posts: action.posts
+      })
+
+    case RECEIVE_POST:
+      return Object.assign({}, state, {
+        isFetching: false,
+        post: action.post
       })
 
     default:

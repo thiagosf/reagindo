@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { Loader, Button } from '../components'
+import { Loader, PostForm } from '../components'
 import { fetchPost } from '../actions/posts'
 
 class PostFormContainer extends Component {
@@ -13,22 +13,10 @@ class PostFormContainer extends Component {
     if (this.props.isFetching) return <Loader />
   }
   render() {
-    return(
+    return (
       <div>
         {this.getLoader()}
-        <h1>{this.props.post.title}</h1>
-        <form>
-          <div className="form-group">
-            <label>Titulo</label>
-            <input type="text" className="form-control" />
-          </div>
-          <div className="text-center">
-            <Button success large>Salvar</Button>
-          </div>
-          <div className="other-actions">
-            <Link to="/posts" className="btn btn-warning">Cancelar</Link>
-          </div>
-        </form>
+        <PostForm {...this.props.post} />
       </div>
     )
   }

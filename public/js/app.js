@@ -32784,7 +32784,7 @@ var removeMessage = exports.removeMessage = function removeMessage(id) {
   };
 };
 
-},{"../constants":281}],270:[function(require,module,exports){
+},{"../constants":282}],270:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32870,7 +32870,7 @@ function fetchPost(id) {
   };
 }
 
-},{"../constants":281,"superagent":262}],271:[function(require,module,exports){
+},{"../constants":282,"superagent":262}],271:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -32982,7 +32982,7 @@ _reactDom2.default.render(_react2.default.createElement(
   )
 ), document.getElementById('content'));
 
-},{"./components":280,"./containers":290,"./reducers":294,"classnames":1,"react":245,"react-dom":53,"react-redux":56,"react-router":99,"react-router-redux":66,"redux":255,"redux-logger":247,"redux-thunk":248}],272:[function(require,module,exports){
+},{"./components":281,"./containers":291,"./reducers":295,"classnames":1,"react":245,"react-dom":53,"react-redux":56,"react-router":99,"react-router-redux":66,"redux":255,"redux-logger":247,"redux-thunk":248}],272:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33307,7 +33307,7 @@ Message.propTypes = {
 
 exports.default = Message;
 
-},{"../components":280,"react":245}],276:[function(require,module,exports){
+},{"../components":281,"react":245}],276:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33407,7 +33407,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(MessageEntry);
 
-},{"../actions/dashboard":269,"../components":280,"react":245,"react-redux":56}],277:[function(require,module,exports){
+},{"../actions/dashboard":269,"../components":281,"react":245,"react-redux":56}],277:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33453,7 +33453,7 @@ MessageList.propTypes = {
 
 exports.default = MessageList;
 
-},{"../components":280,"react":245}],278:[function(require,module,exports){
+},{"../components":281,"react":245}],278:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33665,7 +33665,83 @@ exports.default = NoMatch;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.NoMatch = exports.MessageEntry = exports.Message = exports.MessageList = exports.Login = exports.Loader = exports.Button = exports.Nav = undefined;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _ = require('./');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PostForm = function PostForm(_ref) {
+  var _ref$title = _ref.title;
+  var title = _ref$title === undefined ? '' : _ref$title;
+  var _ref$author = _ref.author;
+  var author = _ref$author === undefined ? '' : _ref$author;
+
+  return _react2.default.createElement(
+    'form',
+    null,
+    _react2.default.createElement(
+      'div',
+      { className: 'form-group' },
+      _react2.default.createElement(
+        'label',
+        null,
+        'Titulo'
+      ),
+      _react2.default.createElement('input', { type: 'text', className: 'form-control', value: title })
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'form-group' },
+      _react2.default.createElement(
+        'label',
+        null,
+        'Autor'
+      ),
+      _react2.default.createElement('input', { type: 'text', className: 'form-control', value: author })
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'text-center' },
+      _react2.default.createElement(
+        _.Button,
+        { success: true, large: true },
+        'Salvar'
+      )
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'other-actions' },
+      _react2.default.createElement(
+        Link,
+        { to: '/posts', className: 'btn btn-warning' },
+        'Cancelar'
+      )
+    )
+  );
+};
+
+PostForm.propTypes = {
+  title: _react.PropTypes.string,
+  author: _react.PropTypes.string
+};
+
+exports.default = PostForm;
+
+},{"./":281,"react":245}],281:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PostForm = exports.MessageEntry = exports.Message = exports.MessageList = exports.Login = exports.Loader = exports.Button = exports.Nav = exports.NoMatch = undefined;
+
+var _NoMatch2 = require('./NoMatch');
+
+var _NoMatch3 = _interopRequireDefault(_NoMatch2);
 
 var _Nav2 = require('./Nav');
 
@@ -33695,12 +33771,13 @@ var _MessageEntry2 = require('./MessageEntry');
 
 var _MessageEntry3 = _interopRequireDefault(_MessageEntry2);
 
-var _NoMatch2 = require('./NoMatch');
+var _PostForm2 = require('./PostForm');
 
-var _NoMatch3 = _interopRequireDefault(_NoMatch2);
+var _PostForm3 = _interopRequireDefault(_PostForm2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+exports.NoMatch = _NoMatch3.default;
 exports.Nav = _Nav3.default;
 exports.Button = _Button3.default;
 exports.Loader = _Loader3.default;
@@ -33708,9 +33785,9 @@ exports.Login = _Login3.default;
 exports.MessageList = _MessageList3.default;
 exports.Message = _Message3.default;
 exports.MessageEntry = _MessageEntry3.default;
-exports.NoMatch = _NoMatch3.default;
+exports.PostForm = _PostForm3.default;
 
-},{"./Button":272,"./Loader":273,"./Login":274,"./Message":275,"./MessageEntry":276,"./MessageList":277,"./Nav":278,"./NoMatch":279}],281:[function(require,module,exports){
+},{"./Button":272,"./Loader":273,"./Login":274,"./Message":275,"./MessageEntry":276,"./MessageList":277,"./Nav":278,"./NoMatch":279,"./PostForm":280}],282:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33727,7 +33804,7 @@ var REQUEST_POST = exports.REQUEST_POST = 'REQUEST_POST';
 var RECEIVE_POSTS = exports.RECEIVE_POSTS = 'RECEIVE_POSTS';
 var RECEIVE_POST = exports.RECEIVE_POST = 'RECEIVE_POST';
 
-},{}],282:[function(require,module,exports){
+},{}],283:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33774,7 +33851,7 @@ var _components = require('../components');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../components":280,"./":290,"react":245}],283:[function(require,module,exports){
+},{"../components":281,"./":291,"react":245}],284:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33807,7 +33884,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":245}],284:[function(require,module,exports){
+},{"react":245}],285:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33838,7 +33915,7 @@ var _UndoRedoMessages2 = _interopRequireDefault(_UndoRedoMessages);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../components":280,"./":290,"./UndoRedoMessages":289,"react":245}],285:[function(require,module,exports){
+},{"../components":281,"./":291,"./UndoRedoMessages":290,"react":245}],286:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33867,7 +33944,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_components.MessageList);
 
-},{"../actions/dashboard":269,"../components":280,"react-redux":56}],286:[function(require,module,exports){
+},{"../actions/dashboard":269,"../components":281,"react-redux":56}],287:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33926,43 +34003,7 @@ var PostFormContainer = function (_Component) {
         'div',
         null,
         this.getLoader(),
-        _react2.default.createElement(
-          'h1',
-          null,
-          this.props.post.title
-        ),
-        _react2.default.createElement(
-          'form',
-          null,
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
-            _react2.default.createElement(
-              'label',
-              null,
-              'Titulo'
-            ),
-            _react2.default.createElement('input', { type: 'text', className: 'form-control' })
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'text-center' },
-            _react2.default.createElement(
-              _components.Button,
-              { success: true, large: true },
-              'Salvar'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'other-actions' },
-            _react2.default.createElement(
-              _reactRouter.Link,
-              { to: '/posts', className: 'btn btn-warning' },
-              'Cancelar'
-            )
-          )
-        )
+        _react2.default.createElement(_components.PostForm, this.props.post)
       );
     }
   }]);
@@ -33988,7 +34029,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostFormContainer);
 
-},{"../actions/posts":270,"../components":280,"react":245,"react-redux":56,"react-router":99}],287:[function(require,module,exports){
+},{"../actions/posts":270,"../components":281,"react":245,"react-redux":56,"react-router":99}],288:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34065,7 +34106,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostsContainer);
 
-},{"react":245,"react-redux":56}],288:[function(require,module,exports){
+},{"react":245,"react-redux":56}],289:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34273,7 +34314,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostsTableContainer);
 
-},{"../actions/posts":270,"../components":280,"moment":50,"react":245,"react-redux":56,"react-router":99}],289:[function(require,module,exports){
+},{"../actions/posts":270,"../components":281,"moment":50,"react":245,"react-redux":56,"react-router":99}],290:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34340,7 +34381,7 @@ UndoRedoMessages = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)
 
 exports.default = UndoRedoMessages;
 
-},{"../components":280,"react":245,"react-redux":56,"redux-undo":249}],290:[function(require,module,exports){
+},{"../components":281,"react":245,"react-redux":56,"redux-undo":249}],291:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34386,7 +34427,7 @@ exports.PostsContainer = _PostsContainer3.default;
 exports.PostsTableContainer = _PostsTableContainer3.default;
 exports.PostFormContainer = _PostFormContainer3.default;
 
-},{"./DashboardContainer":282,"./DashboardItemContainer":283,"./DashboardMessagesContainer":284,"./MessageListContainer":285,"./PostFormContainer":286,"./PostsContainer":287,"./PostsTableContainer":288}],291:[function(require,module,exports){
+},{"./DashboardContainer":283,"./DashboardItemContainer":284,"./DashboardMessagesContainer":285,"./MessageListContainer":286,"./PostFormContainer":287,"./PostsContainer":288,"./PostsTableContainer":289}],292:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34402,7 +34443,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.tokenize = _tokenize3.default;
 
-},{"./tokenize":292}],292:[function(require,module,exports){
+},{"./tokenize":293}],293:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34416,7 +34457,7 @@ exports.default = function () {
   return Math.random();
 };
 
-},{}],293:[function(require,module,exports){
+},{}],294:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34469,7 +34510,7 @@ var undoableTodos = (0, _reduxUndo2.default)(dashboard, {
 
 exports.default = undoableTodos;
 
-},{"../constants":281,"../helpers":291,"redux-undo":249}],294:[function(require,module,exports){
+},{"../constants":282,"../helpers":292,"redux-undo":249}],295:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34490,7 +34531,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.dashboard = _dashboard3.default;
 exports.posts = _posts3.default;
 
-},{"./dashboard":293,"./posts":295}],295:[function(require,module,exports){
+},{"./dashboard":294,"./posts":296}],296:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34503,12 +34544,7 @@ var initialState = {
   isFetching: false,
   posts: [],
   page: 1,
-  post: {
-    id: '...',
-    title: '...',
-    author: '...',
-    created_utc: '...'
-  }
+  post: null
 };
 
 function posts() {
@@ -34517,6 +34553,7 @@ function posts() {
 
   switch (action.type) {
     case _constants.REQUEST_POSTS:
+    case _constants.REQUEST_POST:
       return Object.assign({}, state, {
         isFetching: true
       });
@@ -34527,6 +34564,12 @@ function posts() {
         posts: action.posts
       });
 
+    case _constants.RECEIVE_POST:
+      return Object.assign({}, state, {
+        isFetching: false,
+        post: action.post
+      });
+
     default:
       return state;
   }
@@ -34534,6 +34577,6 @@ function posts() {
 
 exports.default = posts;
 
-},{"../constants":281}]},{},[271]);
+},{"../constants":282}]},{},[271]);
 
 //# sourceMappingURL=map/app.js.map
