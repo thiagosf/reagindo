@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import { Loader, PostForm } from '../components'
-import { fetchPost } from '../actions/posts'
+import { fetchPost, sendPost } from '../actions/posts'
 
 class PostFormContainer extends Component {
   componentDidMount() {
@@ -12,11 +11,24 @@ class PostFormContainer extends Component {
   getLoader() {
     if (this.props.isFetching) return <Loader />
   }
+  getForm() {
+    if (!this.props.isFetching) {
+      const { id, post, sendPost } = this.props
+      return (
+        <PostForm 
+          action={`/posts/${id}`} 
+          method="post" 
+          post={post} 
+          onSubmit={sendPost}
+          />
+      )
+    }
+  }
   render() {
     return (
       <div>
         {this.getLoader()}
-        <PostForm {...this.props.post} />
+        {this.getForm()}
       </div>
     )
   }
@@ -24,9 +36,9 @@ class PostFormContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    isFetching: state.posts.isFetching,
     post: state.posts.post,
-    id: state.posts.id,
-    isFetching: state.posts.isFetching
+    id: state.posts.id
   }
 }
 
@@ -34,6 +46,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchPost: (id) => {
       return dispatch(fetchPost(id))
+    },
+    sendPost: (e, form) => {
+      return dispatch(sendPost(e, form))
     }
   }
 }

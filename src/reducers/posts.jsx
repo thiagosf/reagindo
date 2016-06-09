@@ -10,7 +10,8 @@ const initialState = {
   isFetching: false,
   posts: [],
   page: 1,
-  post: null
+  post: {},
+  id: null
 }
 
 function posts(state = initialState, action) {
@@ -30,7 +31,8 @@ function posts(state = initialState, action) {
     case RECEIVE_POST:
       return Object.assign({}, state, {
         isFetching: false,
-        post: action.post
+        post: action.post,
+        id: action.id
       })
 
     default:

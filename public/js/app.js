@@ -32795,6 +32795,7 @@ exports.requestPosts = requestPosts;
 exports.requestPost = requestPost;
 exports.fetchPosts = fetchPosts;
 exports.fetchPost = fetchPost;
+exports.sendPost = sendPost;
 
 var _superagent = require('superagent');
 
@@ -32867,6 +32868,15 @@ function fetchPost(id) {
           dispatch(receivePost(id, res.body));
         }
     });
+  };
+}
+
+function sendPost(e, form) {
+  return function (dispatch) {
+    e.preventDefault();
+    console.log(form);
+    console.log(form.refs.title.value);
+    console.log(form.refs.author.value);
   };
 }
 
@@ -33666,72 +33676,106 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
 
 var _ = require('./');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PostForm = function PostForm(_ref) {
-  var _ref$title = _ref.title;
-  var title = _ref$title === undefined ? '' : _ref$title;
-  var _ref$author = _ref.author;
-  var author = _ref$author === undefined ? '' : _ref$author;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  return _react2.default.createElement(
-    'form',
-    null,
-    _react2.default.createElement(
-      'div',
-      { className: 'form-group' },
-      _react2.default.createElement(
-        'label',
-        null,
-        'Titulo'
-      ),
-      _react2.default.createElement('input', { type: 'text', className: 'form-control', value: title })
-    ),
-    _react2.default.createElement(
-      'div',
-      { className: 'form-group' },
-      _react2.default.createElement(
-        'label',
-        null,
-        'Autor'
-      ),
-      _react2.default.createElement('input', { type: 'text', className: 'form-control', value: author })
-    ),
-    _react2.default.createElement(
-      'div',
-      { className: 'text-center' },
-      _react2.default.createElement(
-        _.Button,
-        { success: true, large: true },
-        'Salvar'
-      )
-    ),
-    _react2.default.createElement(
-      'div',
-      { className: 'other-actions' },
-      _react2.default.createElement(
-        Link,
-        { to: '/posts', className: 'btn btn-warning' },
-        'Cancelar'
-      )
-    )
-  );
-};
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PostForm = function (_Component) {
+  _inherits(PostForm, _Component);
+
+  function PostForm() {
+    _classCallCheck(this, PostForm);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(PostForm).apply(this, arguments));
+  }
+
+  _createClass(PostForm, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      this.props.onSubmit(e, this);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props$post = this.props.post;
+      var title = _props$post.title;
+      var author = _props$post.author;
+
+      return _react2.default.createElement(
+        'form',
+        { action: this.props.action, method: this.props.method, onSubmit: this.handleSubmit.bind(this) },
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group' },
+          _react2.default.createElement(
+            'label',
+            null,
+            'Titulo'
+          ),
+          _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'title', defaultValue: title })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group' },
+          _react2.default.createElement(
+            'label',
+            null,
+            'Autor'
+          ),
+          _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'author', defaultValue: author })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'text-center' },
+          _react2.default.createElement(
+            _.Button,
+            { success: true, large: true, type: 'submit' },
+            'Salvar'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'other-actions' },
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/posts', className: 'btn btn-warning' },
+            'Cancelar'
+          )
+        )
+      );
+    }
+  }]);
+
+  return PostForm;
+}(_react.Component);
 
 PostForm.propTypes = {
-  title: _react.PropTypes.string,
-  author: _react.PropTypes.string
+  post: _react.PropTypes.shape({
+    title: _react.PropTypes.string,
+    author: _react.PropTypes.string
+  }),
+  action: _react.PropTypes.string,
+  method: _react.PropTypes.string,
+  onSubmit: _react.PropTypes.func
 };
 
 exports.default = PostForm;
 
-},{"./":281,"react":245}],281:[function(require,module,exports){
+},{"./":281,"react":245,"react-router":99}],281:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33959,8 +34003,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
 
-var _reactRouter = require('react-router');
-
 var _components = require('../components');
 
 var _posts = require('../actions/posts');
@@ -33997,13 +34039,30 @@ var PostFormContainer = function (_Component) {
       if (this.props.isFetching) return _react2.default.createElement(_components.Loader, null);
     }
   }, {
+    key: 'getForm',
+    value: function getForm() {
+      if (!this.props.isFetching) {
+        var _props2 = this.props;
+        var id = _props2.id;
+        var post = _props2.post;
+        var _sendPost = _props2.sendPost;
+
+        return _react2.default.createElement(_components.PostForm, {
+          action: '/posts/' + id,
+          method: 'post',
+          post: post,
+          onSubmit: _sendPost
+        });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         null,
         this.getLoader(),
-        _react2.default.createElement(_components.PostForm, this.props.post)
+        this.getForm()
       );
     }
   }]);
@@ -34013,9 +34072,9 @@ var PostFormContainer = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
+    isFetching: state.posts.isFetching,
     post: state.posts.post,
-    id: state.posts.id,
-    isFetching: state.posts.isFetching
+    id: state.posts.id
   };
 };
 
@@ -34023,13 +34082,16 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchPost: function fetchPost(id) {
       return dispatch((0, _posts.fetchPost)(id));
+    },
+    sendPost: function sendPost(e, form) {
+      return dispatch((0, _posts.sendPost)(e, form));
     }
   };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostFormContainer);
 
-},{"../actions/posts":270,"../components":281,"react":245,"react-redux":56,"react-router":99}],288:[function(require,module,exports){
+},{"../actions/posts":270,"../components":281,"react":245,"react-redux":56}],288:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34544,7 +34606,8 @@ var initialState = {
   isFetching: false,
   posts: [],
   page: 1,
-  post: null
+  post: {},
+  id: null
 };
 
 function posts() {
@@ -34567,7 +34630,8 @@ function posts() {
     case _constants.RECEIVE_POST:
       return Object.assign({}, state, {
         isFetching: false,
-        post: action.post
+        post: action.post,
+        id: action.id
       });
 
     default:

@@ -79,3 +79,12 @@ export function fetchPost(id) {
       })
   }
 }
+
+export function sendPost(e, form) {
+  return dispatch => {
+    e.preventDefault()
+    console.log(form)
+    console.log(form.refs.title.value)
+    console.log(form.refs.author.value)
+  }
+}
