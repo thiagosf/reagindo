@@ -32790,12 +32790,13 @@ var removeMessage = exports.removeMessage = function removeMessage(id) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.receivePost = exports.receivePosts = exports.removePost = undefined;
+exports.savedPost = exports.sendingPost = exports.receivePost = exports.receivePosts = exports.removePost = undefined;
 exports.requestPosts = requestPosts;
 exports.requestPost = requestPost;
 exports.fetchPosts = fetchPosts;
 exports.fetchPost = fetchPost;
-exports.sendPost = sendPost;
+exports.createPost = createPost;
+exports.updatePost = updatePost;
 
 var _superagent = require('superagent');
 
@@ -32843,6 +32844,20 @@ var receivePost = exports.receivePost = function receivePost(id, post) {
   };
 };
 
+var sendingPost = exports.sendingPost = function sendingPost(form) {
+  return {
+    type: _constants.SENDING_POST,
+    form: form
+  };
+};
+
+var savedPost = exports.savedPost = function savedPost(id) {
+  return {
+    type: _constants.SAVED_POST,
+    id: id
+  };
+};
+
 function fetchPosts(page) {
   return function (dispatch) {
     dispatch(requestPosts(page));
@@ -32871,12 +32886,47 @@ function fetchPost(id) {
   };
 }
 
-function sendPost(e, form) {
+function createPost(e, form) {
   return function (dispatch) {
     e.preventDefault();
-    console.log(form);
-    console.log(form.refs.title.value);
-    console.log(form.refs.author.value);
+    dispatch(sendingPost(form));
+    var data = {
+      title: form.refs.title.value,
+      author: form.refs.author.value
+    };
+    _superagent2.default.post('http://www.mocky.io/v2/57561bc30f0000d2052eff47').set('Accept', 'application/json').type('form').send(data).end(function (err, res) {
+      if (err) {
+        // dispatch de erro
+      } else {
+          if (res.status == 200) {
+            dispatch(savedPost(res.body.id));
+          } else {
+            // lanca erro
+          }
+        }
+    });
+  };
+}
+
+function updatePost(e, form) {
+  return function (dispatch) {
+    e.preventDefault();
+    dispatch(sendingPost(form));
+    var data = {
+      title: form.refs.title.value,
+      author: form.refs.author.value
+    };
+    _superagent2.default.post('http://www.mocky.io/v2/57561bc30f0000d2052eff47').set('Accept', 'application/json').type('form').send(data).end(function (err, res) {
+      if (err) {
+        // dispatch de erro
+      } else {
+          if (res.status == 200) {
+            dispatch(savedPost(res.body.id));
+          } else {
+            // lanca erro
+          }
+        }
+    });
   };
 }
 
@@ -33709,6 +33759,16 @@ var PostForm = function (_Component) {
       this.props.onSubmit(e, this);
     }
   }, {
+    key: 'lock',
+    value: function lock() {
+      this.refs.button.disabled = true;
+    }
+  }, {
+    key: 'unlock',
+    value: function unlock() {
+      this.refs.button.disabled = false;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _props$post = this.props.post;
@@ -33743,7 +33803,7 @@ var PostForm = function (_Component) {
           { className: 'text-center' },
           _react2.default.createElement(
             _.Button,
-            { success: true, large: true, type: 'submit' },
+            { success: true, large: true, type: 'submit', ref: 'button' },
             'Salvar'
           )
         ),
@@ -33847,6 +33907,8 @@ var REQUEST_POSTS = exports.REQUEST_POSTS = 'REQUEST_POSTS';
 var REQUEST_POST = exports.REQUEST_POST = 'REQUEST_POST';
 var RECEIVE_POSTS = exports.RECEIVE_POSTS = 'RECEIVE_POSTS';
 var RECEIVE_POST = exports.RECEIVE_POST = 'RECEIVE_POST';
+var SENDING_POST = exports.SENDING_POST = 'SENDING_POST';
+var SAVED_POST = exports.SAVED_POST = 'SAVED_POST';
 
 },{}],283:[function(require,module,exports){
 'use strict';
@@ -34045,14 +34107,28 @@ var PostFormContainer = function (_Component) {
         var _props2 = this.props;
         var id = _props2.id;
         var post = _props2.post;
-        var _sendPost = _props2.sendPost;
+        var _createPost = _props2.createPost;
+        var _updatePost = _props2.updatePost;
 
+        var submitAction = !id ? _createPost : _updatePost;
         return _react2.default.createElement(_components.PostForm, {
+          ref: 'form',
           action: '/posts/' + id,
           method: 'post',
           post: post,
-          onSubmit: _sendPost
+          onSubmit: submitAction
         });
+      }
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      if (this.refs.form) {
+        if (this.props.isSending) {
+          this.refs.form.lock();
+        } else {
+          this.refs.form.unlock();
+        }
       }
     }
   }, {
@@ -34073,6 +34149,7 @@ var PostFormContainer = function (_Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     isFetching: state.posts.isFetching,
+    isSending: state.posts.isSending,
     post: state.posts.post,
     id: state.posts.id
   };
@@ -34083,8 +34160,11 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchPost: function fetchPost(id) {
       return dispatch((0, _posts.fetchPost)(id));
     },
-    sendPost: function sendPost(e, form) {
-      return dispatch((0, _posts.sendPost)(e, form));
+    createPost: function createPost(e, form) {
+      return dispatch((0, _posts.createPost)(e, form));
+    },
+    updatePost: function updatePost(e, form) {
+      return dispatch((0, _posts.updatePost)(e, form));
     }
   };
 };
@@ -34604,6 +34684,7 @@ var _constants = require('../constants');
 
 var initialState = {
   isFetching: false,
+  isSending: false,
   posts: [],
   page: 1,
   post: {},
@@ -34618,19 +34699,35 @@ function posts() {
     case _constants.REQUEST_POSTS:
     case _constants.REQUEST_POST:
       return Object.assign({}, state, {
-        isFetching: true
+        isFetching: true,
+        isSending: false
       });
 
     case _constants.RECEIVE_POSTS:
       return Object.assign({}, state, {
         isFetching: false,
+        isSending: false,
         posts: action.posts
       });
 
     case _constants.RECEIVE_POST:
       return Object.assign({}, state, {
         isFetching: false,
+        isSending: false,
         post: action.post,
+        id: action.id
+      });
+
+    case _constants.SENDING_POST:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isSending: true
+      });
+
+    case SAVED_POST:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isSending: false,
         id: action.id
       });
 

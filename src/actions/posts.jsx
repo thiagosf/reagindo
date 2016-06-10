@@ -6,7 +6,9 @@ import {
   REQUEST_POSTS,
   REQUEST_POST,
   RECEIVE_POSTS,
-  RECEIVE_POST
+  RECEIVE_POST,
+  SENDING_POST,
+  SAVED_POST
 } from '../constants'
 
 export const removePost = (id) => {
@@ -46,6 +48,20 @@ export const receivePost = (id, post) => {
   }
 }
 
+export const sendingPost = (form) => {
+  return {
+    type: SENDING_POST,
+    form
+  }
+}
+
+export const savedPost = (id) => {
+  return {
+    type: SAVED_POST,
+    id
+  }
+}
+
 export function fetchPosts(page) {
   return dispatch => {
     dispatch(requestPosts(page))
@@ -80,11 +96,56 @@ export function fetchPost(id) {
   }
 }
 
-export function sendPost(e, form) {
+export function createPost(e, form) {
   return dispatch => {
     e.preventDefault()
-    console.log(form)
-    console.log(form.refs.title.value)
-    console.log(form.refs.author.value)
+    dispatch(sendingPost(form))
+    const data = {
+      title: form.refs.title.value,
+      author: form.refs.author.value
+    }
+    request
+      .post('http://www.mocky.io/v2/57561bc30f0000d2052eff47')
+      .set('Accept', 'application/json')
+      .type('form')
+      .send(data)
+      .end((err, res) => {
+        if (err) {
+          // dispatch de erro
+        } else {
+          if (res.status == 200) {
+            dispatch(savedPost(res.body.id))
+          } else {
+            // lanca erro
+          }
+        }
+      })
+  }
+}
+
+export function updatePost(e, form) {
+  return dispatch => {
+    e.preventDefault()
+    dispatch(sendingPost(form))
+    const data = {
+      title: form.refs.title.value,
+      author: form.refs.author.value
+    }
+    request
+      .post('http://www.mocky.io/v2/57561bc30f0000d2052eff47')
+      .set('Accept', 'application/json')
+      .type('form')
+      .send(data)
+      .end((err, res) => {
+        if (err) {
+          // dispatch de erro
+        } else {
+          if (res.status == 200) {
+            dispatch(savedPost(res.body.id))
+          } else {
+            // lanca erro
+          }
+        }
+      })
   }
 }

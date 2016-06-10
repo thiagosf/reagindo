@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Loader, PostForm } from '../components'
-import { fetchPost, sendPost } from '../actions/posts'
+import { fetchPost, createPost, updatePost } from '../actions/posts'
 
 class PostFormContainer extends Component {
   componentDidMount() {
@@ -13,15 +13,26 @@ class PostFormContainer extends Component {
   }
   getForm() {
     if (!this.props.isFetching) {
-      const { id, post, sendPost } = this.props
+      const { id, post, createPost, updatePost } = this.props
+      let submitAction = !id ? createPost : updatePost
       return (
         <PostForm 
+          ref="form"
           action={`/posts/${id}`} 
           method="post" 
           post={post} 
-          onSubmit={sendPost}
+          onSubmit={submitAction}
           />
       )
+    }
+  }
+  componentDidUpdate() {
+    if (this.refs.form) {
+      if (this.props.isSending) {
+        this.refs.form.lock()
+      } else {
+        this.refs.form.unlock()
+      }
     }
   }
   render() {
@@ -37,6 +48,7 @@ class PostFormContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     isFetching: state.posts.isFetching,
+    isSending: state.posts.isSending,
     post: state.posts.post,
     id: state.posts.id
   }
@@ -47,8 +59,11 @@ const mapDispatchToProps = (dispatch) => {
     fetchPost: (id) => {
       return dispatch(fetchPost(id))
     },
-    sendPost: (e, form) => {
-      return dispatch(sendPost(e, form))
+    createPost: (e, form) => {
+      return dispatch(createPost(e, form))
+    },
+    updatePost: (e, form) => {
+      return dispatch(updatePost(e, form))
     }
   }
 }

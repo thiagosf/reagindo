@@ -6,6 +6,12 @@ class PostForm extends Component {
   handleSubmit(e) {
     this.props.onSubmit(e, this)
   }
+  lock() {
+    this.refs.button.disabled = true
+  }
+  unlock() {
+    this.refs.button.disabled = false
+  }
   render() {
     let { title, author } = this.props.post
     return (
@@ -19,7 +25,7 @@ class PostForm extends Component {
           <input type="text" className="form-control" ref="author" defaultValue={author} />
         </div>
         <div className="text-center">
-          <Button success large type="submit">Salvar</Button>
+          <Button success large type="submit" ref="button">Salvar</Button>
         </div>
         <div className="other-actions">
           <Link to="/posts" className="btn btn-warning">Cancelar</Link>
