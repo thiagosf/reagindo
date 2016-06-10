@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Loader, PostForm } from '../components'
 import { fetchPost, createPost, updatePost } from '../actions/posts'
@@ -33,6 +33,9 @@ class PostFormContainer extends Component {
       } else {
         this.refs.form.unlock()
       }
+      if (this.props.isSaved) {
+        this.context.router.push('/posts')
+      }
     }
   }
   render() {
@@ -47,10 +50,8 @@ class PostFormContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isFetching: state.posts.isFetching,
-    isSending: state.posts.isSending,
-    post: state.posts.post,
-    id: state.posts.id
+    ...state.posts,
+    routing: state.routing
   }
 }
 
@@ -66,6 +67,10 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch(updatePost(e, form))
     }
   }
+}
+
+PostFormContainer.contextTypes = {
+  router: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostFormContainer)

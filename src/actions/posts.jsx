@@ -1,4 +1,3 @@
-// import fetch from 'isomorphic-fetch'
 import request from 'superagent'
 
 import {
@@ -55,10 +54,11 @@ export const sendingPost = (form) => {
   }
 }
 
-export const savedPost = (id) => {
+export const savedPost = (id, message) => {
   return {
     type: SAVED_POST,
-    id
+    id,
+    message
   }
 }
 
@@ -141,7 +141,7 @@ export function updatePost(e, form) {
           // dispatch de erro
         } else {
           if (res.status == 200) {
-            dispatch(savedPost(res.body.id))
+            dispatch(savedPost(res.body.id, 'Post atualizado com sucesso!'))
           } else {
             // lanca erro
           }

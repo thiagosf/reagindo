@@ -10,3 +10,6 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const RECEIVE_POST = 'RECEIVE_POST'
 export const SENDING_POST = 'SENDING_POST'
 export const SAVED_POST = 'SAVED_POST'
+
+// Notifications
+export const CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION'

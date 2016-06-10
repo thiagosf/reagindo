@@ -7,7 +7,7 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import { Login, NoMatch, Nav } from './components'
-import { DashboardContainer, PostsContainer, PostsTableContainer, PostFormContainer } from './containers'
+import { DashboardContainer, PostsContainer, PostsTableContainer, PostFormContainer, NotificationContainer } from './containers'
 import * as reducers from './reducers'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
@@ -30,6 +30,7 @@ class App extends Component {
       <div>
         <Nav />
         <div className="container">
+          <NotificationContainer />
           {this.props.children}
         </div>
       </div>

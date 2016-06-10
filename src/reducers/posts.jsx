@@ -4,16 +4,19 @@ import {
   REQUEST_POST,
   RECEIVE_POSTS,
   RECEIVE_POST,
-  SENDING_POST
+  SENDING_POST,
+  SAVED_POST
 } from '../constants'
 
 const initialState = {
   isFetching: false,
   isSending: false,
+  isSaved: false,
   posts: [],
   page: 1,
   post: {},
-  id: null
+  id: null,
+  message: null
 }
 
 function posts(state = initialState, action) {
@@ -22,35 +25,44 @@ function posts(state = initialState, action) {
     case REQUEST_POST:
       return Object.assign({}, state, {
         isFetching: true,
-        isSending: false
+        isSending: false,
+        isSaved: false,
+        message: null
       })
 
     case RECEIVE_POSTS:
       return Object.assign({}, state, {
         isFetching: false,
         isSending: false,
-        posts: action.posts
+        isSaved: false,
+        posts: action.posts,
+        message: null
       })
 
     case RECEIVE_POST:
       return Object.assign({}, state, {
         isFetching: false,
         isSending: false,
+        isSaved: false,
         post: action.post,
-        id: action.id
+        id: action.id,
+        message: null
       })
 
     case SENDING_POST:
       return Object.assign({}, state, {
         isFetching: false,
-        isSending: true
+        isSending: true,
+        message: null
       })
 
     case SAVED_POST:
       return Object.assign({}, state, {
         isFetching: false,
         isSending: false,
-        id: action.id
+        isSaved: true,
+        id: action.id,
+        message: action.message
       })
 
     default:
