@@ -7,7 +7,10 @@ import {
   RECEIVE_POSTS,
   RECEIVE_POST,
   SENDING_POST,
-  SAVED_POST
+  SAVED_POST,
+  NOTIFICATION_SUCCESS,
+  NOTIFICATION_ERROR,
+  ERROR_TO_SAVE_POST
 } from '../constants'
 
 export const removePost = (id) => {
@@ -54,11 +57,20 @@ export const sendingPost = (form) => {
   }
 }
 
-export const savedPost = (id, message) => {
+const savedPost = (id, message, message_type) => {
   return {
     type: SAVED_POST,
     id,
-    message
+    message,
+    message_type
+  }
+}
+
+const errorToSavePost = (message, message_type) => {
+  return {
+    type: ERROR_TO_SAVE_POST,
+    message,
+    message_type
   }
 }
 
@@ -137,11 +149,12 @@ export function updatePost(e, form) {
       .type('form')
       .send(data)
       .end((err, res) => {
-        if (err) {
-          // dispatch de erro
+        let random = Math.floor(Math.random() * (3 - 1)) + 1;
+        if (err || random % 2 == 0) {
+          dispatch(errorToSavePost('Ops.. algo não saiu como esperado', NOTIFICATION_ERROR))
         } else {
           if (res.status == 200) {
-            dispatch(savedPost(res.body.id, 'Post atualizado com sucesso!'))
+            dispatch(savedPost(res.body.id, 'Post atualizado com sucesso!', NOTIFICATION_SUCCESS))
           } else {
             // lanca erro
           }

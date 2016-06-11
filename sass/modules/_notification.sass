@@ -1,0 +1,17 @@
+.notification
+  margin-top: 20px
+  @media (min-width: 769px)
+    transition: all 300ms ease-out
+    position: fixed
+    z-index: 1030
+    top: 70px
+    right: 20px
+    margin-top: 0
+    &.dismiss
+      transform: translateX(120%)
+      opacity: 0
+  .alert
+    cursor: pointer
+    transition: opacity 300ms
+    &:hover
+      opacity: 0.7
