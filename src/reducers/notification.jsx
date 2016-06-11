@@ -1,5 +1,6 @@
 import {
-  CLEAR_NOTIFICATION,
+  HIDING_NOTIFICATION,
+  HIDDEN_NOTIFICATION,
   NOTIFICATION_SUCCESS,
   NOTIFICATION_INFO,
   NOTIFICATION_ERROR,
@@ -10,14 +11,20 @@ import {
 const initialState = {
   message: null,
   message_type: NOTIFICATION_INFO,
-  message_duration: 3000
+  message_duration: 3000,
+  status: 'hidden'
 }
 
-function notifications(state = initialState, action) {
+function notification(state = initialState, action) {
   switch (action.type) {
-    case CLEAR_NOTIFICATION:
+    case HIDING_NOTIFICATION:
       return Object.assign({}, state, {
-        message: null
+        status: 'hiding'
+      })
+
+    case HIDDEN_NOTIFICATION:
+      return Object.assign({}, state, {
+        status: 'hidden'
       })
   }
   
@@ -25,11 +32,12 @@ function notifications(state = initialState, action) {
     return Object.assign({}, state, {
       message: action.message,
       message_type: (action.message_type || initialState.message_type),
-      message_duration: (action.message_duration || initialState.message_duration)
+      message_duration: (action.message_duration || initialState.message_duration),
+      status: 'show'
     })
   }
 
   return state
 }
 
-export default notifications
+export default notification

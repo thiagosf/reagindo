@@ -1,30 +1,32 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
+import classnames from 'classnames'
 
-export default Notification = ({ message, message_type, message_duration, onClick }) => {
-  if (!message) return false
-  // let timeout = setTimeout(() => onClick(), message_duration)
-  let i = message_duration / 1000
-  let timeout = setInterval(() => {
-    --i
-    if (i == 0) clearInterval(timeout)
-  }, message_duration)
-  const cancelTimeout = () => {
-    clearInterval(timeout)
-  }
-  return (
-    <div className="notification" onMouseEnter={cancelTimeout}>
-      <div className={`alert alert-${message_type}`} onClick={onClick}>
-        {message}
-        <br />
-        <small>Fechando em {i}s</small>
+export default class Notification extends Component  {
+  render() {
+    let { message, message_duration, message_type, status, onClick, onMouseEnter } = this.props
+    let class_name = classnames({
+      'notification': true,
+      'notification-show': (status == 'show' || status == 'hiding'),
+      'notification-hiding': status == 'hiding',
+      'notification-hidden': status == 'hidden'
+    })
+    return (
+      <div className={class_name}>
+        <div className={`alert alert-${message_type}`} onClick={onClick} onMouseEnter={onMouseEnter}>
+          {message}
+          <br />
+          <small><i>Fechando em alguns segungos</i></small>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 Notification.propTypes = {
   message: PropTypes.string,
   message_type: PropTypes.string,
   message_duration: PropTypes.number,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  onMouseEnter: PropTypes.func,
+  status: PropTypes.string
 }

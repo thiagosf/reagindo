@@ -13,7 +13,8 @@ export const SAVED_POST = 'SAVED_POST'
 export const ERROR_TO_SAVE_POST = 'ERROR_TO_SAVE_POST'
 
 // Notifications
-export const CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION'
+export const HIDING_NOTIFICATION = 'HIDING_NOTIFICATION'
+export const HIDDEN_NOTIFICATION = 'HIDDEN_NOTIFICATION'
 export const NOTIFICATION_SUCCESS = 'success'
 export const NOTIFICATION_INFO = 'info'
 export const NOTIFICATION_ERROR = 'danger'

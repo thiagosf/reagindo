@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Loader, PostForm } from '../components'
-import { fetchPost, createPost, updatePost } from '../actions/posts'
+import { fetchPost, createPost, updatePost } from '../actions/post'
 
 class PostFormContainer extends Component {
   componentDidMount() {
@@ -50,7 +50,7 @@ class PostFormContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.posts,
+    ...state.post,
     routing: state.routing
   }
 }

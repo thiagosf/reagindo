@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Loader } from '../components'
-import { removePost, fetchPosts } from '../actions/posts'
+import { removePost, fetchPosts } from '../actions/post'
 import moment from 'moment'
 
 export function postRow(post) {
@@ -69,9 +69,7 @@ class PostsTableContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts.posts,
-    page: state.posts.page,
-    isFetching: state.posts.isFetching
+    ...state.post
   }
 }
 

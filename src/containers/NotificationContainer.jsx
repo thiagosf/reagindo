@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { clearNotification } from '../actions/notifications'
+import { hideNotification, hideTimeOutNotification, cancelTimeOutNotification } from '../actions/notification'
 import { Notification } from '../components'
 
 class NotificationContainer extends Component {
   render() {
+    this.props.hideTimeOutNotification(this.props.notification)
     return (
       <Notification 
-        message={this.props.message}
-        message_type={this.props.message_type} 
-        message_duration={this.props.message_duration} 
-        onClick={this.props.clearNotification} 
+        {...this.props.notification} 
+        onClick={this.props.hideNotification} 
+        onMouseEnter={this.props.cancelTimeOutNotification}
         />
     )
   }
@@ -18,16 +18,20 @@ class NotificationContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    message: state.notifications.message,
-    message_type: state.notifications.message_type,
-    message_duration: state.notifications.message_duration
+    notification: state.notification
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearNotification: () => {
-      dispatch(clearNotification())
+    hideNotification: () => {
+      dispatch(hideNotification())
+    },
+    hideTimeOutNotification: (notification) => {
+      dispatch(hideTimeOutNotification(notification))
+    },
+    cancelTimeOutNotification: () => {
+      dispatch(cancelTimeOutNotification())
     }
   }
 }

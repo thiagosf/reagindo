@@ -32790,12 +32790,41 @@ var removeMessage = exports.removeMessage = function removeMessage(id) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.clearNotification = undefined;
+exports.cancelTimeOutNotification = exports.hideTimeOutNotification = exports.hideNotification = undefined;
 
 var _constants = require('../constants');
 
-var clearNotification = exports.clearNotification = function clearNotification() {
-  return { type: _constants.CLEAR_NOTIFICATION };
+var hiddenTimeOut = void 0;
+var hideTimeOut = void 0;
+
+var hideNotification = exports.hideNotification = function hideNotification() {
+  return function (dispatch) {
+    dispatch({ type: _constants.HIDING_NOTIFICATION });
+    clearTimeout(hiddenTimeOut);
+    clearTimeout(hideTimeOut);
+    hiddenTimeOut = window.setTimeout(function () {
+      dispatch({ type: _constants.HIDDEN_NOTIFICATION });
+    }, 500);
+  };
+};
+
+var hideTimeOutNotification = exports.hideTimeOutNotification = function hideTimeOutNotification(notification) {
+  var timeoutTime = 3000;
+  return function (dispatch) {
+    if (notification && notification.status == 'show') {
+      clearTimeout(hideTimeOut);
+      hideTimeOut = window.setTimeout(function () {
+        dispatch(hideNotification());
+      }, timeoutTime);
+    }
+  };
+};
+
+var cancelTimeOutNotification = exports.cancelTimeOutNotification = function cancelTimeOutNotification() {
+  return function (dispatch) {
+    clearTimeout(hiddenTimeOut);
+    clearTimeout(hideTimeOut);
+  };
 };
 
 },{"../constants":284}],271:[function(require,module,exports){
@@ -33745,61 +33774,94 @@ var NoMatch = function (_Component) {
 exports.default = NoMatch;
 
 },{"react":245}],281:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = require("react");
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = Notification = function Notification(_ref) {
-  var message = _ref.message;
-  var message_type = _ref.message_type;
-  var message_duration = _ref.message_duration;
-  var onClick = _ref.onClick;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  if (!message) return false;
-  // let timeout = setTimeout(() => onClick(), message_duration)
-  var i = message_duration;
-  var timeout = setInterval(function () {
-    --i;
-    if (i == 0) clearInterval(timeout);
-  }, 1);
-  var cancelTimeout = function cancelTimeout() {
-    clearInterval(timeout);
-  };
-  return _react2.default.createElement(
-    "div",
-    { className: "notification", onMouseEnter: cancelTimeout },
-    _react2.default.createElement(
-      "div",
-      { className: "alert alert-" + message_type, onClick: onClick },
-      message,
-      _react2.default.createElement("br", null),
-      _react2.default.createElement(
-        "small",
-        null,
-        "Fechando em ",
-        i,
-        "s"
-      )
-    )
-  );
-};
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Notification = function (_Component) {
+  _inherits(Notification, _Component);
+
+  function Notification() {
+    _classCallCheck(this, Notification);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Notification).apply(this, arguments));
+  }
+
+  _createClass(Notification, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props;
+      var message = _props.message;
+      var message_duration = _props.message_duration;
+      var message_type = _props.message_type;
+      var status = _props.status;
+      var onClick = _props.onClick;
+      var onMouseEnter = _props.onMouseEnter;
+
+      var class_name = (0, _classnames2.default)({
+        'notification': true,
+        'notification-show': status == 'show' || status == 'hiding',
+        'notification-hiding': status == 'hiding',
+        'notification-hidden': status == 'hidden'
+      });
+      return _react2.default.createElement(
+        'div',
+        { className: class_name },
+        _react2.default.createElement(
+          'div',
+          { className: 'alert alert-' + message_type, onClick: onClick, onMouseEnter: onMouseEnter },
+          message,
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'small',
+            null,
+            _react2.default.createElement(
+              'i',
+              null,
+              'Fechando em alguns segungos'
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Notification;
+}(_react.Component);
+
+exports.default = Notification;
+
 
 Notification.propTypes = {
   message: _react.PropTypes.string,
   message_type: _react.PropTypes.string,
   message_duration: _react.PropTypes.number,
-  onClick: _react.PropTypes.func.isRequired
+  onClick: _react.PropTypes.func.isRequired,
+  onMouseEnter: _react.PropTypes.func,
+  status: _react.PropTypes.string
 };
 
-},{"react":245}],282:[function(require,module,exports){
+},{"classnames":1,"react":245}],282:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33997,7 +34059,8 @@ var SAVED_POST = exports.SAVED_POST = 'SAVED_POST';
 var ERROR_TO_SAVE_POST = exports.ERROR_TO_SAVE_POST = 'ERROR_TO_SAVE_POST';
 
 // Notifications
-var CLEAR_NOTIFICATION = exports.CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION';
+var HIDING_NOTIFICATION = exports.HIDING_NOTIFICATION = 'HIDING_NOTIFICATION';
+var HIDDEN_NOTIFICATION = exports.HIDDEN_NOTIFICATION = 'HIDDEN_NOTIFICATION';
 var NOTIFICATION_SUCCESS = exports.NOTIFICATION_SUCCESS = 'success';
 var NOTIFICATION_INFO = exports.NOTIFICATION_INFO = 'info';
 var NOTIFICATION_ERROR = exports.NOTIFICATION_ERROR = 'danger';
@@ -34151,6 +34214,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -34159,7 +34224,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
 
-var _notifications = require('../actions/notifications');
+var _notification = require('../actions/notification');
 
 var _components = require('../components');
 
@@ -34183,12 +34248,11 @@ var NotificationContainer = function (_Component) {
   _createClass(NotificationContainer, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_components.Notification, {
-        message: this.props.message,
-        message_type: this.props.message_type,
-        message_duration: this.props.message_duration,
-        onClick: this.props.clearNotification
-      });
+      this.props.hideTimeOutNotification(this.props.notification);
+      return _react2.default.createElement(_components.Notification, _extends({}, this.props.notification, {
+        onClick: this.props.hideNotification,
+        onMouseEnter: this.props.cancelTimeOutNotification
+      }));
     }
   }]);
 
@@ -34197,23 +34261,27 @@ var NotificationContainer = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    message: state.notifications.message,
-    message_type: state.notifications.message_type,
-    message_duration: state.notifications.message_duration
+    notification: state.notification
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    clearNotification: function clearNotification() {
-      dispatch((0, _notifications.clearNotification)());
+    hideNotification: function hideNotification() {
+      dispatch((0, _notification.hideNotification)());
+    },
+    hideTimeOutNotification: function hideTimeOutNotification(notification) {
+      dispatch((0, _notification.hideTimeOutNotification)(notification));
+    },
+    cancelTimeOutNotification: function cancelTimeOutNotification() {
+      dispatch((0, _notification.cancelTimeOutNotification)());
     }
   };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NotificationContainer);
 
-},{"../actions/notifications":270,"../components":283,"react":245,"react-redux":56}],290:[function(require,module,exports){
+},{"../actions/notification":270,"../components":283,"react":245,"react-redux":56}],290:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34232,7 +34300,7 @@ var _reactRedux = require('react-redux');
 
 var _components = require('../components');
 
-var _posts = require('../actions/posts');
+var _post = require('../actions/post');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34315,7 +34383,7 @@ var PostFormContainer = function (_Component) {
 }(_react.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-  return _extends({}, state.posts, {
+  return _extends({}, state.post, {
     routing: state.routing
   });
 };
@@ -34323,13 +34391,13 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchPost: function fetchPost(id) {
-      return dispatch((0, _posts.fetchPost)(id));
+      return dispatch((0, _post.fetchPost)(id));
     },
     createPost: function createPost(e, form) {
-      return dispatch((0, _posts.createPost)(e, form));
+      return dispatch((0, _post.createPost)(e, form));
     },
     updatePost: function updatePost(e, form) {
-      return dispatch((0, _posts.updatePost)(e, form));
+      return dispatch((0, _post.updatePost)(e, form));
     }
   };
 };
@@ -34340,12 +34408,14 @@ PostFormContainer.contextTypes = {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostFormContainer);
 
-},{"../actions/posts":271,"../components":283,"react":245,"react-redux":56}],291:[function(require,module,exports){
+},{"../actions/post":271,"../components":283,"react":245,"react-redux":56}],291:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -34396,9 +34466,7 @@ var PostsContainer = function (_Component) {
 }(_react.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-  return {
-    posts: state.posts.posts
-  };
+  return _extends({}, state.post);
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -34424,6 +34492,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 exports.postRow = postRow;
@@ -34438,7 +34508,7 @@ var _reactRouter = require('react-router');
 
 var _components = require('../components');
 
-var _posts = require('../actions/posts');
+var _post = require('../actions/post');
 
 var _moment = require('moment');
 
@@ -34605,27 +34675,23 @@ var PostsTableContainer = function (_Component) {
 }(_react.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-  return {
-    posts: state.posts.posts,
-    page: state.posts.page,
-    isFetching: state.posts.isFetching
-  };
+  return _extends({}, state.post);
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchPosts: function fetchPosts(page) {
-      dispatch((0, _posts.fetchPosts)(page));
+      dispatch((0, _post.fetchPosts)(page));
     },
     onDeletePost: function onDeletePost(id) {
-      dispatch((0, _posts.removePost)(id));
+      dispatch((0, _post.removePost)(id));
     }
   };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostsTableContainer);
 
-},{"../actions/posts":271,"../components":283,"moment":50,"react":245,"react-redux":56,"react-router":99}],293:[function(require,module,exports){
+},{"../actions/post":271,"../components":283,"moment":50,"react":245,"react-redux":56,"react-router":99}],293:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34832,27 +34898,27 @@ exports.default = undoableTodos;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.notifications = exports.posts = exports.dashboard = undefined;
+exports.notification = exports.post = exports.dashboard = undefined;
 
 var _dashboard2 = require('./dashboard');
 
 var _dashboard3 = _interopRequireDefault(_dashboard2);
 
-var _posts2 = require('./posts');
+var _post2 = require('./post');
 
-var _posts3 = _interopRequireDefault(_posts2);
+var _post3 = _interopRequireDefault(_post2);
 
-var _notifications2 = require('./notifications');
+var _notification2 = require('./notification');
 
-var _notifications3 = _interopRequireDefault(_notifications2);
+var _notification3 = _interopRequireDefault(_notification2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.dashboard = _dashboard3.default;
-exports.posts = _posts3.default;
-exports.notifications = _notifications3.default;
+exports.post = _post3.default;
+exports.notification = _notification3.default;
 
-},{"./dashboard":297,"./notifications":299,"./posts":300}],299:[function(require,module,exports){
+},{"./dashboard":297,"./notification":299,"./post":300}],299:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34864,17 +34930,23 @@ var _constants = require('../constants');
 var initialState = {
   message: null,
   message_type: _constants.NOTIFICATION_INFO,
-  message_duration: 3000
+  message_duration: 3000,
+  status: 'hidden'
 };
 
-function notifications() {
+function notification() {
   var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
   var action = arguments[1];
 
   switch (action.type) {
-    case _constants.CLEAR_NOTIFICATION:
+    case _constants.HIDING_NOTIFICATION:
       return Object.assign({}, state, {
-        message: null
+        status: 'hiding'
+      });
+
+    case _constants.HIDDEN_NOTIFICATION:
+      return Object.assign({}, state, {
+        status: 'hidden'
       });
   }
 
@@ -34882,14 +34954,15 @@ function notifications() {
     return Object.assign({}, state, {
       message: action.message,
       message_type: action.message_type || initialState.message_type,
-      message_duration: action.message_duration || initialState.message_duration
+      message_duration: action.message_duration || initialState.message_duration,
+      status: 'show'
     });
   }
 
   return state;
 }
 
-exports.default = notifications;
+exports.default = notification;
 
 },{"../constants":284}],300:[function(require,module,exports){
 'use strict';
@@ -34911,7 +34984,7 @@ var initialState = {
   message: null
 };
 
-function posts() {
+function post() {
   var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
   var action = arguments[1];
 
@@ -34965,7 +35038,7 @@ function posts() {
   }
 }
 
-exports.default = posts;
+exports.default = post;
 
 },{"../constants":284}]},{},[272]);
 

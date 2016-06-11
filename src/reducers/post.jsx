@@ -19,7 +19,7 @@ const initialState = {
   message: null
 }
 
-function posts(state = initialState, action) {
+function post(state = initialState, action) {
   switch (action.type) {
     case REQUEST_POSTS:
     case REQUEST_POST:
@@ -70,4 +70,4 @@ function posts(state = initialState, action) {
   }
 }
 
-export default posts
+export default post
