@@ -5,14 +5,18 @@ import {
   NOTIFICATION_INFO,
   NOTIFICATION_ERROR,
   NOTIFICATION_WARNING,
-  NOTIFICATION_PRIMARY
+  NOTIFICATION_PRIMARY,
+  TIME_LEFT_NOTIFICATION,
+  TIME_LEFT_CANCELLED_NOTIFICATION
 } from '../constants'
 
 const initialState = {
   message: null,
   message_type: NOTIFICATION_INFO,
-  message_duration: 3000,
-  status: 'hidden'
+  message_duration: 5000,
+  status: 'hidden',
+  time_left: 5,
+  time_left_cancelled: false
 }
 
 function notification(state = initialState, action) {
@@ -26,6 +30,16 @@ function notification(state = initialState, action) {
       return Object.assign({}, state, {
         status: 'hidden'
       })
+
+    case TIME_LEFT_NOTIFICATION:
+      return Object.assign({}, state, {
+        time_left: action.time_left
+      })
+
+    case TIME_LEFT_CANCELLED_NOTIFICATION:
+      return Object.assign({}, state, {
+        time_left_cancelled: true
+      })
   }
   
   if (action.message) {
@@ -33,7 +47,9 @@ function notification(state = initialState, action) {
       message: action.message,
       message_type: (action.message_type || initialState.message_type),
       message_duration: (action.message_duration || initialState.message_duration),
-      status: 'show'
+      time_left: (action.message_duration || initialState.message_duration) / 1000,
+      status: 'show',
+      time_left_cancelled: false
     })
   }
 

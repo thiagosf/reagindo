@@ -27,6 +27,8 @@ function post(state = initialState, action) {
         isFetching: true,
         isSending: false,
         isSaved: false,
+        posts: [],
+        post: {},
         message: null
       })
 

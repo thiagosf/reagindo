@@ -1,37 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { Loader } from '../components'
+import { Loader, PostTable } from '../components'
 import { removePost, fetchPosts } from '../actions/post'
-import moment from 'moment'
-
-export function postRow(post) {
-  const thumbnail = () => {
-    if (post.thumbnail != 'self') return <img src={post.thumbnail} height="30" />
-  }
-
-  const date = () => {
-    return <span className="label label-default">{moment.unix(post.created_utc).format('LLL')}</span>
-  }
-
-  let edit_url = `/posts/${post.id}`
-  let destroy_url = `/posts/${post.id}`
-
-  return (
-    <tr key={post.id}>
-      <td>{post.id}</td>
-      <td className="text-center">{thumbnail()}</td>
-      <td>{post.title}</td>
-      <td>{post.author}</td>
-      <td className="text-nowrap">{date()}</td>
-      <td>
-        <Link to={edit_url} className="btn btn-success btn-xs">Editar</Link>
-        <span> </span>
-        <Link to={destroy_url} className="btn btn-danger btn-xs">Deletar</Link>
-      </td>
-    </tr>
-  )
-}
 
 class PostsTableContainer extends Component {
   componentDidMount() {
@@ -45,23 +15,7 @@ class PostsTableContainer extends Component {
     return(
       <div>
         {this.getLoader()}
-        <div className="table-responsive">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Imagem</th>
-                <th>Titulo</th>
-                <th>Autor</th>
-                <th>Data</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.posts.map(post => postRow(post))}
-            </tbody>
-          </table>
-        </div>
+        <PostTable {...this.props} />
       </div>
     )
   }

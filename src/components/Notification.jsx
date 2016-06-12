@@ -3,19 +3,27 @@ import classnames from 'classnames'
 
 export default class Notification extends Component  {
   render() {
-    let { message, message_duration, message_type, status, onClick, onMouseEnter } = this.props
     let class_name = classnames({
       'notification': true,
-      'notification-show': (status == 'show' || status == 'hiding'),
-      'notification-hiding': status == 'hiding',
-      'notification-hidden': status == 'hidden'
+      'notification-show': (this.props.status == 'show' || this.props.status == 'hiding'),
+      'notification-hiding': this.props.status == 'hiding',
+      'notification-hidden': this.props.status == 'hidden'
     })
+    let class_name_time_left = classnames({ 'hide': this.props.time_left_cancelled })
+    let class_name_time_left_cancelled = classnames({ 'hide': !this.props.time_left_cancelled })
     return (
       <div className={class_name}>
-        <div className={`alert alert-${message_type}`} onClick={onClick} onMouseEnter={onMouseEnter}>
-          {message}
+        <div className={`alert alert-${this.props.message_type}`} onClick={this.props.onClick} onMouseEnter={this.props.onMouseEnter}>
+          {this.props.message}
           <br />
-          <small><i>Fechando em alguns segungos</i></small>
+          <small>
+            <span className={class_name_time_left}>
+              <i>Fechando em {this.props.time_left} segundos</i>
+            </span>
+            <span className={class_name_time_left_cancelled}>
+              <i>Clique para fechar</i>
+            </span>
+          </small>
         </div>
       </div>
     )
@@ -28,5 +36,7 @@ Notification.propTypes = {
   message_duration: PropTypes.number,
   onClick: PropTypes.func.isRequired,
   onMouseEnter: PropTypes.func,
-  status: PropTypes.string
+  status: PropTypes.string,
+  time_left: PropTypes.number,
+  time_left_cancelled: PropTypes.bool
 }
