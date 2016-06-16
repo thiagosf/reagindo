@@ -3,14 +3,17 @@ export const ADD_MESSAGE = 'ADD_MESSAGE'
 export const REMOVE_MESSAGE = 'REMOVE_MESSAGE'
 
 // Posts
+export const CREATE_POST = 'CREATE_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const REQUEST_POST = 'REQUEST_POST'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const RECEIVE_POST = 'RECEIVE_POST'
 export const SENDING_POST = 'SENDING_POST'
-export const SAVED_POST = 'SAVED_POST'
-export const ERROR_TO_SAVE_POST = 'ERROR_TO_SAVE_POST'
+export const CREATED_POST = 'CREATED_POST'
+export const CREATED_POST_ERROR = 'CREATED_POST_ERROR'
+export const UPDATED_POST = 'UPDATED_POST'
+export const UPDATED_POST_ERROR = 'UPDATED_POST_ERROR'
 
 // Notifications
 export const HIDING_NOTIFICATION = 'HIDING_NOTIFICATION'

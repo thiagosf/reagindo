@@ -1,11 +1,13 @@
 import {
+  CREATE_POST,
   REMOVE_POST,
   REQUEST_POSTS,
   REQUEST_POST,
   RECEIVE_POSTS,
   RECEIVE_POST,
   SENDING_POST,
-  SAVED_POST
+  CREATED_POST,
+  UPDATED_POST
 } from '../constants'
 
 const initialState = {
@@ -21,6 +23,17 @@ const initialState = {
 
 function post(state = initialState, action) {
   switch (action.type) {
+    case CREATE_POST:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isSending: false,
+        isSaved: false,
+        posts: [],
+        post: {},
+        id: null,
+        message: null
+      })
+
     case REQUEST_POSTS:
     case REQUEST_POST:
       return Object.assign({}, state, {
@@ -58,7 +71,16 @@ function post(state = initialState, action) {
         message: null
       })
 
-    case SAVED_POST:
+    case CREATED_POST:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isSending: false,
+        isSaved: true,
+        id: action.id,
+        message: action.message
+      })
+
+    case UPDATED_POST:
       return Object.assign({}, state, {
         isFetching: false,
         isSending: false,

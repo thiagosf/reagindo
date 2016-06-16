@@ -6,7 +6,9 @@ import { fetchPost, createPost, updatePost } from '../actions/post'
 class PostFormContainer extends Component {
   componentDidMount() {
     const { fetchPost, params } = this.props
-    fetchPost(params.id)
+    if (params.id) {
+      fetchPost(params.id)
+    }
   }
   getLoader() {
     if (this.props.isFetching) return <Loader />
@@ -27,14 +29,18 @@ class PostFormContainer extends Component {
     }
   }
   componentDidUpdate() {
-    if (this.refs.form) {
-      if (this.props.isSending) {
-        this.refs.form.lock()
+    const { isSending, isSaved, params } = this.props
+    const { form } = this.refs
+    const { router } = this.context
+
+    if (form) {
+      if (isSending) {
+        form.lock()
       } else {
-        this.refs.form.unlock()
+        form.unlock()
       }
-      if (this.props.isSaved) {
-        this.context.router.push('/posts')
+      if (isSaved) {
+        router.push('/posts')
       }
     }
   }

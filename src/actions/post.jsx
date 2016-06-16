@@ -7,11 +7,20 @@ import {
   RECEIVE_POSTS,
   RECEIVE_POST,
   SENDING_POST,
-  SAVED_POST,
+  CREATED_POST,
+  CREATED_POST_ERROR,
+  UPDATED_POST,
+  UPDATED_POST_ERROR,
+  CREATE_POST,
   NOTIFICATION_SUCCESS,
-  NOTIFICATION_ERROR,
-  ERROR_TO_SAVE_POST
+  NOTIFICATION_ERROR
 } from '../constants'
+
+export const newPost = () => {
+  return {
+    type: CREATE_POST
+  }
+}
 
 export const removePost = (id) => {
   return {
@@ -57,9 +66,9 @@ export const sendingPost = (form) => {
   }
 }
 
-const savedPost = (id, message, message_type) => {
+const createdPost = (id, message, message_type) => {
   return {
-    type: SAVED_POST,
+    type: CREATED_POST,
     id,
     message,
     message_type
@@ -68,7 +77,24 @@ const savedPost = (id, message, message_type) => {
 
 const errorToSavePost = (message, message_type) => {
   return {
-    type: ERROR_TO_SAVE_POST,
+    type: CREATED_POST_ERROR,
+    message,
+    message_type
+  }
+}
+
+const updatedPost = (id, message, message_type) => {
+  return {
+    type: UPDATED_POST,
+    id,
+    message,
+    message_type
+  }
+}
+
+const errorToUpdatePost = (message, message_type) => {
+  return {
+    type: UPDATED_POST_ERROR,
     message,
     message_type
   }
@@ -122,15 +148,14 @@ export function createPost(e, form) {
       .type('form')
       .send(data)
       .end((err, res) => {
-        if (err) {
-          // dispatch de erro
-        } else {
+        let random = Math.floor(Math.random() * (3 - 1)) + 1;
+        err = random % 2 == 0
+        if (!err) {
           if (res.status == 200) {
-            dispatch(savedPost(res.body.id))
-          } else {
-            // lanca erro
+            return dispatch(createdPost(res.body.id, 'Post criado com sucesso!', NOTIFICATION_SUCCESS))
           }
         }
+        return dispatch(errorToSavePost('Ops.. algo não saiu como esperado', NOTIFICATION_ERROR))
       })
   }
 }
@@ -150,15 +175,13 @@ export function updatePost(e, form) {
       .send(data)
       .end((err, res) => {
         let random = Math.floor(Math.random() * (3 - 1)) + 1;
-        if (err || random % 2 == 0) {
-          dispatch(errorToSavePost('Ops.. algo não saiu como esperado', NOTIFICATION_ERROR))
-        } else {
+        err = random % 2 == 0
+        if (!err) {
           if (res.status == 200) {
-            dispatch(savedPost(res.body.id, 'Post atualizado com sucesso!', NOTIFICATION_SUCCESS))
-          } else {
-            // lanca erro
+            return dispatch(updatedPost(res.body.id, 'Post atualizado com sucesso!', NOTIFICATION_SUCCESS))
           }
         }
+        return dispatch(errorToUpdatePost('Ops.. algo não saiu como esperado', NOTIFICATION_ERROR))
       })
   }
 }

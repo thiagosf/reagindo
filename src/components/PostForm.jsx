@@ -12,17 +12,27 @@ class PostForm extends Component {
   unlock() {
     this.refs.button.disabled = false
   }
+  componentDidMount() {
+    this.addValues()
+  }
+  componentDidUpdate() {
+    this.addValues()
+  }
+  addValues() {
+    let { title = '', author = '' } = this.props.post
+    this.refs.title.value = title
+    this.refs.author.value = author
+  }
   render() {
-    let { title, author } = this.props.post
     return (
       <form action={this.props.action} method={this.props.method} onSubmit={this.handleSubmit.bind(this)}>
         <div className="form-group">
           <label>Titulo</label>
-          <input type="text" className="form-control" ref="title" defaultValue={title} />
+          <input type="text" className="form-control" ref="title" />
         </div>
         <div className="form-group">
           <label>Autor</label>
-          <input type="text" className="form-control" ref="author" defaultValue={author} />
+          <input type="text" className="form-control" ref="author" />
         </div>
         <div className="text-center">
           <Button success large type="submit" ref="button">Salvar</Button>

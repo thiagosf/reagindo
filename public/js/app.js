@@ -32843,7 +32843,7 @@ var cancelTimeOutNotification = exports.cancelTimeOutNotification = function can
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.sendingPost = exports.receivePost = exports.receivePosts = exports.removePost = undefined;
+exports.sendingPost = exports.receivePost = exports.receivePosts = exports.removePost = exports.newPost = undefined;
 exports.requestPosts = requestPosts;
 exports.requestPost = requestPost;
 exports.fetchPosts = fetchPosts;
@@ -32858,6 +32858,12 @@ var _superagent2 = _interopRequireDefault(_superagent);
 var _constants = require('../constants');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var newPost = exports.newPost = function newPost() {
+  return {
+    type: _constants.CREATE_POST
+  };
+};
 
 var removePost = exports.removePost = function removePost(id) {
   return {
@@ -32903,9 +32909,9 @@ var sendingPost = exports.sendingPost = function sendingPost(form) {
   };
 };
 
-var savedPost = function savedPost(id, message, message_type) {
+var createdPost = function createdPost(id, message, message_type) {
   return {
-    type: _constants.SAVED_POST,
+    type: _constants.CREATED_POST,
     id: id,
     message: message,
     message_type: message_type
@@ -32914,7 +32920,24 @@ var savedPost = function savedPost(id, message, message_type) {
 
 var errorToSavePost = function errorToSavePost(message, message_type) {
   return {
-    type: _constants.ERROR_TO_SAVE_POST,
+    type: _constants.CREATED_POST_ERROR,
+    message: message,
+    message_type: message_type
+  };
+};
+
+var updatedPost = function updatedPost(id, message, message_type) {
+  return {
+    type: _constants.UPDATED_POST,
+    id: id,
+    message: message,
+    message_type: message_type
+  };
+};
+
+var errorToUpdatePost = function errorToUpdatePost(message, message_type) {
+  return {
+    type: _constants.UPDATED_POST_ERROR,
     message: message,
     message_type: message_type
   };
@@ -32957,15 +32980,14 @@ function createPost(e, form) {
       author: form.refs.author.value
     };
     _superagent2.default.post('http://www.mocky.io/v2/57561bc30f0000d2052eff47').set('Accept', 'application/json').type('form').send(data).end(function (err, res) {
-      if (err) {
-        // dispatch de erro
-      } else {
-          if (res.status == 200) {
-            dispatch(savedPost(res.body.id));
-          } else {
-            // lanca erro
-          }
+      var random = Math.floor(Math.random() * (3 - 1)) + 1;
+      err = random % 2 == 0;
+      if (!err) {
+        if (res.status == 200) {
+          return dispatch(createdPost(res.body.id, 'Post criado com sucesso!', _constants.NOTIFICATION_SUCCESS));
         }
+      }
+      return dispatch(errorToSavePost('Ops.. algo não saiu como esperado', _constants.NOTIFICATION_ERROR));
     });
   };
 }
@@ -32980,15 +33002,13 @@ function updatePost(e, form) {
     };
     _superagent2.default.post('http://www.mocky.io/v2/57561bc30f0000d2052eff47').set('Accept', 'application/json').type('form').send(data).end(function (err, res) {
       var random = Math.floor(Math.random() * (3 - 1)) + 1;
-      if (err || random % 2 == 0) {
-        dispatch(errorToSavePost('Ops.. algo não saiu como esperado', _constants.NOTIFICATION_ERROR));
-      } else {
+      err = random % 2 == 0;
+      if (!err) {
         if (res.status == 200) {
-          dispatch(savedPost(res.body.id, 'Post atualizado com sucesso!', _constants.NOTIFICATION_SUCCESS));
-        } else {
-          // lanca erro
+          return dispatch(updatedPost(res.body.id, 'Post atualizado com sucesso!', _constants.NOTIFICATION_SUCCESS));
         }
       }
+      return dispatch(errorToUpdatePost('Ops.. algo não saiu como esperado', _constants.NOTIFICATION_ERROR));
     });
   };
 }
@@ -33099,7 +33119,8 @@ _reactDom2.default.render(_react2.default.createElement(
         _reactRouter.Route,
         { path: '/posts', component: _containers.PostsContainer },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: _containers.PostsTableContainer }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/posts/:id', component: _containers.PostFormContainer })
+        _react2.default.createElement(_reactRouter.Route, { path: 'new', component: _containers.PostFormContainer }),
+        _react2.default.createElement(_reactRouter.Route, { path: ':id', component: _containers.PostFormContainer })
       ),
       _react2.default.createElement(_reactRouter.Route, { path: '*', component: _components.NoMatch })
     )
@@ -33932,12 +33953,30 @@ var PostForm = function (_Component) {
       this.refs.button.disabled = false;
     }
   }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.addValues();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.addValues();
+    }
+  }, {
+    key: 'addValues',
+    value: function addValues() {
+      var _props$post = this.props.post;
+      var _props$post$title = _props$post.title;
+      var title = _props$post$title === undefined ? '' : _props$post$title;
+      var _props$post$author = _props$post.author;
+      var author = _props$post$author === undefined ? '' : _props$post$author;
+
+      this.refs.title.value = title;
+      this.refs.author.value = author;
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _props$post = this.props.post;
-      var title = _props$post.title;
-      var author = _props$post.author;
-
       return _react2.default.createElement(
         'form',
         { action: this.props.action, method: this.props.method, onSubmit: this.handleSubmit.bind(this) },
@@ -33949,7 +33988,7 @@ var PostForm = function (_Component) {
             null,
             'Titulo'
           ),
-          _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'title', defaultValue: title })
+          _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'title' })
         ),
         _react2.default.createElement(
           'div',
@@ -33959,7 +33998,7 @@ var PostForm = function (_Component) {
             null,
             'Autor'
           ),
-          _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'author', defaultValue: author })
+          _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'author' })
         ),
         _react2.default.createElement(
           'div',
@@ -34238,14 +34277,17 @@ var ADD_MESSAGE = exports.ADD_MESSAGE = 'ADD_MESSAGE';
 var REMOVE_MESSAGE = exports.REMOVE_MESSAGE = 'REMOVE_MESSAGE';
 
 // Posts
+var CREATE_POST = exports.CREATE_POST = 'CREATE_POST';
 var REMOVE_POST = exports.REMOVE_POST = 'REMOVE_POST';
 var REQUEST_POSTS = exports.REQUEST_POSTS = 'REQUEST_POSTS';
 var REQUEST_POST = exports.REQUEST_POST = 'REQUEST_POST';
 var RECEIVE_POSTS = exports.RECEIVE_POSTS = 'RECEIVE_POSTS';
 var RECEIVE_POST = exports.RECEIVE_POST = 'RECEIVE_POST';
 var SENDING_POST = exports.SENDING_POST = 'SENDING_POST';
-var SAVED_POST = exports.SAVED_POST = 'SAVED_POST';
-var ERROR_TO_SAVE_POST = exports.ERROR_TO_SAVE_POST = 'ERROR_TO_SAVE_POST';
+var CREATED_POST = exports.CREATED_POST = 'CREATED_POST';
+var CREATED_POST_ERROR = exports.CREATED_POST_ERROR = 'CREATED_POST_ERROR';
+var UPDATED_POST = exports.UPDATED_POST = 'UPDATED_POST';
+var UPDATED_POST_ERROR = exports.UPDATED_POST_ERROR = 'UPDATED_POST_ERROR';
 
 // Notifications
 var HIDING_NOTIFICATION = exports.HIDING_NOTIFICATION = 'HIDING_NOTIFICATION';
@@ -34517,7 +34559,9 @@ var PostFormContainer = function (_Component) {
       var fetchPost = _props.fetchPost;
       var params = _props.params;
 
-      fetchPost(params.id);
+      if (params.id) {
+        fetchPost(params.id);
+      }
     }
   }, {
     key: 'getLoader',
@@ -34547,14 +34591,22 @@ var PostFormContainer = function (_Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
-      if (this.refs.form) {
-        if (this.props.isSending) {
-          this.refs.form.lock();
+      var _props3 = this.props;
+      var isSending = _props3.isSending;
+      var isSaved = _props3.isSaved;
+      var params = _props3.params;
+      var form = this.refs.form;
+      var router = this.context.router;
+
+
+      if (form) {
+        if (isSending) {
+          form.lock();
         } else {
-          this.refs.form.unlock();
+          form.unlock();
         }
-        if (this.props.isSaved) {
-          this.context.router.push('/posts');
+        if (isSaved) {
+          router.push('/posts');
         }
       }
     }
@@ -34616,6 +34668,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
 
+var _reactRouter = require('react-router');
+
+var _post = require('../actions/post');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34648,6 +34704,15 @@ var PostsContainer = function (_Component) {
             'Posts'
           )
         ),
+        _react2.default.createElement(
+          'div',
+          { className: 'actions-box' },
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/posts/new', className: 'btn btn-primary btn-sm', onClick: this.props.newPost },
+            'Novo post'
+          )
+        ),
         this.props.children
       );
     }
@@ -34662,21 +34727,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    onCreatePost: function onCreatePost(post) {
-      console.log('onCreatePost', post);
-    },
-    onUpdatePost: function onUpdatePost(post) {
-      console.log('onUpdatePost', post);
-    },
-    onDeletePost: function onDeletePost(id) {
-      console.log('onDeletePost', id);
+    newPost: function newPost() {
+      return dispatch((0, _post.newPost)());
     }
   };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostsContainer);
 
-},{"react":245,"react-redux":56}],293:[function(require,module,exports){
+},{"../actions/post":271,"react":245,"react-redux":56,"react-router":99}],293:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35072,6 +35131,17 @@ function post() {
   var action = arguments[1];
 
   switch (action.type) {
+    case _constants.CREATE_POST:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isSending: false,
+        isSaved: false,
+        posts: [],
+        post: {},
+        id: null,
+        message: null
+      });
+
     case _constants.REQUEST_POSTS:
     case _constants.REQUEST_POST:
       return Object.assign({}, state, {
@@ -35109,7 +35179,16 @@ function post() {
         message: null
       });
 
-    case _constants.SAVED_POST:
+    case _constants.CREATED_POST:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isSending: false,
+        isSaved: true,
+        id: action.id,
+        message: action.message
+      });
+
+    case _constants.UPDATED_POST:
       return Object.assign({}, state, {
         isFetching: false,
         isSending: false,

@@ -47,7 +47,8 @@ ReactDOM.render((
         <Route path="/dashboard" component={DashboardContainer} />
         <Route path="/posts" component={PostsContainer}>
           <IndexRoute component={PostsTableContainer} />
-          <Route path="/posts/:id" component={PostFormContainer} />
+          <Route path="new" component={PostFormContainer} />
+          <Route path=":id" component={PostFormContainer} />
         </Route>
         <Route path="*" component={NoMatch} />
       </Route>
