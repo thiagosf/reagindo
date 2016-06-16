@@ -15,7 +15,7 @@ class PostFormContainer extends Component {
   }
   getForm() {
     if (!this.props.isFetching) {
-      const { id, post, createPost, updatePost } = this.props
+      const { id, post, createPost, updatePost, newPost } = this.props
       let submitAction = !id ? createPost : updatePost
       return (
         <PostForm 
@@ -23,6 +23,7 @@ class PostFormContainer extends Component {
           action={`/posts/${id}`} 
           method="post" 
           post={post} 
+          newPost={newPost} 
           onSubmit={submitAction}
           />
       )

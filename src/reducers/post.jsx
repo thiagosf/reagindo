@@ -16,22 +16,20 @@ const initialState = {
   isSaved: false,
   posts: [],
   page: 1,
-  post: {},
+  post: {
+    title: '',
+    author: ''
+  },
   id: null,
-  message: null
+  message: null,
+  newPost: false
 }
 
 function post(state = initialState, action) {
   switch (action.type) {
     case CREATE_POST:
-      return Object.assign({}, state, {
-        isFetching: false,
-        isSending: false,
-        isSaved: false,
-        posts: [],
-        post: {},
-        id: null,
-        message: null
+      return Object.assign({}, initialState, {
+        newPost: true
       })
 
     case REQUEST_POSTS:

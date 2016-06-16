@@ -33960,16 +33960,16 @@ var PostForm = function (_Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
-      this.addValues();
+      if (this.props.newPost) {
+        this.addValues();
+      }
     }
   }, {
     key: 'addValues',
     value: function addValues() {
       var _props$post = this.props.post;
-      var _props$post$title = _props$post.title;
-      var title = _props$post$title === undefined ? '' : _props$post$title;
-      var _props$post$author = _props$post.author;
-      var author = _props$post$author === undefined ? '' : _props$post$author;
+      var title = _props$post.title;
+      var author = _props$post.author;
 
       this.refs.title.value = title;
       this.refs.author.value = author;
@@ -34577,6 +34577,7 @@ var PostFormContainer = function (_Component) {
         var post = _props2.post;
         var _createPost = _props2.createPost;
         var _updatePost = _props2.updatePost;
+        var newPost = _props2.newPost;
 
         var submitAction = !id ? _createPost : _updatePost;
         return _react2.default.createElement(_components.PostForm, {
@@ -34584,6 +34585,7 @@ var PostFormContainer = function (_Component) {
           action: '/posts/' + id,
           method: 'post',
           post: post,
+          newPost: newPost,
           onSubmit: submitAction
         });
       }
@@ -35121,9 +35123,13 @@ var initialState = {
   isSaved: false,
   posts: [],
   page: 1,
-  post: {},
+  post: {
+    title: '',
+    author: ''
+  },
   id: null,
-  message: null
+  message: null,
+  newPost: false
 };
 
 function post() {
@@ -35132,14 +35138,8 @@ function post() {
 
   switch (action.type) {
     case _constants.CREATE_POST:
-      return Object.assign({}, state, {
-        isFetching: false,
-        isSending: false,
-        isSaved: false,
-        posts: [],
-        post: {},
-        id: null,
-        message: null
+      return Object.assign({}, initialState, {
+        newPost: true
       });
 
     case _constants.REQUEST_POSTS:

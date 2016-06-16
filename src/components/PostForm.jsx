@@ -16,10 +16,12 @@ class PostForm extends Component {
     this.addValues()
   }
   componentDidUpdate() {
-    this.addValues()
+    if (this.props.newPost) {
+      this.addValues()
+    }
   }
   addValues() {
-    let { title = '', author = '' } = this.props.post
+    let { title, author } = this.props.post
     this.refs.title.value = title
     this.refs.author.value = author
   }
