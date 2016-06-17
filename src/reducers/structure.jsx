@@ -1,4 +1,5 @@
 import { SET_TITLE } from '../constants'
+
 let initialState = { title: 'Reagindo' }
 
 const structure = (state = initialState, action) => {

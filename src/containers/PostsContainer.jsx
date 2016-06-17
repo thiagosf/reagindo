@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { newPost } from '../actions/post'
+import { setTitle } from '../actions/structure'
 
 class PostsContainer extends Component {
   render() {
+    this.props.setTitle('Posts')
     return(
       <div>
         <div className="actions-box">
@@ -26,6 +28,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     newPost: () => {
       return dispatch(newPost())
+    },
+    setTitle: (title) => {
+      return dispatch(setTitle(title))
     }
   }
 }

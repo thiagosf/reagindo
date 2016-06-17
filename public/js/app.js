@@ -32784,7 +32784,7 @@ var removeMessage = exports.removeMessage = function removeMessage(id) {
   };
 };
 
-},{"../constants":285}],270:[function(require,module,exports){
+},{"../constants":286}],270:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32837,7 +32837,7 @@ var cancelTimeOutNotification = exports.cancelTimeOutNotification = function can
   };
 };
 
-},{"../constants":285}],271:[function(require,module,exports){
+},{"../constants":286}],271:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33013,7 +33013,29 @@ function updatePost(e, form) {
   };
 }
 
-},{"../constants":285,"superagent":262}],272:[function(require,module,exports){
+},{"../constants":286,"superagent":262}],272:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setTitle = undefined;
+
+var _constants = require('../constants');
+
+var changeDocumentTitle = function changeDocumentTitle(title) {
+  document.title = title;
+};
+
+var setTitle = exports.setTitle = function setTitle(title) {
+  changeDocumentTitle(title);
+  return {
+    type: _constants.SET_TITLE,
+    title: title
+  };
+};
+
+},{"../constants":286}],273:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -33025,10 +33047,6 @@ var _react2 = _interopRequireDefault(_react);
 var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
 
 var _redux = require('redux');
 
@@ -33088,7 +33106,7 @@ _reactDom2.default.render(_react2.default.createElement(
   )
 ), document.getElementById('content'));
 
-},{"./components":284,"./containers":296,"./reducers":300,"classnames":1,"react":245,"react-dom":53,"react-redux":56,"react-router":99,"react-router-redux":66,"redux":255,"redux-logger":247,"redux-thunk":248}],273:[function(require,module,exports){
+},{"./components":285,"./containers":297,"./reducers":301,"react":245,"react-dom":53,"react-redux":56,"react-router":99,"react-router-redux":66,"redux":255,"redux-logger":247,"redux-thunk":248}],274:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33182,7 +33200,7 @@ Button.propTypes = {
   block: PropTypes.bool
 };
 
-},{"classnames":1,"react":245}],274:[function(require,module,exports){
+},{"classnames":1,"react":245}],275:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33243,7 +33261,7 @@ Loader.propTypes = {
   color: PropTypes.string
 };
 
-},{"react":245}],275:[function(require,module,exports){
+},{"react":245}],276:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33366,7 +33384,7 @@ Login.contextTypes = {
   router: _react2.default.PropTypes.object.isRequired
 };
 
-},{"classnames":1,"react":245}],276:[function(require,module,exports){
+},{"classnames":1,"react":245}],277:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33413,7 +33431,7 @@ Message.propTypes = {
 
 exports.default = Message;
 
-},{"../components":284,"react":245}],277:[function(require,module,exports){
+},{"../components":285,"react":245}],278:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33513,7 +33531,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(MessageEntry);
 
-},{"../actions/dashboard":269,"../components":284,"react":245,"react-redux":56}],278:[function(require,module,exports){
+},{"../actions/dashboard":269,"../components":285,"react":245,"react-redux":56}],279:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33559,7 +33577,7 @@ MessageList.propTypes = {
 
 exports.default = MessageList;
 
-},{"../components":284,"react":245}],279:[function(require,module,exports){
+},{"../components":285,"react":245}],280:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33711,7 +33729,7 @@ var mapStateToProps = function mapStateToProps(state) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(Nav);
 
-},{"classnames":1,"react":245,"react-redux":56,"react-router":99}],280:[function(require,module,exports){
+},{"classnames":1,"react":245,"react-redux":56,"react-router":99}],281:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33765,7 +33783,7 @@ var NoMatch = function (_Component) {
 
 exports.default = NoMatch;
 
-},{"react":245}],281:[function(require,module,exports){
+},{"react":245}],282:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33864,7 +33882,7 @@ Notification.propTypes = {
   time_left_cancelled: _react.PropTypes.bool
 };
 
-},{"classnames":1,"react":245}],282:[function(require,module,exports){
+},{"classnames":1,"react":245}],283:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33998,7 +34016,7 @@ PostForm.propTypes = {
 
 exports.default = PostForm;
 
-},{"./":284,"react":245,"react-router":99}],283:[function(require,module,exports){
+},{"./":285,"react":245,"react-router":99}],284:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34161,7 +34179,7 @@ var PostTable = function (_Component) {
 
 exports.default = PostTable;
 
-},{"moment":50,"react":245,"react-router":99}],284:[function(require,module,exports){
+},{"moment":50,"react":245,"react-router":99}],285:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34227,7 +34245,7 @@ exports.PostForm = _PostForm3.default;
 exports.PostTable = _PostTable3.default;
 exports.Notification = _Notification3.default;
 
-},{"./Button":273,"./Loader":274,"./Login":275,"./Message":276,"./MessageEntry":277,"./MessageList":278,"./Nav":279,"./NoMatch":280,"./Notification":281,"./PostForm":282,"./PostTable":283}],285:[function(require,module,exports){
+},{"./Button":274,"./Loader":275,"./Login":276,"./Message":277,"./MessageEntry":278,"./MessageList":279,"./Nav":280,"./NoMatch":281,"./Notification":282,"./PostForm":283,"./PostTable":284}],286:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34264,7 +34282,7 @@ var NOTIFICATION_ERROR = exports.NOTIFICATION_ERROR = 'danger';
 var NOTIFICATION_WARNING = exports.NOTIFICATION_WARNING = 'warning';
 var NOTIFICATION_PRIMARY = exports.NOTIFICATION_PRIMARY = 'primary';
 
-},{}],286:[function(require,module,exports){
+},{}],287:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34341,7 +34359,7 @@ var mapStateToProps = function mapStateToProps(state) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(AppContainer);
 
-},{"../components":284,"../containers":296,"react":245,"react-redux":56}],287:[function(require,module,exports){
+},{"../components":285,"../containers":297,"react":245,"react-redux":56}],288:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34379,7 +34397,7 @@ var _components = require('../components');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../components":284,"./":296,"react":245}],288:[function(require,module,exports){
+},{"../components":285,"./":297,"react":245}],289:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34412,7 +34430,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":245}],289:[function(require,module,exports){
+},{"react":245}],290:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34443,7 +34461,7 @@ var _UndoRedoMessages2 = _interopRequireDefault(_UndoRedoMessages);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../components":284,"./":296,"./UndoRedoMessages":295,"react":245}],290:[function(require,module,exports){
+},{"../components":285,"./":297,"./UndoRedoMessages":296,"react":245}],291:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34472,7 +34490,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_components.MessageList);
 
-},{"../actions/dashboard":269,"../components":284,"react-redux":56}],291:[function(require,module,exports){
+},{"../actions/dashboard":269,"../components":285,"react-redux":56}],292:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34546,7 +34564,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NotificationContainer);
 
-},{"../actions/notification":270,"../components":284,"react":245,"react-redux":56}],292:[function(require,module,exports){
+},{"../actions/notification":270,"../components":285,"react":245,"react-redux":56}],293:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34685,7 +34703,7 @@ PostFormContainer.contextTypes = {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostFormContainer);
 
-},{"../actions/post":271,"../components":284,"react":245,"react-redux":56}],293:[function(require,module,exports){
+},{"../actions/post":271,"../components":285,"react":245,"react-redux":56}],294:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34705,6 +34723,8 @@ var _reactRedux = require('react-redux');
 var _reactRouter = require('react-router');
 
 var _post = require('../actions/post');
+
+var _structure = require('../actions/structure');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34726,6 +34746,7 @@ var PostsContainer = function (_Component) {
   _createClass(PostsContainer, [{
     key: 'render',
     value: function render() {
+      this.props.setTitle('Posts');
       return _react2.default.createElement(
         'div',
         null,
@@ -34754,13 +34775,16 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     newPost: function newPost() {
       return dispatch((0, _post.newPost)());
+    },
+    setTitle: function setTitle(title) {
+      return dispatch((0, _structure.setTitle)(title));
     }
   };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostsContainer);
 
-},{"../actions/post":271,"react":245,"react-redux":56,"react-router":99}],294:[function(require,module,exports){
+},{"../actions/post":271,"../actions/structure":272,"react":245,"react-redux":56,"react-router":99}],295:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34844,7 +34868,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostsTableContainer);
 
-},{"../actions/post":271,"../components":284,"react":245,"react-redux":56}],295:[function(require,module,exports){
+},{"../actions/post":271,"../components":285,"react":245,"react-redux":56}],296:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34911,7 +34935,7 @@ UndoRedoMessages = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)
 
 exports.default = UndoRedoMessages;
 
-},{"../components":284,"react":245,"react-redux":56,"redux-undo":249}],296:[function(require,module,exports){
+},{"../components":285,"react":245,"react-redux":56,"redux-undo":249}],297:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34967,7 +34991,7 @@ exports.PostsTableContainer = _PostsTableContainer3.default;
 exports.PostFormContainer = _PostFormContainer3.default;
 exports.NotificationContainer = _NotificationContainer3.default;
 
-},{"./AppContainer":286,"./DashboardContainer":287,"./DashboardItemContainer":288,"./DashboardMessagesContainer":289,"./MessageListContainer":290,"./NotificationContainer":291,"./PostFormContainer":292,"./PostsContainer":293,"./PostsTableContainer":294}],297:[function(require,module,exports){
+},{"./AppContainer":287,"./DashboardContainer":288,"./DashboardItemContainer":289,"./DashboardMessagesContainer":290,"./MessageListContainer":291,"./NotificationContainer":292,"./PostFormContainer":293,"./PostsContainer":294,"./PostsTableContainer":295}],298:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34983,7 +35007,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.tokenize = _tokenize3.default;
 
-},{"./tokenize":298}],298:[function(require,module,exports){
+},{"./tokenize":299}],299:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34997,7 +35021,7 @@ exports.default = function () {
   return Math.random();
 };
 
-},{}],299:[function(require,module,exports){
+},{}],300:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35050,7 +35074,7 @@ var undoableTodos = (0, _reduxUndo2.default)(dashboard, {
 
 exports.default = undoableTodos;
 
-},{"../constants":285,"../helpers":297,"redux-undo":249}],300:[function(require,module,exports){
+},{"../constants":286,"../helpers":298,"redux-undo":249}],301:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35081,7 +35105,7 @@ exports.dashboard = _dashboard3.default;
 exports.post = _post3.default;
 exports.notification = _notification3.default;
 
-},{"./dashboard":299,"./notification":301,"./post":302,"./structure":303}],301:[function(require,module,exports){
+},{"./dashboard":300,"./notification":302,"./post":303,"./structure":304}],302:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35141,7 +35165,7 @@ function notification() {
 
 exports.default = notification;
 
-},{"../constants":285}],302:[function(require,module,exports){
+},{"../constants":286}],303:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35237,7 +35261,7 @@ function post() {
 
 exports.default = post;
 
-},{"../constants":285}],303:[function(require,module,exports){
+},{"../constants":286}],304:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35265,6 +35289,6 @@ var structure = function structure() {
 
 exports.default = structure;
 
-},{"../constants":285}]},{},[272]);
+},{"../constants":286}]},{},[273]);
 
 //# sourceMappingURL=map/app.js.map
