@@ -1,3 +1,4 @@
+export AppContainer from './AppContainer'
 export DashboardContainer from './DashboardContainer'
 export DashboardItemContainer from './DashboardItemContainer'
 export DashboardMessagesContainer from './DashboardMessagesContainer'

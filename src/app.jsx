@@ -2,17 +2,22 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
-import { Login, NoMatch, Nav } from './components'
-import { DashboardContainer, PostsContainer, PostsTableContainer, PostFormContainer, NotificationContainer } from './containers'
+import { Login, NoMatch } from './components'
+import { 
+  AppContainer,
+  DashboardContainer,
+  PostsContainer,
+  PostsTableContainer,
+  PostFormContainer
+} from './containers'
 import * as reducers from './reducers'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 
-// Add the reducer to your store on the `routing` key
 const store = createStore(
   combineReducers({
     ...reducers,
@@ -21,28 +26,13 @@ const store = createStore(
   applyMiddleware(thunkMiddleware, createLogger())
 )
 
-// Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store)
-
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Nav />
-        <div className="container">
-          <NotificationContainer />
-          {this.props.children}
-        </div>
-      </div>
-    )
-  }
-}
 
 ReactDOM.render((
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/login" component={Login} />
-      <Route path="/" component={App}>
+      <Route path="/" component={AppContainer}>
         <IndexRoute component={DashboardContainer} />
         <Route path="/dashboard" component={DashboardContainer} />
         <Route path="/posts" component={PostsContainer}>

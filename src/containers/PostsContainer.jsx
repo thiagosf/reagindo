@@ -7,9 +7,6 @@ class PostsContainer extends Component {
   render() {
     return(
       <div>
-        <header className="main-header">
-          <h1>Posts</h1>
-        </header>
         <div className="actions-box">
           <Link to="/posts/new" className="btn btn-primary btn-sm" onClick={this.props.newPost}>Novo post</Link>
         </div>

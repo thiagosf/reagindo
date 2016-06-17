@@ -33016,8 +33016,6 @@ function updatePost(e, form) {
 },{"../constants":285,"superagent":262}],272:[function(require,module,exports){
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _react = require('react');
@@ -33060,48 +33058,11 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// Add the reducer to your store on the `routing` key
 var store = (0, _redux.createStore)((0, _redux.combineReducers)(_extends({}, reducers, {
   routing: _reactRouterRedux.routerReducer
 })), (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)()));
 
-// Create an enhanced history that syncs navigation events with the store
 var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.browserHistory, store);
-
-var App = function (_Component) {
-  _inherits(App, _Component);
-
-  function App() {
-    _classCallCheck(this, App);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
-  }
-
-  _createClass(App, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(_components.Nav, null),
-        _react2.default.createElement(
-          'div',
-          { className: 'container' },
-          _react2.default.createElement(_containers.NotificationContainer, null),
-          this.props.children
-        )
-      );
-    }
-  }]);
-
-  return App;
-}(_react.Component);
 
 _reactDom2.default.render(_react2.default.createElement(
   _reactRedux.Provider,
@@ -33112,7 +33073,7 @@ _reactDom2.default.render(_react2.default.createElement(
     _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _components.Login }),
     _react2.default.createElement(
       _reactRouter.Route,
-      { path: '/', component: App },
+      { path: '/', component: _containers.AppContainer },
       _react2.default.createElement(_reactRouter.IndexRoute, { component: _containers.DashboardContainer }),
       _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _containers.DashboardContainer }),
       _react2.default.createElement(
@@ -33127,7 +33088,7 @@ _reactDom2.default.render(_react2.default.createElement(
   )
 ), document.getElementById('content'));
 
-},{"./components":284,"./containers":295,"./reducers":299,"classnames":1,"react":245,"react-dom":53,"react-redux":56,"react-router":99,"react-router-redux":66,"redux":255,"redux-logger":247,"redux-thunk":248}],273:[function(require,module,exports){
+},{"./components":284,"./containers":296,"./reducers":300,"classnames":1,"react":245,"react-dom":53,"react-redux":56,"react-router":99,"react-router-redux":66,"redux":255,"redux-logger":247,"redux-thunk":248}],273:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34272,6 +34233,9 @@ exports.Notification = _Notification3.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+// Structure
+var SET_TITLE = exports.SET_TITLE = 'SET_TITLE';
+
 // Dashboard
 var ADD_MESSAGE = exports.ADD_MESSAGE = 'ADD_MESSAGE';
 var REMOVE_MESSAGE = exports.REMOVE_MESSAGE = 'REMOVE_MESSAGE';
@@ -34307,19 +34271,87 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+var _components = require('../components');
+
+var _containers = require('../containers');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AppContainer = function (_Component) {
+  _inherits(AppContainer, _Component);
+
+  function AppContainer() {
+    _classCallCheck(this, AppContainer);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(AppContainer).apply(this, arguments));
+  }
+
+  _createClass(AppContainer, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_components.Nav, null),
+        _react2.default.createElement(
+          'header',
+          { className: 'header main-header' },
+          _react2.default.createElement(
+            'div',
+            { className: 'container' },
+            _react2.default.createElement(
+              'h1',
+              null,
+              this.props.title
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'container' },
+          _react2.default.createElement(_containers.NotificationContainer, null),
+          this.props.children
+        )
+      );
+    }
+  }]);
+
+  return AppContainer;
+}(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return _extends({}, state.structure);
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(AppContainer);
+
+},{"../components":284,"../containers":296,"react":245,"react-redux":56}],287:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 exports.default = function () {
   return _react2.default.createElement(
     'div',
     null,
-    _react2.default.createElement(
-      'header',
-      { className: 'main-header' },
-      _react2.default.createElement(
-        'h1',
-        null,
-        'Dashboard'
-      )
-    ),
     _react2.default.createElement(
       'div',
       { className: 'row' },
@@ -34347,7 +34379,7 @@ var _components = require('../components');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../components":284,"./":295,"react":245}],287:[function(require,module,exports){
+},{"../components":284,"./":296,"react":245}],288:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34380,7 +34412,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"react":245}],288:[function(require,module,exports){
+},{"react":245}],289:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34411,7 +34443,7 @@ var _UndoRedoMessages2 = _interopRequireDefault(_UndoRedoMessages);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../components":284,"./":295,"./UndoRedoMessages":294,"react":245}],289:[function(require,module,exports){
+},{"../components":284,"./":296,"./UndoRedoMessages":295,"react":245}],290:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34440,7 +34472,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_components.MessageList);
 
-},{"../actions/dashboard":269,"../components":284,"react-redux":56}],290:[function(require,module,exports){
+},{"../actions/dashboard":269,"../components":284,"react-redux":56}],291:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34514,7 +34546,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NotificationContainer);
 
-},{"../actions/notification":270,"../components":284,"react":245,"react-redux":56}],291:[function(require,module,exports){
+},{"../actions/notification":270,"../components":284,"react":245,"react-redux":56}],292:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34653,7 +34685,7 @@ PostFormContainer.contextTypes = {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostFormContainer);
 
-},{"../actions/post":271,"../components":284,"react":245,"react-redux":56}],292:[function(require,module,exports){
+},{"../actions/post":271,"../components":284,"react":245,"react-redux":56}],293:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34698,15 +34730,6 @@ var PostsContainer = function (_Component) {
         'div',
         null,
         _react2.default.createElement(
-          'header',
-          { className: 'main-header' },
-          _react2.default.createElement(
-            'h1',
-            null,
-            'Posts'
-          )
-        ),
-        _react2.default.createElement(
           'div',
           { className: 'actions-box' },
           _react2.default.createElement(
@@ -34737,7 +34760,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostsContainer);
 
-},{"../actions/post":271,"react":245,"react-redux":56,"react-router":99}],293:[function(require,module,exports){
+},{"../actions/post":271,"react":245,"react-redux":56,"react-router":99}],294:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34821,7 +34844,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PostsTableContainer);
 
-},{"../actions/post":271,"../components":284,"react":245,"react-redux":56}],294:[function(require,module,exports){
+},{"../actions/post":271,"../components":284,"react":245,"react-redux":56}],295:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34888,13 +34911,17 @@ UndoRedoMessages = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)
 
 exports.default = UndoRedoMessages;
 
-},{"../components":284,"react":245,"react-redux":56,"redux-undo":249}],295:[function(require,module,exports){
+},{"../components":284,"react":245,"react-redux":56,"redux-undo":249}],296:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.NotificationContainer = exports.PostFormContainer = exports.PostsTableContainer = exports.PostsContainer = exports.MessageListContainer = exports.DashboardMessagesContainer = exports.DashboardItemContainer = exports.DashboardContainer = undefined;
+exports.NotificationContainer = exports.PostFormContainer = exports.PostsTableContainer = exports.PostsContainer = exports.MessageListContainer = exports.DashboardMessagesContainer = exports.DashboardItemContainer = exports.DashboardContainer = exports.AppContainer = undefined;
+
+var _AppContainer2 = require('./AppContainer');
+
+var _AppContainer3 = _interopRequireDefault(_AppContainer2);
 
 var _DashboardContainer2 = require('./DashboardContainer');
 
@@ -34930,6 +34957,7 @@ var _NotificationContainer3 = _interopRequireDefault(_NotificationContainer2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+exports.AppContainer = _AppContainer3.default;
 exports.DashboardContainer = _DashboardContainer3.default;
 exports.DashboardItemContainer = _DashboardItemContainer3.default;
 exports.DashboardMessagesContainer = _DashboardMessagesContainer3.default;
@@ -34939,7 +34967,7 @@ exports.PostsTableContainer = _PostsTableContainer3.default;
 exports.PostFormContainer = _PostFormContainer3.default;
 exports.NotificationContainer = _NotificationContainer3.default;
 
-},{"./DashboardContainer":286,"./DashboardItemContainer":287,"./DashboardMessagesContainer":288,"./MessageListContainer":289,"./NotificationContainer":290,"./PostFormContainer":291,"./PostsContainer":292,"./PostsTableContainer":293}],296:[function(require,module,exports){
+},{"./AppContainer":286,"./DashboardContainer":287,"./DashboardItemContainer":288,"./DashboardMessagesContainer":289,"./MessageListContainer":290,"./NotificationContainer":291,"./PostFormContainer":292,"./PostsContainer":293,"./PostsTableContainer":294}],297:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34955,7 +34983,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.tokenize = _tokenize3.default;
 
-},{"./tokenize":297}],297:[function(require,module,exports){
+},{"./tokenize":298}],298:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34969,7 +34997,7 @@ exports.default = function () {
   return Math.random();
 };
 
-},{}],298:[function(require,module,exports){
+},{}],299:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35022,13 +35050,17 @@ var undoableTodos = (0, _reduxUndo2.default)(dashboard, {
 
 exports.default = undoableTodos;
 
-},{"../constants":285,"../helpers":296,"redux-undo":249}],299:[function(require,module,exports){
+},{"../constants":285,"../helpers":297,"redux-undo":249}],300:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.notification = exports.post = exports.dashboard = undefined;
+exports.notification = exports.post = exports.dashboard = exports.structure = undefined;
+
+var _structure2 = require('./structure');
+
+var _structure3 = _interopRequireDefault(_structure2);
 
 var _dashboard2 = require('./dashboard');
 
@@ -35044,11 +35076,12 @@ var _notification3 = _interopRequireDefault(_notification2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+exports.structure = _structure3.default;
 exports.dashboard = _dashboard3.default;
 exports.post = _post3.default;
 exports.notification = _notification3.default;
 
-},{"./dashboard":298,"./notification":300,"./post":301}],300:[function(require,module,exports){
+},{"./dashboard":299,"./notification":301,"./post":302,"./structure":303}],301:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35108,7 +35141,7 @@ function notification() {
 
 exports.default = notification;
 
-},{"../constants":285}],301:[function(require,module,exports){
+},{"../constants":285}],302:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35203,6 +35236,34 @@ function post() {
 }
 
 exports.default = post;
+
+},{"../constants":285}],303:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _constants = require('../constants');
+
+var initialState = { title: 'Reagindo' };
+
+var structure = function structure() {
+  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _constants.SET_TITLE:
+      return Object.assign({}, state, {
+        title: action.title
+      });
+
+    default:
+      return state;
+  }
+};
+
+exports.default = structure;
 
 },{"../constants":285}]},{},[272]);
 
