@@ -1,18 +1,23 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { DashboardMessagesContainer } from './'
 import { Loader } from '../components'
+import { BaseContainer } from './'
 
-export default function() {
-  return(
-    <div>
-      <div className="row">
-        <div className="col-sm-4">
-          <DashboardMessagesContainer />
+class DashboardContainer extends Component {
+  render() {
+    return(
+      <BaseContainer title="Dashboard">
+        <div className="row">
+          <div className="col-sm-4">
+            <DashboardMessagesContainer />
+          </div>
+          <div className="col-sm-4">
+            <Loader />
+          </div>
         </div>
-        <div className="col-sm-4">
-          <Loader />
-        </div>
-      </div>
-    </div>
-  )
+      </BaseContainer>
+    )
+  }
 }
+
+export default DashboardContainer

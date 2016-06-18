@@ -1,6 +1,3 @@
-// Structure
-export const SET_TITLE = 'SET_TITLE'
-
 // Dashboard
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 export const REMOVE_MESSAGE = 'REMOVE_MESSAGE'
@@ -28,3 +25,8 @@ export const NOTIFICATION_INFO = 'info'
 export const NOTIFICATION_ERROR = 'danger'
 export const NOTIFICATION_WARNING = 'warning'
 export const NOTIFICATION_PRIMARY = 'primary'
+
+// Login
+export const SENDING_LOGIN = 'SENDING_LOGIN'
+export const SUCCESS_LOGIN = 'SUCCESS_LOGIN'
+export const ERROR_LOGIN = 'ERROR_LOGIN'

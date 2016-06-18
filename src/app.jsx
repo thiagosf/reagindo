@@ -5,13 +5,14 @@ import { Provider } from 'react-redux'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
-import { Login, NoMatch } from './components'
 import { 
   AppContainer,
   DashboardContainer,
   PostsContainer,
   PostsTableContainer,
-  PostFormContainer
+  PostFormContainer,
+  LoginFormContainer,
+  NoMatchContainer
 } from './containers'
 import * as reducers from './reducers'
 import thunkMiddleware from 'redux-thunk'
@@ -30,7 +31,7 @@ const history = syncHistoryWithStore(browserHistory, store)
 ReactDOM.render((
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/login" component={Login} />
+      <Route path="/login" component={LoginFormContainer} />
       <Route path="/" component={AppContainer}>
         <IndexRoute component={DashboardContainer} />
         <Route path="/dashboard" component={DashboardContainer} />
@@ -39,7 +40,7 @@ ReactDOM.render((
           <Route path="new" component={PostFormContainer} />
           <Route path=":id" component={PostFormContainer} />
         </Route>
-        <Route path="*" component={NoMatch} />
+        <Route path="*" component={NoMatchContainer} />
       </Route>
     </Router>
   </Provider>

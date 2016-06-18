@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class NoMatch extends Component {
+export default class NoMatchContainer extends Component {
   render() {
     return (
       <div className="row">
