@@ -3,8 +3,13 @@ import { connect } from 'react-redux'
 import { Loader, LoginForm } from '../components'
 import { submitLogin } from '../actions/login'
 import { NotificationContainer } from './'
+import { meta } from '../helpers'
 
 class LoginFormContainer extends Component {
+  constructor(props) {
+    super(props)
+    meta.setTitle('Login')
+  }
   render() {
     return(
       <div className="container-fluid">

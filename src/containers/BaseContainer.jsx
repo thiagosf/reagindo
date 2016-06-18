@@ -1,8 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import { Nav } from '../components'
 import { NotificationContainer } from '../containers'
+import { meta } from '../helpers'
 
 class BaseContainer extends Component {
+  constructor(props) {
+    super(props)
+    meta.setTitle(this.props.title)
+  }
   render() {
     return(
       <div>

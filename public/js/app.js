@@ -33141,7 +33141,7 @@ _reactDom2.default.render(_react2.default.createElement(
   )
 ), document.getElementById('content'));
 
-},{"./containers":299,"./reducers":303,"react":245,"react-dom":53,"react-redux":56,"react-router":99,"react-router-redux":66,"redux":255,"redux-logger":247,"redux-thunk":248}],274:[function(require,module,exports){
+},{"./containers":299,"./reducers":304,"react":245,"react-dom":53,"react-redux":56,"react-router":99,"react-router-redux":66,"redux":255,"redux-logger":247,"redux-thunk":248}],274:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34300,6 +34300,8 @@ var _components = require('../components');
 
 var _containers = require('../containers');
 
+var _helpers = require('../helpers');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34311,10 +34313,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var BaseContainer = function (_Component) {
   _inherits(BaseContainer, _Component);
 
-  function BaseContainer() {
+  function BaseContainer(props) {
     _classCallCheck(this, BaseContainer);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(BaseContainer).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BaseContainer).call(this, props));
+
+    _helpers.meta.setTitle(_this.props.title);
+    return _this;
   }
 
   _createClass(BaseContainer, [{
@@ -34356,7 +34361,7 @@ BaseContainer.propTypes = {
 
 exports.default = BaseContainer;
 
-},{"../components":284,"../containers":299,"react":245}],288:[function(require,module,exports){
+},{"../components":284,"../containers":299,"../helpers":300,"react":245}],288:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34506,6 +34511,8 @@ var _login = require('../actions/login');
 
 var _ = require('./');
 
+var _helpers = require('../helpers');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34517,10 +34524,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var LoginFormContainer = function (_Component) {
   _inherits(LoginFormContainer, _Component);
 
-  function LoginFormContainer() {
+  function LoginFormContainer(props) {
     _classCallCheck(this, LoginFormContainer);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(LoginFormContainer).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LoginFormContainer).call(this, props));
+
+    _helpers.meta.setTitle('Login');
+    return _this;
   }
 
   _createClass(LoginFormContainer, [{
@@ -34565,7 +34575,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginFormContainer);
 
-},{"../actions/login":270,"../components":284,"./":299,"react":245,"react-redux":56}],292:[function(require,module,exports){
+},{"../actions/login":270,"../components":284,"../helpers":300,"./":299,"react":245,"react-redux":56}],292:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35166,17 +35176,36 @@ exports.NoMatchContainer = _NoMatchContainer3.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.tokenize = undefined;
+exports.meta = exports.tokenize = undefined;
 
 var _tokenize2 = require('./tokenize');
 
 var _tokenize3 = _interopRequireDefault(_tokenize2);
 
+var _meta2 = require('./meta');
+
+var _meta3 = _interopRequireDefault(_meta2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.tokenize = _tokenize3.default;
+exports.meta = _meta3.default;
 
-},{"./tokenize":301}],301:[function(require,module,exports){
+},{"./meta":301,"./tokenize":302}],301:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  setTitle: function setTitle(title) {
+    if (title != document.title) {
+      document.title = title;
+    }
+  }
+};
+
+},{}],302:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35190,7 +35219,7 @@ exports.default = function () {
   return Math.random();
 };
 
-},{}],302:[function(require,module,exports){
+},{}],303:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35243,17 +35272,13 @@ var undoableTodos = (0, _reduxUndo2.default)(dashboard, {
 
 exports.default = undoableTodos;
 
-},{"../constants":285,"../helpers":300,"redux-undo":249}],303:[function(require,module,exports){
+},{"../constants":285,"../helpers":300,"redux-undo":249}],304:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.login = exports.notification = exports.post = exports.dashboard = exports.structure = undefined;
-
-var _structure2 = require('./structure');
-
-var _structure3 = _interopRequireDefault(_structure2);
+exports.login = exports.notification = exports.post = exports.dashboard = undefined;
 
 var _dashboard2 = require('./dashboard');
 
@@ -35273,13 +35298,12 @@ var _login3 = _interopRequireDefault(_login2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.structure = _structure3.default;
 exports.dashboard = _dashboard3.default;
 exports.post = _post3.default;
 exports.notification = _notification3.default;
 exports.login = _login3.default;
 
-},{"./dashboard":302,"./login":304,"./notification":305,"./post":306,"./structure":307}],304:[function(require,module,exports){
+},{"./dashboard":303,"./login":305,"./notification":306,"./post":307}],305:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35323,7 +35347,7 @@ var login = function login() {
 
 exports.default = login;
 
-},{"../constants":285}],305:[function(require,module,exports){
+},{"../constants":285}],306:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35383,7 +35407,7 @@ function notification() {
 
 exports.default = notification;
 
-},{"../constants":285}],306:[function(require,module,exports){
+},{"../constants":285}],307:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35478,34 +35502,6 @@ function post() {
 }
 
 exports.default = post;
-
-},{"../constants":285}],307:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _constants = require('../constants');
-
-var initialState = { title: 'Reagindo' };
-
-var structure = function structure() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
-  var action = arguments[1];
-
-  switch (action.type) {
-    case _constants.SET_TITLE:
-      return Object.assign({}, state, {
-        title: action.title
-      });
-
-    default:
-      return state;
-  }
-};
-
-exports.default = structure;
 
 },{"../constants":285}]},{},[273]);
 
