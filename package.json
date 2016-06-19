@@ -44,11 +44,13 @@
     "gulp-util": "^3.0.7",
     "gulp-webserver": "^0.9.1",
     "istanbul": "^0.4.3",
+    "lodash": "^4.13.1",
     "mocha": "^2.5.3",
     "serve-static": "^1.10.2",
     "sinon": "^1.17.4",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0"
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.6",
