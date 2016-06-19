@@ -7,7 +7,7 @@ import {
   NOTIFICATION_ERROR
 } from '../constants'
 
-import { browserHistory } from 'react-router'
+import { push } from 'react-router-redux'
 
 const sendingLogin = () => {
   return {
@@ -18,9 +18,6 @@ const sendingLogin = () => {
 }
 
 const successLogin = () => {
-  setTimeout(() => {
-    browserHistory.push('/dashboard')
-  }, 2000)
   return {
     type: SUCCESS_LOGIN,
     message: 'Entrando na Matrix...',
@@ -46,6 +43,7 @@ export function submitLogin({ username, password }) {
       }
       if (credentials.username == username && credentials.password == password) {
         dispatch(successLogin())
+        dispatch(push('/dashboard'))
       } else {
         dispatch(errorLogin())
       }

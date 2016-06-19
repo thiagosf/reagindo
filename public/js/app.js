@@ -32794,7 +32794,7 @@ exports.submitLogin = submitLogin;
 
 var _constants = require('../constants');
 
-var _reactRouter = require('react-router');
+var _reactRouterRedux = require('react-router-redux');
 
 var sendingLogin = function sendingLogin() {
   return {
@@ -32805,9 +32805,6 @@ var sendingLogin = function sendingLogin() {
 };
 
 var successLogin = function successLogin() {
-  setTimeout(function () {
-    _reactRouter.browserHistory.push('/dashboard');
-  }, 2000);
   return {
     type: _constants.SUCCESS_LOGIN,
     message: 'Entrando na Matrix...',
@@ -32836,6 +32833,7 @@ function submitLogin(_ref) {
       };
       if (credentials.username == username && credentials.password == password) {
         dispatch(successLogin());
+        dispatch((0, _reactRouterRedux.push)('/dashboard'));
       } else {
         dispatch(errorLogin());
       }
@@ -32843,7 +32841,7 @@ function submitLogin(_ref) {
   };
 }
 
-},{"../constants":285,"react-router":99}],271:[function(require,module,exports){
+},{"../constants":285,"react-router-redux":66}],271:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33075,8 +33073,6 @@ function updatePost(e, form) {
 },{"../constants":285,"superagent":262}],273:[function(require,module,exports){
 'use strict';
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -33085,63 +33081,47 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _redux = require('redux');
-
 var _reactRedux = require('react-redux');
 
 var _reactRouter = require('react-router');
 
-var _reactRouterRedux = require('react-router-redux');
+var _store = require('./store');
+
+var _store2 = _interopRequireDefault(_store);
 
 var _containers = require('./containers');
 
-var _reducers = require('./reducers');
-
-var reducers = _interopRequireWildcard(_reducers);
-
-var _reduxThunk = require('redux-thunk');
-
-var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-var _reduxLogger = require('redux-logger');
-
-var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+var containers = _interopRequireWildcard(_containers);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _redux.createStore)((0, _redux.combineReducers)(_extends({}, reducers, {
-  routing: _reactRouterRedux.routerReducer
-})), (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)()));
-
-var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.browserHistory, store);
-
 _reactDom2.default.render(_react2.default.createElement(
   _reactRedux.Provider,
-  { store: store },
+  { store: _store2.default },
   _react2.default.createElement(
     _reactRouter.Router,
     { history: _reactRouter.browserHistory },
-    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _containers.LoginFormContainer }),
+    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: containers.LoginFormContainer }),
     _react2.default.createElement(
       _reactRouter.Route,
-      { path: '/', component: _containers.AppContainer },
-      _react2.default.createElement(_reactRouter.IndexRoute, { component: _containers.DashboardContainer }),
-      _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _containers.DashboardContainer }),
+      { path: '/', component: containers.AppContainer },
+      _react2.default.createElement(_reactRouter.IndexRoute, { component: containers.DashboardContainer }),
+      _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: containers.DashboardContainer }),
       _react2.default.createElement(
         _reactRouter.Route,
-        { path: '/posts', component: _containers.PostsContainer },
-        _react2.default.createElement(_reactRouter.IndexRoute, { component: _containers.PostsTableContainer }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'new', component: _containers.PostFormContainer }),
-        _react2.default.createElement(_reactRouter.Route, { path: ':id', component: _containers.PostFormContainer })
+        { path: '/posts', component: containers.PostsContainer },
+        _react2.default.createElement(_reactRouter.IndexRoute, { component: containers.PostsTableContainer }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'new', component: containers.PostFormContainer }),
+        _react2.default.createElement(_reactRouter.Route, { path: ':id', component: containers.PostFormContainer })
       ),
-      _react2.default.createElement(_reactRouter.Route, { path: '*', component: _containers.NoMatchContainer })
+      _react2.default.createElement(_reactRouter.Route, { path: '*', component: containers.NoMatchContainer })
     )
   )
 ), document.getElementById('content'));
 
-},{"./containers":299,"./reducers":304,"react":245,"react-dom":53,"react-redux":56,"react-router":99,"react-router-redux":66,"redux":255,"redux-logger":247,"redux-thunk":248}],274:[function(require,module,exports){
+},{"./containers":299,"./store":308,"react":245,"react-dom":53,"react-redux":56,"react-router":99}],274:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35503,6 +35483,44 @@ function post() {
 
 exports.default = post;
 
-},{"../constants":285}]},{},[273]);
+},{"../constants":285}],308:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _redux = require('redux');
+
+var _reactRouterRedux = require('react-router-redux');
+
+var _reactRouter = require('react-router');
+
+var _reduxThunk = require('redux-thunk');
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _reduxLogger = require('redux-logger');
+
+var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+
+var _reducers = require('../reducers');
+
+var reducers = _interopRequireWildcard(_reducers);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var middleware = (0, _reactRouterRedux.routerMiddleware)(_reactRouter.browserHistory);
+var store = (0, _redux.createStore)((0, _redux.combineReducers)(_extends({}, reducers, {
+  routing: _reactRouterRedux.routerReducer
+})), (0, _redux.applyMiddleware)(middleware), (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)()));
+
+exports.default = store;
+
+},{"../reducers":304,"react-router":99,"react-router-redux":66,"redux":255,"redux-logger":247,"redux-thunk":248}]},{},[273]);
 
 //# sourceMappingURL=map/app.js.map
