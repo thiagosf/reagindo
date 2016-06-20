@@ -18,9 +18,9 @@ import watchify from 'watchify';
 import { assign } from 'lodash';
 
 // Configuration for Gulp
-var config = {
+const config = {
   js: {
-    src: './src/app.jsx',
+    src: './src/index.jsx',
     watch: ['./src/**/*', './src/**/**/*'],
     outputDir: './public/js/',
     outputFile: 'app.js',
@@ -47,12 +47,9 @@ const customOpts = {
   extensions: ['.jsx']
 };
 const opts = assign({}, watchify.args, customOpts);
-var b = watchify(browserify(opts), { poll: true });
-b.transform(babelify)
-b.on('update', () => {
-  gutil.log("Updating 'watchify'...");
-  bundle();
-});
+let b = watchify(browserify(opts), { poll: true });
+b.transform(babelify);
+b.on('update', bundle);
 b.on('log', gutil.log);
 gulp.task('scripts', bundle);
 
