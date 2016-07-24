@@ -7,6 +7,8 @@
   "login.login": "Login",
   "login.username": "Username",
   "login.password": "Password",
+  "nav.home": "Home",
+  "nav.posts": "Posts",
   "nav.languages": "Languages",
   "nav.logout": "Logout"
 }

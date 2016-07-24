@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { FormattedMessage } from 'react-intl'
+
 import { Loader, LoginForm, LanguageBox } from '../components'
 import { submitLogin } from '../actions/login'
 import { NotificationContainer } from './'
 import { meta } from '../helpers'
-import { FormattedMessage } from 'react-intl'
+import { checkLocaleInQuery } from '../actions/intl'
 
 class LoginFormContainer extends Component {
   constructor(props) {
     super(props)
     meta.setTitle(this.props.intl.messages['login.login'])
+    this.props.onCheckLocaleInQuery(this.props.location.query)
   }
   render() {
     return(
@@ -40,6 +43,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onSubmit: (data) => {
       return dispatch(submitLogin(data))
+    },
+    onCheckLocaleInQuery: (query) => {
+      dispatch(checkLocaleInQuery(query))
     }
   }
 }

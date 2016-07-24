@@ -1,0 +1,14 @@
+{
+  "dashboard.messages.title": "Mensajes",
+  "actions.add": "Añadir",
+  "actions.undo": "Deshacer",
+  "actions.redo": "Rehacer",
+  "actions.enter": "Acceder",
+  "login.login": "Iniciar sesión en",
+  "login.username": "Nombre de usuario",
+  "login.password": "Contraseña",
+  "nav.home": "Início",
+  "nav.posts": "Posts",
+  "nav.languages": "Idiomas",
+  "nav.logout": "Dejar"
+}

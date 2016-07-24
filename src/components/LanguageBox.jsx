@@ -1,21 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { Button } from '../components'
+import { Button, LanguageItem } from '../components'
 import { changeLanguage } from '../actions/intl'
 import classNames from 'classnames'
-
-const LanguageItem = ({ current_locale, name, locale, onClick }) => {
-  let link = `?locale=${locale}`
-  let className = classNames({
-    'active-locale': current_locale == locale
-  })
-  return (
-    <li>
-      <a className={className} onClick={onClick} href={link}>{name}</a>
-    </li>
-  )
-}
 
 class LanguageBox extends Component {
   onChangeLanguage(locale, e) {

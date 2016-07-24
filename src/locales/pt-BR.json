@@ -7,6 +7,8 @@
   "login.login": "Entrar no sistema",
   "login.username": "Nome de usuário",
   "login.password": "Senha",
+  "nav.home": "Página inicial",
+  "nav.posts": "Posts",
   "nav.languages": "Idiomas",
   "nav.logout": "Sair"
 }

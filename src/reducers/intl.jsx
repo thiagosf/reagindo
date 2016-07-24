@@ -1,17 +1,20 @@
 import { CHANGE_LANGUAGE } from '../constants'
 import enUsLocaleData from '../locales/en-US.json'
 import ptBrLocaleData from '../locales/pt-BR.json'
+import esEsLocaleData from '../locales/es-ES.json'
 
 import { addLocaleData } from 'react-intl'
 import en from 'react-intl/locale-data/en'
 import pt from 'react-intl/locale-data/pt'
+import es from 'react-intl/locale-data/es'
 import { intlReducer } from 'react-intl-redux'
 
-addLocaleData([...en, ...pt])
+addLocaleData([...en, ...pt, ...es])
 
 const messages = {
   'en-US': enUsLocaleData,
-  'pt-BR': ptBrLocaleData
+  'pt-BR': ptBrLocaleData,
+  'es-ES': esEsLocaleData
 }
 
 let initialState = {
@@ -24,6 +27,9 @@ let initialState = {
   }, {
     locale: 'pt-BR',
     name: 'Português'
+  }, {
+    locale: 'es-ES',
+    name: 'Español'
   }]
 }
 
