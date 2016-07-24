@@ -1,18 +1,25 @@
+// @TODO Colocar migrar state para redux
+
 import React, { Component } from 'react'
 const { PropTypes } = React;
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 class Nav extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      opened_nav: false
+      opened_nav: false,
+      opened_languages: false
     }
   }
   openNav() {
     this.setState({ opened_nav: !this.state.opened_nav })
+  }
+  openLanguages() {
+    this.setState({ opened_languages: !this.state.opened_languages })
   }
   changeNavClass(path) {
     [...this.refs.main_nav.children].map(li => {
@@ -32,6 +39,10 @@ class Nav extends Component {
       'collapse': true,
       'in': this.state.opened_nav
     })
+    let languagesClassname = classNames({
+      'dropdown': true,
+      'open': this.state.opened_languages
+    })
     return (
       <nav className="navbar navbar-inverse navbar-fixed-top">
         <div className="container">
@@ -47,6 +58,16 @@ class Nav extends Component {
           <div id="navbar" className={navbarClassname}>
             <ul className="nav navbar-nav" ref="main_nav">
               {this.props.nav.map(item => this.renderNav(item))}
+              <li className={languagesClassname} onClick={() => this.openLanguages()}>
+                <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" className="dropdown-toggle" href="#">
+                  <FormattedMessage id="nav.languages" />
+                  <span className="caret"></span>
+                </a>
+                <ul className="dropdown-menu">
+                  <li><a href="#">English</a></li>
+                  <li><a href="#">Portugues</a></li>
+                </ul>
+              </li>
             </ul>
           </div>
         </div>

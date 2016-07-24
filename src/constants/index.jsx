@@ -30,3 +30,6 @@ export const NOTIFICATION_PRIMARY = 'primary'
 export const SENDING_LOGIN = 'SENDING_LOGIN'
 export const SUCCESS_LOGIN = 'SUCCESS_LOGIN'
 export const ERROR_LOGIN = 'ERROR_LOGIN'
+
+// Intl
+export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE'

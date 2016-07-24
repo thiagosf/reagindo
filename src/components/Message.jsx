@@ -3,7 +3,7 @@ import { Button } from '../components'
 
 const Message = ({ text, onClick }) => {
   return (
-    <div  className="message-item">
+    <div className="message-item">
       <Button danger xsmall className="text-danger" onClick={onClick}>
         <span className="glyphicon glyphicon-remove"></span>
       </Button>

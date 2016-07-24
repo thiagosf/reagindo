@@ -1,17 +1,18 @@
 import React from 'react'
 import { ActionCreators as UndoActionCreators } from 'redux-undo'
 import { connect } from 'react-redux'
+import { FormattedMessage } from 'react-intl'
 import { Button } from '../components'
 
 let UndoRedoMessages = ({ canUndo, canRedo, onUndo, onRedo }) => (
   <div>
     <div className="pull-right">
       <Button info xsmall onClick={onRedo} disabled={!canRedo}>
-        Refazer
+        <FormattedMessage id="actions.redo" />
       </Button>
     </div>
     <Button info xsmall onClick={onUndo} disabled={!canUndo}>
-      Desfazer
+      <FormattedMessage id="actions.undo" />
     </Button>
     <hr />
   </div>

@@ -1,0 +1,12 @@
+{
+  "dashboard.messages.title": "Messages",
+  "actions.add": "Add",
+  "actions.undo": "Undo",
+  "actions.redo": "Redo",
+  "actions.enter": "Enter",
+  "login.login": "Login",
+  "login.username": "Username",
+  "login.password": "Password",
+  "nav.languages": "Languages",
+  "nav.logout": "Logout"
+}

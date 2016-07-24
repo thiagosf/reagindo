@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import classNames from 'classnames'
-const { PropTypes } = React;
+import _ from 'lodash'
 
-export default class Button extends Component {
+class Button extends Component {
   getClassName() {
     return classNames({
       'btn': true,
@@ -19,9 +19,10 @@ export default class Button extends Component {
     })
   }
   render() {
+    const safe_props = _.omit(this.props, _.keys(Button.propTypes))
     return (
       <button 
-        {...this.props}
+        {...safe_props}
         className={this.getClassName()}
         >{this.props.children}</button>
     )
@@ -29,13 +30,10 @@ export default class Button extends Component {
 }
 
 Button.defaultProps = {
-  type: 'button',
-  styled: 'primary',
-  size: ''
+  type: 'button'
 }
 
 Button.propTypes = {
-  type: PropTypes.string,
   primary: PropTypes.bool,
   warning: PropTypes.bool,
   danger: PropTypes.bool,
@@ -47,3 +45,5 @@ Button.propTypes = {
   large: PropTypes.bool,
   block: PropTypes.bool
 }
+
+export default Button

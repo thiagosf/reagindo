@@ -22,7 +22,8 @@ Executar o webserver:
 - [x] Usar react-router
 - [x] Adicionar Redux ou ~~Flux~~ para manipulação do estado da aplicação
 - [x] Criar testes dos componentes do React
-- [ ] Adicionar suporte a i18n
+- [x] Adicionar suporte a i18n
 - [ ] Criar estrutura de admin modular
+- [x] Suporte a Azk
 
 :dash:

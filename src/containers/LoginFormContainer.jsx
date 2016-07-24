@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Loader, LoginForm } from '../components'
+import { Loader, LoginForm, LanguageBox } from '../components'
 import { submitLogin } from '../actions/login'
 import { NotificationContainer } from './'
 import { meta } from '../helpers'
+import { FormattedMessage } from 'react-intl'
 
 class LoginFormContainer extends Component {
   constructor(props) {
     super(props)
-    meta.setTitle('Login')
+    meta.setTitle(this.props.intl.messages['login.login'])
   }
   render() {
     return(
@@ -16,8 +17,11 @@ class LoginFormContainer extends Component {
         <NotificationContainer />
         <div className="row">
           <div className="col-sm-4 col-sm-offset-4">
-            <h2>Login</h2>
+            <h2>
+              <FormattedMessage id="login.login" />
+            </h2>
             <LoginForm {...this.props} />
+            <LanguageBox />
           </div>
         </div>
       </div>
@@ -27,7 +31,8 @@ class LoginFormContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.login
+    ...state.login,
+    intl: state.intl
   }
 }
 

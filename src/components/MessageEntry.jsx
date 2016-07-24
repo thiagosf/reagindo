@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { FormattedMessage } from 'react-intl'
 
 import { Button } from '../components'
 import { addMessage } from '../actions/dashboard'
@@ -27,7 +28,9 @@ class MessageEntry extends Component {
               </div>
             </div>
             <div className="col-sm-5">
-              <Button type="submit" primary block>Adicionar</Button>
+              <Button type="submit" primary block>
+                <FormattedMessage id="actions.add" />
+              </Button>
             </div>
           </div>
         </form>

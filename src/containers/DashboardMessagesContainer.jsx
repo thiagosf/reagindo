@@ -5,7 +5,7 @@ import UndoRedoMessages from './UndoRedoMessages'
 
 export default function() {
   return (
-    <DashboardItemContainer item="message-entry" title="Mensagens">
+    <DashboardItemContainer item="message-entry" title="dashboard.messages.title">
       <UndoRedoMessages />
       <MessageEntry />
       <MessageListContainer />
