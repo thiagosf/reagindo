@@ -73,7 +73,7 @@ gulp.task('compress', ['scripts'], () => {
 });
 
 // Webserver
-gulp.task('ws', ['sass:watch', 'scripts'], () => {
+gulp.task('ws', ['sass', 'sass:watch', 'scripts'], () => {
   return gulp.src('public')
     .pipe(webserver({
       host: '0.0.0.0',

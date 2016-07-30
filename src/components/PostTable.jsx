@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import moment from 'moment'
+import { Button } from './'
 
-const postRow = (post) => {
+const postRow = (post, onDestroy) => {
   const thumbnail = () => {
     if (post.thumbnail != 'self') return <img src={post.thumbnail} height="30" />
   }
@@ -13,6 +14,11 @@ const postRow = (post) => {
 
   let edit_url = `/posts/${post.id}`
   let destroy_url = `/posts/${post.id}`
+  const onClickDestroy = (e) => {
+    if (confirm('tem certeza?')) {
+      onDestroy(post)
+    }
+  }
 
   return (
     <tr key={post.id}>
@@ -24,7 +30,7 @@ const postRow = (post) => {
       <td>
         <Link to={edit_url} className="btn btn-success btn-xs">Editar</Link>
         <span> </span>
-        <Link to={destroy_url} className="btn btn-danger btn-xs">Deletar</Link>
+        <Button type='button' danger xsmall onClick={onClickDestroy.bind(this)}>Deletar</Button>
       </td>
     </tr>
   )
@@ -47,7 +53,7 @@ export default class PostTable extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.posts.map(post => postRow(post))}
+            {this.props.posts.map(post => postRow(post, this.props.onDestroy))}
           </tbody>
         </table>
       </div>

@@ -15,7 +15,7 @@ class PostsTableContainer extends Component {
     return(
       <div>
         {this.getLoader()}
-        <PostTable {...this.props} />
+        <PostTable {...this.props} onDestroy={this.props.onDeletePost} />
       </div>
     )
   }

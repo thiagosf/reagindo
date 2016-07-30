@@ -1,7 +1,9 @@
 import request from 'superagent'
 
 import {
-  REMOVE_POST,
+  REMOVING_POST,
+  REMOVED_POST,
+  REMOVED_POST_ERROR,
   REQUEST_POSTS,
   REQUEST_POST,
   RECEIVE_POSTS,
@@ -19,13 +21,6 @@ import {
 export const newPost = () => {
   return {
     type: CREATE_POST
-  }
-}
-
-export const removePost = (id) => {
-  return {
-    type: REMOVE_POST,
-    id
   }
 }
 
@@ -97,6 +92,31 @@ const errorToUpdatePost = (message, message_type) => {
     type: UPDATED_POST_ERROR,
     message,
     message_type
+  }
+}
+
+export const removedPost = (post, message, message_type) => {
+  return {
+    type: REMOVED_POST,
+    post,
+    message,
+    message_type
+  }
+}
+
+export const errorToRemovePost = (post, message, message_type) => {
+  return {
+    type: REMOVED_POST_ERROR,
+    post,
+    message,
+    message_type
+  }
+}
+
+export const removingPost = (post) => {
+  return {
+    type: REMOVING_POST,
+    post
   }
 }
 
@@ -182,6 +202,29 @@ export function updatePost(e, form) {
           }
         }
         return dispatch(errorToUpdatePost('Ops.. algo não saiu como esperado', NOTIFICATION_ERROR))
+      })
+  }
+}
+
+
+export const removePost = (post) => {
+  return dispatch => {
+    dispatch(removingPost(post))
+    request
+      .delete('http://www.mocky.io/v2/57561bc30f0000d2052eff47')
+      .set('Accept', 'application/json')
+      .type('form')
+      .send({ id: post.id })
+      .end((err, res) => {
+        let random = Math.floor(Math.random() * (3 - 1)) + 1;
+        err = random % 2 == 0
+        if (!err) {
+          // if (res.status == 201) {
+          if (true) {
+            return dispatch(removedPost(post, 'Post removido com sucesso!', NOTIFICATION_SUCCESS))
+          }
+        }
+        return dispatch(errorToRemovePost(post, 'Ops.. algo não saiu como esperado', NOTIFICATION_ERROR))
       })
   }
 }

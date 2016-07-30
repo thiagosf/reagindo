@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import { checkLocaleInQuery } from '../actions/intl'
 
 class AppContainer extends Component {
-  render() {
+  componentDidMount() {
     this.props.onCheckLocaleInQuery(this.props.location.query)
-    console.log("aqui");
+  }
+  render() {
     return (
       <div>
         {this.props.children}
