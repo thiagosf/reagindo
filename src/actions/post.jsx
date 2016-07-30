@@ -1,4 +1,5 @@
 import request from 'superagent'
+import { translate } from '../helpers'
 
 import {
   REMOVING_POST,
@@ -155,7 +156,7 @@ export function fetchPost(id) {
 }
 
 export function createPost(e, form) {
-  return dispatch => {
+  return (dispatch, store) => {
     e.preventDefault()
     dispatch(sendingPost(form))
     const data = {
@@ -172,16 +173,16 @@ export function createPost(e, form) {
         err = random % 2 == 0
         if (!err) {
           if (res.status == 200) {
-            return dispatch(createdPost(res.body.id, 'Post criado com sucesso!', NOTIFICATION_SUCCESS))
+            return dispatch(createdPost(res.body.id, 'posts.created', NOTIFICATION_SUCCESS))
           }
         }
-        return dispatch(errorToSavePost('Ops.. algo não saiu como esperado', NOTIFICATION_ERROR))
+        return dispatch(errorToSavePost('posts.created_error', NOTIFICATION_ERROR))
       })
   }
 }
 
 export function updatePost(e, form) {
-  return dispatch => {
+  return (dispatch, store) => {
     e.preventDefault()
     dispatch(sendingPost(form))
     const data = {
@@ -198,17 +199,16 @@ export function updatePost(e, form) {
         err = random % 2 == 0
         if (!err) {
           if (res.status == 200) {
-            return dispatch(updatedPost(res.body.id, 'Post atualizado com sucesso!', NOTIFICATION_SUCCESS))
+            return dispatch(updatedPost(res.body.id, 'posts.updated', NOTIFICATION_SUCCESS))
           }
         }
-        return dispatch(errorToUpdatePost('Ops.. algo não saiu como esperado', NOTIFICATION_ERROR))
+        return dispatch(errorToUpdatePost('posts.updated_error', NOTIFICATION_ERROR))
       })
   }
 }
 
-
 export const removePost = (post) => {
-  return dispatch => {
+  return (dispatch, store) => {
     dispatch(removingPost(post))
     request
       .delete('http://www.mocky.io/v2/57561bc30f0000d2052eff47')
@@ -219,12 +219,11 @@ export const removePost = (post) => {
         let random = Math.floor(Math.random() * (3 - 1)) + 1;
         err = random % 2 == 0
         if (!err) {
-          // if (res.status == 201) {
-          if (true) {
-            return dispatch(removedPost(post, 'Post removido com sucesso!', NOTIFICATION_SUCCESS))
+          if ((res && res.status == 201) || true) {
+            return dispatch(removedPost(post, 'posts.removed', NOTIFICATION_SUCCESS))
           }
         }
-        return dispatch(errorToRemovePost(post, 'Ops.. algo não saiu como esperado', NOTIFICATION_ERROR))
+        return dispatch(errorToRemovePost(post, 'posts.removed_error', NOTIFICATION_ERROR))
       })
   }
 }

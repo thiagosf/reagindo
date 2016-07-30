@@ -10,5 +10,14 @@
   "nav.home": "Página inicial",
   "nav.posts": "Posts",
   "nav.languages": "Idiomas",
-  "nav.logout": "Sair"
+  "nav.logout": "Sair",
+  "posts.created": "Post criado!",
+  "posts.created_error": "Erro ao criar post",
+  "posts.updated": "Post atualizado",
+  "posts.updated_error": "Erro ao atualizar post",
+  "posts.removed": "Post removido!",
+  "posts.removed_error": "Erro ao remover post",
+  "login.sending_login": "Sending...",
+  "login.user_logged_in": "Success login!",
+  "login.error_login": "Login invalid"
 }

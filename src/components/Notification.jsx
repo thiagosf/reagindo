@@ -1,7 +1,13 @@
 import React, { PropTypes, Component } from 'react'
 import classnames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
 export default class Notification extends Component  {
+  getMessage() {
+    if (this.props.message) {
+      return <FormattedMessage id={this.props.message} />
+    }
+  }
   render() {
     let class_name = classnames({
       'notification': true,
@@ -14,7 +20,7 @@ export default class Notification extends Component  {
     return (
       <div className={class_name}>
         <div className={`alert alert-${this.props.message_type}`} onClick={this.props.onClick} onMouseEnter={this.props.onMouseEnter}>
-          {this.props.message}
+          {this.getMessage()}
           <br />
           <small>
             <span className={class_name_time_left}>

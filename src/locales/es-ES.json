@@ -10,5 +10,14 @@
   "nav.home": "Início",
   "nav.posts": "Posts",
   "nav.languages": "Idiomas",
-  "nav.logout": "Dejar"
+  "nav.logout": "Dejar",
+  "posts.created": "Publicación creada!",
+  "posts.created_error": "Error para crear publicación",
+  "posts.updated": "Actualización de publicación!",
+  "posts.updated_error": "Error al actualizar publicación",
+  "posts.removed": "Publicación eliminado",
+  "posts.removed_error": "Error al eliminar la publicación",
+  "login.sending_login": "Sending...",
+  "login.user_logged_in": "Success login!",
+  "login.error_login": "Login invalid"
 }

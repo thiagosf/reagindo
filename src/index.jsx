@@ -4,12 +4,18 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import store from './store'
 import * as containers from './containers'
 import { Provider } from 'react-intl-redux'
+import { UserAuthWrapper } from 'redux-auth-wrapper'
+
+const UserIsAuthenticated = UserAuthWrapper({
+  authSelector: state => state.user,
+  wrapperDisplayName: 'UserIsAuthenticated'
+})
 
 ReactDOM.render((
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/login" component={containers.LoginFormContainer} />
-      <Route path="/" component={containers.AppContainer}>
+      <Route path="/" component={UserIsAuthenticated(containers.AppContainer)}>
         <IndexRoute component={containers.DashboardContainer} />
         <Route path="/dashboard" component={containers.DashboardContainer} />
         <Route path="/posts" component={containers.PostsContainer}>

@@ -1,6 +1,6 @@
 import {
   SENDING_LOGIN,
-  SUCCESS_LOGIN,
+  USER_LOGGED_IN,
   ERROR_LOGIN,
   NOTIFICATION_INFO,
   NOTIFICATION_SUCCESS,
@@ -12,23 +12,24 @@ import { push } from 'react-router-redux'
 const sendingLogin = () => {
   return {
     type: SENDING_LOGIN,
-    message: 'Enviando, aguarde um instante...',
+    message: 'login.sending_login',
     message_type: NOTIFICATION_INFO
   }
 }
 
-const successLogin = () => {
+const successLogin = (user) => {
   return {
-    type: SUCCESS_LOGIN,
-    message: 'Entrando na Matrix...',
-    message_type: NOTIFICATION_SUCCESS
+    type: USER_LOGGED_IN,
+    message: 'login.user_logged_in',
+    message_type: NOTIFICATION_SUCCESS,
+    user: user
   }
 }
 
 const errorLogin = () => {
   return {
     type: ERROR_LOGIN,
-    message: 'Credenciais inválidas',
+    message: 'login.error_login',
     message_type: NOTIFICATION_ERROR
   }
 }
@@ -42,11 +43,11 @@ export function submitLogin({ username, password }) {
         password: '123'
       }
       if (credentials.username == username && credentials.password == password) {
-        dispatch(successLogin())
+        dispatch(successLogin(credentials))
         dispatch(push('/dashboard'))
       } else {
         dispatch(errorLogin())
       }
-    }, 1500)
+    }, 1000)
   }
 }
