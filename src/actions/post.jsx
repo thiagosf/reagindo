@@ -16,7 +16,8 @@ import {
   UPDATED_POST_ERROR,
   CREATE_POST,
   NOTIFICATION_SUCCESS,
-  NOTIFICATION_ERROR
+  NOTIFICATION_ERROR,
+  NOTIFICATION_INFO
 } from '../constants'
 
 export const newPost = () => {
@@ -114,10 +115,12 @@ export const errorToRemovePost = (post, message, message_type) => {
   }
 }
 
-export const removingPost = (post) => {
+export const removingPost = (post, message, message_type) => {
   return {
     type: REMOVING_POST,
-    post
+    post,
+    message,
+    message_type
   }
 }
 
@@ -209,7 +212,7 @@ export function updatePost(e, form) {
 
 export const removePost = (post) => {
   return (dispatch, store) => {
-    dispatch(removingPost(post))
+    dispatch(removingPost(post, 'posts.removing', NOTIFICATION_INFO))
     request
       .delete('http://www.mocky.io/v2/57561bc30f0000d2052eff47')
       .set('Accept', 'application/json')

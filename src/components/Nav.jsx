@@ -73,6 +73,11 @@ class Nav extends Component {
                 </ul>
               </li>
             </ul>
+            <ul className="nav navbar-nav pull-right">
+              <li>
+                <a href="#">Ola {this.props.user.name}</a>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
@@ -96,6 +101,7 @@ const mapStateToProps = (state) => {
   return {
     routing: state.routing,
     nav: state.nav,
+    user: state.user,
     intl: state.intl
   }
 }

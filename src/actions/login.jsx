@@ -39,6 +39,9 @@ export function submitLogin({ username, password }) {
     dispatch(sendingLogin())
     setTimeout(() => {
       const credentials = {
+        name: 'Admin',
+        id: 1,
+        token: '123',
         username: 'admin',
         password: '123'
       }
@@ -49,5 +52,12 @@ export function submitLogin({ username, password }) {
         dispatch(errorLogin())
       }
     }, 1000)
+  }
+}
+
+export function forceLogin(credentials) {
+  return dispatch => {
+    dispatch(successLogin(credentials))
+    dispatch(push('/dashboard'))
   }
 }

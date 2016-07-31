@@ -17,6 +17,7 @@
   "posts.updated_error": "Erro ao atualizar post",
   "posts.removed": "Post removido!",
   "posts.removed_error": "Erro ao remover post",
+  "posts.removing": "Removing post...",
   "login.sending_login": "Sending...",
   "login.user_logged_in": "Success login!",
   "login.error_login": "Login invalid"

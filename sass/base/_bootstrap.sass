@@ -9,5 +9,56 @@ $border-radius-small: 2px
 
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap"
 
+.navbar-inverse
+  background: #43a047
+  border: 0
+  .navbar-nav 
+    > li 
+      > a
+        color: white
+  .navbar-brand
+    color: white
+    &:hover
+      color: white
+  .navbar-toggle
+    border: 0
+    &:hover, 
+    &:focus
+      background: transparent
+    .icon-bar
+      height: 4px
+      border-radius: 0
+      + .icon-bar
+        margin-top: 2px
+  .navbar-collapse
+    border-color: #43a047
+    box-shadow: none
+  .navbar-nav
+    .open
+      .dropdown-menu
+        > li
+          > a
+            color: white
+    > .open
+      > a,
+      > a:hover,
+      > a:focus
+        background: #358038
+    > .active
+      > a,
+      > a:hover,
+      > a:focus
+        background: #358038
+
+.dropdown-menu
+  background: #358038
+  box-shadow: none
+  border-width: 0
+  > li
+    > a:hover,
+    > a:focus
+      background: #358038
+      color: black
+
 .form-control:focus
   box-shadow: 0 1px 1px rgba(black, .075) inset, 0 0 0 2px rgba($brand-primary, .3)
