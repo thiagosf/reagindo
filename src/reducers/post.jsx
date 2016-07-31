@@ -16,6 +16,8 @@ const initialState = {
   isSaved: false,
   posts: [],
   page: 1,
+  page_count: 0,
+  limit: 1,
   post: {
     title: '',
     author: ''
@@ -40,6 +42,8 @@ function post(state = initialState, action) {
         isSaved: false,
         posts: [],
         post: {},
+        page_count: 0,
+        limit: 1,
         message: null
       })
 
@@ -49,6 +53,8 @@ function post(state = initialState, action) {
         isSending: false,
         isSaved: false,
         posts: action.posts,
+        page_count: action.page_count,
+        limit: action.limit,
         message: null
       })
 

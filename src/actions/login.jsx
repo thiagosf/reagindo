@@ -55,9 +55,22 @@ export function submitLogin({ username, password }) {
   }
 }
 
-export function forceLogin(credentials) {
+let checked_session = false
+
+export function checkSession() {
   return dispatch => {
-    dispatch(successLogin(credentials))
-    dispatch(push('/dashboard'))
+    if (!checked_session) {
+      checked_session = true
+      // fetch api
+      let random = Math.floor(Math.random() * (3 - 1)) + 1;
+      let err = random % 2 == 0
+      // if (!err) {
+        setTimeout(() => {
+          let user = { name: 'Admin', id: 1, token: '123' }
+          dispatch(successLogin(user))
+          dispatch(push('/dashboard'))
+        }, 500);
+      // }
+    }
   }
 }

@@ -40,11 +40,13 @@ export function requestPost(id) {
   }
 }
 
-export const receivePosts = (page, posts) => {
+export const receivePosts = (page, pagination) => {
   return {
     type: RECEIVE_POSTS,
     page,
-    posts: posts
+    posts: pagination.posts,
+    page_count: pagination.page_count,
+    limit: pagination.limit
   }
 }
 
@@ -135,7 +137,12 @@ export function fetchPosts(page) {
         if (err) {
           // dispatch de erro
         } else {
-          dispatch(receivePosts(page, res.body))
+          let pagination = {
+            posts: res.body,
+            page_count: 10,
+            limit: 1
+          }
+          dispatch(receivePosts(page, pagination))
         }
       })
   }

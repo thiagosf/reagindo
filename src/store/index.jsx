@@ -12,7 +12,8 @@ const store = createStore(
     routing: routerReducer
   }),
   applyMiddleware(middleware),
-  applyMiddleware(thunkMiddleware, createLogger())
+  applyMiddleware(thunkMiddleware)
+  // applyMiddleware(thunkMiddleware, createLogger())
 )
 
 export default store

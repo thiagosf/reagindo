@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 
 import { Loader, LoginForm, LanguageBox } from '../components'
-import { submitLogin, forceLogin } from '../actions/login'
+import { submitLogin, checkSession } from '../actions/login'
 import { NotificationContainer } from './'
 import { meta, translate } from '../helpers'
 import { checkLocaleInQuery } from '../actions/intl'
@@ -13,9 +13,7 @@ class LoginFormContainer extends Component {
     let messages = translate.getMessages(this.props)
     meta.setTitle(messages['login.login'])
     this.props.onCheckLocaleInQuery(this.props.location.query)
-    setTimeout(() => {
-      this.props.onForceLogin({ name: 'Admin', id: 1, token: '123' })
-    }, 500);
+    this.props.checkSession();
   }
   render() {
     return(
@@ -50,8 +48,8 @@ const mapDispatchToProps = (dispatch) => {
     onCheckLocaleInQuery: (query) => {
       dispatch(checkLocaleInQuery(query))
     },
-    onForceLogin: (user) => {
-      dispatch(forceLogin(user))
+    checkSession: () => {
+      dispatch(checkSession())
     }
   }
 }

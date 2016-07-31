@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import moment from 'moment'
-import { Button } from './'
+import { Button, Pagination } from './'
 
 const postRow = (post, onDestroy) => {
   const thumbnail = () => {
@@ -40,22 +40,25 @@ export default class PostTable extends Component {
   render() {
     if (this.props.posts.length == 0) return false
     return(
-      <div className="table-responsive">
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Imagem</th>
-              <th>Titulo</th>
-              <th>Autor</th>
-              <th>Data</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.posts.map(post => postRow(post, this.props.onDestroy))}
-          </tbody>
-        </table>
+      <div>
+        <div className="table-responsive">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Imagem</th>
+                <th>Titulo</th>
+                <th>Autor</th>
+                <th>Data</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.props.posts.map(post => postRow(post, this.props.onDestroy))}
+            </tbody>
+          </table>
+        </div>
+        <Pagination {...this.props} />
       </div>
     )
   }
