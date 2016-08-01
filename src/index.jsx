@@ -11,11 +11,13 @@ const UserIsAuthenticated = UserAuthWrapper({
   wrapperDisplayName: 'UserIsAuthenticated'
 })
 
+// <Route path="/" component={UserIsAuthenticated(containers.AppContainer)}>
+
 ReactDOM.render((
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/login" component={containers.LoginFormContainer} />
-      <Route path="/" component={UserIsAuthenticated(containers.AppContainer)}>
+      <Route path="/" component={containers.AppContainer}>
         <IndexRoute component={containers.DashboardContainer} />
         <Route path="/dashboard" component={containers.DashboardContainer} />
         <Route path="/posts" component={containers.PostsContainer}>

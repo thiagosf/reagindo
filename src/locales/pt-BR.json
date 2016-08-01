@@ -20,5 +20,9 @@
   "posts.removing": "Removing post...",
   "login.sending_login": "Sending...",
   "login.user_logged_in": "Success login!",
-  "login.error_login": "Login invalid"
+  "login.error_login": "Login invalid",
+  "pagination.prev": "Anterior",
+  "pagination.next": "Próximo",
+  "pagination.page": "página",
+  "pagination.pages": "páginas"
 }

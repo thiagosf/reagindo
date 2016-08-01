@@ -132,6 +132,7 @@ export function fetchPosts(page) {
     // Access-Control-Allow-Origin: *
     request
       .get('http://www.mocky.io/v2/575618730f00007e052eff46')
+      .query({ page: page })
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (err) {
@@ -139,7 +140,7 @@ export function fetchPosts(page) {
         } else {
           let pagination = {
             posts: res.body,
-            page_count: 10,
+            page_count: 7,
             limit: 1
           }
           dispatch(receivePosts(page, pagination))

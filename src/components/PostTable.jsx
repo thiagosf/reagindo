@@ -40,25 +40,22 @@ export default class PostTable extends Component {
   render() {
     if (this.props.posts.length == 0) return false
     return(
-      <div>
-        <div className="table-responsive">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Imagem</th>
-                <th>Titulo</th>
-                <th>Autor</th>
-                <th>Data</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.posts.map(post => postRow(post, this.props.onDestroy))}
-            </tbody>
-          </table>
-        </div>
-        <Pagination {...this.props} />
+      <div className="table-responsive">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Imagem</th>
+              <th>Titulo</th>
+              <th>Autor</th>
+              <th>Data</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.posts.map(post => postRow(post, this.props.onDestroy))}
+          </tbody>
+        </table>
       </div>
     )
   }
