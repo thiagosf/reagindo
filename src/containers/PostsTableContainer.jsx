@@ -5,7 +5,8 @@ import { removePost, fetchPosts } from '../actions/post'
 
 class PostsTableContainer extends Component {
   componentDidMount() {
-    const { fetchPosts, page } = this.props
+    const { fetchPosts, page, pagination } = this.props
+    console.log("componentDidMount", pagination);
     fetchPosts(page)
   }
   getLoader() {
@@ -36,9 +37,11 @@ class PostsTableContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log("state.pagination", state.pagination);
   return {
     ...state.post,
-    intl: state.intl
+    intl: state.intl,
+    pagination: state.pagination
   }
 }
 
