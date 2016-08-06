@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Loader, PostTable, Pagination } from '../components'
 import { removePost, fetchPosts } from '../actions/post'
+import { getPage } from '../actions/pagination'
 
 class PostsTableContainer extends Component {
   componentDidMount() {
-    const { fetchPosts, page, pagination } = this.props
-    console.log("componentDidMount", pagination);
-    fetchPosts(page)
+    const { fetchPosts } = this.props
+    fetchPosts(getPage(this.props.location.query, this.props.page))
   }
   getLoader() {
     if (this.props.isFetching) return <Loader />
@@ -37,7 +37,6 @@ class PostsTableContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("state.pagination", state.pagination);
   return {
     ...state.post,
     intl: state.intl,

@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { translate } from '../helpers'
+import { translate, api } from '../helpers'
 
 import {
   REMOVING_POST,
@@ -129,9 +129,8 @@ export const removingPost = (post, message, message_type) => {
 export function fetchPosts(page) {
   return dispatch => {
     dispatch(requestPosts(page))
-    // Access-Control-Allow-Origin: *
     request
-      .get('http://www.mocky.io/v2/575618730f00007e052eff46')
+      .get(api.url('/posts'))
       .query({ page: page })
       .set('Accept', 'application/json')
       .end((err, res) => {
@@ -139,7 +138,7 @@ export function fetchPosts(page) {
           // dispatch de erro
         } else {
           let pagination = {
-            posts: res.body,
+            posts: res.body.data,
             page_count: 7,
             limit: 1
           }
@@ -152,15 +151,14 @@ export function fetchPosts(page) {
 export function fetchPost(id) {
   return dispatch => {
     dispatch(requestPost(id))
-    // Access-Control-Allow-Origin: *
     request
-      .get('http://www.mocky.io/v2/57561bc30f0000d2052eff47')
+      .get(api.url(`/posts/${id}`))
       .set('Accept', 'application/json')
       .end((err, res) => {
         if (err) {
           // dispatch de erro
         } else {
-          dispatch(receivePost(id, res.body))
+          dispatch(receivePost(id, res.body.data))
         }
       })
   }
@@ -175,7 +173,7 @@ export function createPost(e, form) {
       author: form.refs.author.value
     }
     request
-      .post('http://www.mocky.io/v2/57561bc30f0000d2052eff47')
+      .post(api.url('/posts'))
       .set('Accept', 'application/json')
       .type('form')
       .send(data)
@@ -196,12 +194,13 @@ export function updatePost(e, form) {
   return (dispatch, store) => {
     e.preventDefault()
     dispatch(sendingPost(form))
+    const id = form.props.id
     const data = {
       title: form.refs.title.value,
       author: form.refs.author.value
     }
     request
-      .post('http://www.mocky.io/v2/57561bc30f0000d2052eff47')
+      .put(api.url(`/posts/${id}`))
       .set('Accept', 'application/json')
       .type('form')
       .send(data)

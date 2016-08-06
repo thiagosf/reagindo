@@ -17,3 +17,7 @@ export const checkPaginationParams = (query) => {
     }
   }
 }
+
+export const getPage = (query, fallback) => {
+  return query.page || fallback
+}

@@ -21,6 +21,7 @@ class PostFormContainer extends Component {
         <PostForm 
           ref="form"
           action={`/posts/${id}`} 
+          id={id}
           method="post" 
           post={post} 
           newPost={newPost} 
